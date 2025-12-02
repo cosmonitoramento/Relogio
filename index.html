@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Relógio Digital</title>
+  <title>Relógio Digital - Natal 🎄</title>
   <style>
     * {
       margin: 0;
@@ -11,129 +11,26 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --christmas-red: #c41e3a;
+      --christmas-green: #0f7f4f;
+      --christmas-gold: #ffd700;
+      --christmas-white: #ffffff;
+      --christmas-dark-red: #8b1a2e;
+    }
+
     body {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f0f0f0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
+      background: linear-gradient(135deg, #0a1428 0%, #1a0a0a 50%, #0a1428 100%);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
       overflow: hidden;
-    }
-
-    .clock-container {
-      text-align: center;
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 40px 60px;
-      box-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.1),
-        0 1px 3px rgba(0, 0, 0, 0.08);
-      border: 1px solid #e5e5e5;
       position: relative;
-      min-width: 300px;
     }
 
-    .clock-container::before {
-      display: none;
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes glow {
-      0% { box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.1); }
-      100% { box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.3); }
-    }
-
-    .time-display {
-      font-size: 4.5rem;
-      font-weight: 300;
-      color: #333333;
-      margin-bottom: 10px;
-      letter-spacing: 0.05em;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-
-    .date-display {
-      font-size: 1.1rem;
-      color: #666666;
-      margin-bottom: 8px;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .seconds-display {
-      font-size: 1rem;
-      color: #006400;
-      font-weight: 600;
-      margin-top: 5px;
-    }
-
-    .timezone {
-      font-size: 0.85rem;
-      color: #888888;
-      margin-top: 10px;
-      opacity: 0.8;
-      font-weight: 400;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    .seconds-display {
-      font-size: 1rem;
-      color: #006400;
-      font-weight: 600;
-      margin-top: 5px;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .clock-container {
-        padding: 30px 40px;
-        margin: 20px;
-      }
-      
-      .time-display {
-        font-size: 3rem;
-      }
-      
-      .date-display {
-        font-size: 1.2rem;
-      }
-      
-      .seconds-display {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .clock-container {
-        padding: 25px 30px;
-        margin: 15px;
-      }
-      
-      .time-display {
-        font-size: 2.5rem;
-      }
-      
-      .date-display {
-        font-size: 1rem;
-      }
-      
-      .seconds-display {
-        font-size: 0.9rem;
-      }
-    }
-
-    /* Efeitos especiais para o fundo */
+    /* Imagem de fundo */
     body::before {
       content: '';
       position: fixed;
@@ -141,27 +38,342 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-      z-index: -1;
-      animation: backgroundMove 10s ease-in-out infinite alternate;
+      background-image: url('https://raw.githubusercontent.com/cosmonitoramento/natal_tema/refs/heads/main/papai%20noel.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+      z-index: 0;
+      filter: brightness(0.8);
     }
 
-    @keyframes backgroundMove {
-      0% { transform: translateX(-20px) translateY(-20px); }
-      100% { transform: translateX(20px) translateY(20px); }
+    /* Overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(10, 20, 40, 0.4) 0%, rgba(10, 20, 40, 0.7) 100%);
+      z-index: 1;
+    }
+
+    /* Neve caindo */
+    .snowflakes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      font-size: 1.5em;
+      animation: fall linear infinite;
+      opacity: 0.9;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 0.9;
+      }
+      100% {
+        top: 110%;
+        opacity: 0.2;
+      }
+    }
+
+    .clock-container {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(196, 30, 58, 0.4) 0%, rgba(15, 127, 79, 0.4) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 50px 70px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      border: 3px solid var(--christmas-gold);
+      position: relative;
+      min-width: 400px;
+      z-index: 10;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { 
+        box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(255, 215, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+      100% { 
+        box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.6),
+          0 0 80px rgba(255, 215, 0, 0.6),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    .clock-header {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--christmas-gold);
+      margin-bottom: 20px;
+      text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.5);
+      letter-spacing: 2px;
+    }
+
+    .clock-header::before {
+      content: '🎅 ';
+    }
+
+    .clock-header::after {
+      content: ' 🎄';
+    }
+
+    .time-display {
+      font-size: 5.5rem;
+      font-weight: 700;
+      color: var(--christmas-white);
+      margin-bottom: 15px;
+      letter-spacing: 0.1em;
+      font-family: 'Courier New', monospace;
+      text-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(255, 215, 0, 0.6);
+      animation: timeGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes timeGlow {
+      0% { 
+        text-shadow: 
+          3px 3px 6px rgba(0, 0, 0, 0.8),
+          0 0 20px rgba(255, 215, 0, 0.4);
+      }
+      100% { 
+        text-shadow: 
+          3px 3px 6px rgba(0, 0, 0, 0.8),
+          0 0 40px rgba(255, 215, 0, 0.8);
+      }
+    }
+
+    .date-display {
+      font-size: 1.3rem;
+      color: var(--christmas-white);
+      margin-bottom: 12px;
+      font-weight: 500;
+      text-transform: capitalize;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .seconds-display {
+      font-size: 1.4rem;
+      color: var(--christmas-gold);
+      font-weight: 700;
+      margin-top: 10px;
+      animation: pulse 1s ease-in-out infinite;
+      text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 15px rgba(255, 215, 0, 0.6);
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+    }
+
+    .timezone {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 15px;
+      font-weight: 500;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      display: inline-block;
+      border: 1px solid var(--christmas-gold);
+    }
+
+    .christmas-message {
+      font-size: 1.1rem;
+      color: var(--christmas-gold);
+      margin-top: 20px;
+      font-weight: 600;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      animation: messageGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes messageGlow {
+      0% { 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      }
+      100% { 
+        text-shadow: 
+          2px 2px 4px rgba(0, 0, 0, 0.8),
+          0 0 20px rgba(255, 215, 0, 0.8);
+      }
+    }
+
+    /* Decoração de canto */
+    .corner-decoration {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.7;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .corner-decoration.top-left {
+      top: 15px;
+      left: 15px;
+    }
+
+    .corner-decoration.top-right {
+      top: 15px;
+      right: 15px;
+      animation-delay: 1s;
+    }
+
+    .corner-decoration.bottom-left {
+      bottom: 15px;
+      left: 15px;
+      animation-delay: 2s;
+    }
+
+    .corner-decoration.bottom-right {
+      bottom: 15px;
+      right: 15px;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .clock-container {
+        padding: 40px 50px;
+        margin: 20px;
+        min-width: 320px;
+      }
+      
+      .clock-header {
+        font-size: 1.4rem;
+      }
+      
+      .time-display {
+        font-size: 4rem;
+      }
+      
+      .date-display {
+        font-size: 1.1rem;
+      }
+      
+      .seconds-display {
+        font-size: 1.2rem;
+      }
+
+      .corner-decoration {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .clock-container {
+        padding: 30px 35px;
+        margin: 15px;
+        min-width: 280px;
+      }
+      
+      .clock-header {
+        font-size: 1.2rem;
+      }
+      
+      .time-display {
+        font-size: 3rem;
+      }
+      
+      .date-display {
+        font-size: 1rem;
+      }
+      
+      .seconds-display {
+        font-size: 1rem;
+      }
+
+      .timezone {
+        font-size: 0.85rem;
+      }
+
+      .christmas-message {
+        font-size: 0.95rem;
+      }
+
+      .corner-decoration {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Neve caindo -->
+  <div class="snowflakes" id="snowflakes"></div>
+
   <div class="clock-container">
+    <!-- Decorações nos cantos -->
+    <div class="corner-decoration top-left">🎁</div>
+    <div class="corner-decoration top-right">⭐</div>
+    <div class="corner-decoration bottom-left">🔔</div>
+    <div class="corner-decoration bottom-right">🎀</div>
+
+    <div class="clock-header">Feliz Natal!</div>
     <div class="time-display" id="time"></div>
     <div class="seconds-display" id="seconds"></div>
     <div class="date-display" id="date"></div>
     <div class="timezone" id="timezone"></div>
+    <div class="christmas-message">🎄 Boas Festas! ✨</div>
   </div>
 
   <script>
+    // Criar neve caindo
+    function createSnowflakes() {
+      const snowflakesContainer = document.getElementById('snowflakes');
+      const snowflakeChars = ['❄', '❅', '❆', '✻', '✼', '❇', '❈', '❉'];
+      const numberOfSnowflakes = 80;
+
+      for (let i = 0; i < numberOfSnowflakes; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+        snowflake.style.left = Math.random() * 100 + '%';
+        snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        snowflake.style.animationDelay = Math.random() * 2 + 's';
+        snowflake.style.fontSize = (Math.random() * 1 + 1) + 'em';
+        snowflakesContainer.appendChild(snowflake);
+      }
+    }
+
     function updateClock() {
       const now = new Date();
       
@@ -191,7 +403,8 @@
       document.getElementById('timezone').textContent = `Fuso Horário: ${timezoneStr}`;
     }
     
-    // Atualizar a cada segundo
+    // Inicializar
+    createSnowflakes();
     updateClock();
     setInterval(updateClock, 1000);
   </script>
