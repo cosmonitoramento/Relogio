@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Relógio Digital - Natal 🎄</title>
+  <title>Relógio Digital - Carnaval 🎭</title>
   <style>
     * {
       margin: 0;
@@ -12,11 +12,13 @@
     }
 
     :root {
-      --christmas-red: #c41e3a;
-      --christmas-green: #0f7f4f;
-      --christmas-gold: #ffd700;
-      --christmas-white: #ffffff;
-      --christmas-dark-red: #8b1a2e;
+      --carnival-red: #FF0066;
+      --carnival-pink: #FF1493;
+      --carnival-yellow: #FFD700;
+      --carnival-blue: #0066FF;
+      --carnival-orange: #FF8C00;
+      --carnival-purple: #9B30FF;
+      --carnival-white: #ffffff;
     }
 
     body {
@@ -25,13 +27,13 @@
       align-items: flex-start;
       justify-content: center;
       padding-top: 5vh;
-      background: linear-gradient(135deg, #0a1428 0%, #1a0a0a 50%, #0a1428 100%);
+      background: linear-gradient(135deg, #1a0520 0%, #0a0310 50%, #1a0520 100%);
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
       overflow: hidden;
       position: relative;
     }
 
-    /* Imagem de fundo */
+    /* Imagem de fundo - COLE O LINK DA IMAGEM AQUI */
     body::before {
       content: '';
       position: fixed;
@@ -39,7 +41,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('https://raw.githubusercontent.com/cosmonitoramento/natal_tema/refs/heads/main/papai%20noel.png');
+      background-image: url('https://raw.githubusercontent.com/cosmonitoramento/natal_tema/refs/heads/main/Gemini_Generated_Image_pftdl0pftdl0pftd.png');
       background-size: cover;
       background-position: center;
       opacity: 0.3;
@@ -47,7 +49,7 @@
       filter: brightness(0.8);
     }
 
-    /* Overlay */
+    /* Overlay colorido */
     body::after {
       content: '';
       position: fixed;
@@ -55,12 +57,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at center, rgba(10, 20, 40, 0.4) 0%, rgba(10, 20, 40, 0.7) 100%);
+      background: radial-gradient(circle at center, rgba(255, 0, 102, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
       z-index: 1;
     }
 
-    /* Neve caindo */
-    .snowflakes {
+    /* Confetes caindo */
+    .confetti-container {
       position: fixed;
       top: 0;
       left: 0;
@@ -71,39 +73,48 @@
       overflow: hidden;
     }
 
-    .snowflake {
+    .confetti {
       position: absolute;
       top: -10px;
-      color: white;
       font-size: 1.5em;
       animation: fall linear infinite;
-      opacity: 0.9;
-      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+      opacity: 0.85;
+      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.6));
     }
 
     @keyframes fall {
       0% {
         top: -10%;
-        opacity: 0.9;
+        opacity: 0;
+        transform: translateX(0) rotate(0deg);
       }
+      10% { opacity: 0.85; }
+      90% { opacity: 0.6; }
       100% {
         top: 110%;
-        opacity: 0.2;
+        opacity: 0;
+        transform: translateX(50px) rotate(360deg);
       }
     }
 
     .clock-container {
       text-align: center;
-      background: linear-gradient(135deg, rgba(196, 30, 58, 0.4) 0%, rgba(15, 127, 79, 0.4) 100%);
+      background: linear-gradient(135deg, 
+        rgba(255, 0, 102, 0.4) 0%, 
+        rgba(255, 215, 0, 0.4) 25%,
+        rgba(0, 102, 255, 0.4) 50%,
+        rgba(255, 140, 0, 0.4) 75%,
+        rgba(255, 20, 147, 0.4) 100%
+      );
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: 24px;
       padding: 35px 50px;
       box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.6),
-        0 0 60px rgba(255, 215, 0, 0.3),
+        0 0 60px rgba(255, 20, 147, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      border: 3px solid var(--christmas-gold);
+      border: 3px solid var(--carnival-yellow);
       position: relative;
       min-width: 320px;
       max-width: 600px;
@@ -115,13 +126,13 @@
       0% { 
         box-shadow: 
           0 8px 32px rgba(0, 0, 0, 0.6),
-          0 0 40px rgba(255, 215, 0, 0.3),
+          0 0 40px rgba(255, 20, 147, 0.4),
           inset 0 1px 0 rgba(255, 255, 255, 0.2);
       }
       100% { 
         box-shadow: 
           0 8px 32px rgba(0, 0, 0, 0.6),
-          0 0 80px rgba(255, 215, 0, 0.6),
+          0 0 80px rgba(255, 20, 147, 0.7),
           inset 0 1px 0 rgba(255, 255, 255, 0.3);
       }
     }
@@ -129,32 +140,49 @@
     .clock-header {
       font-size: 1.8rem;
       font-weight: 700;
-      color: var(--christmas-gold);
+      background: linear-gradient(90deg, 
+        var(--carnival-red) 0%,
+        var(--carnival-yellow) 25%,
+        var(--carnival-blue) 50%,
+        var(--carnival-orange) 75%,
+        var(--carnival-pink) 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin-bottom: 15px;
-      text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.8),
-        0 0 20px rgba(255, 215, 0, 0.5);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
       letter-spacing: 2px;
+      animation: rainbow-slide 3s linear infinite;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    }
+
+    @keyframes rainbow-slide {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
     }
 
     .clock-header::before {
-      content: '🎅 ';
+      content: '🎭 ';
+      -webkit-text-fill-color: var(--carnival-pink);
     }
 
     .clock-header::after {
-      content: ' 🎄';
+      content: ' 🎉';
+      -webkit-text-fill-color: var(--carnival-yellow);
     }
 
     .time-display {
       font-size: 5rem;
       font-weight: 700;
-      color: var(--christmas-white);
+      color: var(--carnival-white);
       margin-bottom: 10px;
       letter-spacing: 0.1em;
       font-family: 'Courier New', monospace;
       text-shadow: 
         3px 3px 6px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(255, 215, 0, 0.6);
+        0 0 30px rgba(255, 20, 147, 0.6);
       animation: timeGlow 2s ease-in-out infinite alternate;
     }
 
@@ -162,18 +190,18 @@
       0% { 
         text-shadow: 
           3px 3px 6px rgba(0, 0, 0, 0.8),
-          0 0 20px rgba(255, 215, 0, 0.4);
+          0 0 20px rgba(255, 20, 147, 0.4);
       }
       100% { 
         text-shadow: 
           3px 3px 6px rgba(0, 0, 0, 0.8),
-          0 0 40px rgba(255, 215, 0, 0.8);
+          0 0 40px rgba(255, 20, 147, 0.8);
       }
     }
 
     .date-display {
       font-size: 1.1rem;
-      color: var(--christmas-white);
+      color: var(--carnival-white);
       margin-bottom: 10px;
       font-weight: 500;
       text-transform: capitalize;
@@ -183,13 +211,19 @@
 
     .seconds-display {
       font-size: 1.2rem;
-      color: var(--christmas-gold);
+      background: linear-gradient(90deg, 
+        var(--carnival-yellow) 0%,
+        var(--carnival-pink) 50%,
+        var(--carnival-blue) 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       font-weight: 700;
       margin-top: 8px;
-      animation: pulse 1s ease-in-out infinite;
-      text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.8),
-        0 0 15px rgba(255, 215, 0, 0.6);
+      animation: pulse 1s ease-in-out infinite, rainbow-slide 3s linear infinite;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
     }
 
     @keyframes pulse {
@@ -205,34 +239,42 @@
 
     .timezone {
       font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.9);
       margin-top: 12px;
       font-weight: 500;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
       padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 20, 147, 0.2);
       border-radius: 20px;
       display: inline-block;
-      border: 1px solid var(--christmas-gold);
+      border: 2px solid var(--carnival-yellow);
     }
 
-    .christmas-message {
+    .carnival-message {
       font-size: 1rem;
-      color: var(--christmas-gold);
+      background: linear-gradient(90deg, 
+        var(--carnival-red) 0%,
+        var(--carnival-yellow) 25%,
+        var(--carnival-blue) 50%,
+        var(--carnival-orange) 75%,
+        var(--carnival-pink) 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin-top: 15px;
       font-weight: 600;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-      animation: messageGlow 3s ease-in-out infinite alternate;
+      animation: rainbow-slide 3s linear infinite, messageGlow 3s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
     }
 
     @keyframes messageGlow {
       0% { 
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
       }
       100% { 
-        text-shadow: 
-          2px 2px 4px rgba(0, 0, 0, 0.8),
-          0 0 20px rgba(255, 215, 0, 0.8);
+        filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8));
       }
     }
 
@@ -240,8 +282,9 @@
     .corner-decoration {
       position: absolute;
       font-size: 1.5rem;
-      opacity: 0.7;
+      opacity: 0.8;
       animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     }
 
     .corner-decoration.top-left {
@@ -268,8 +311,12 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+      }
+      50% { 
+        transform: translateY(-10px) rotate(10deg); 
+      }
     }
 
     /* Responsividade */
@@ -328,7 +375,7 @@
         font-size: 0.85rem;
       }
 
-      .christmas-message {
+      .carnival-message {
         font-size: 0.95rem;
       }
 
@@ -339,40 +386,40 @@
   </style>
 </head>
 <body>
-  <!-- Neve caindo -->
-  <div class="snowflakes" id="snowflakes"></div>
+  <!-- Confetes caindo -->
+  <div class="confetti-container" id="confetti-container"></div>
 
   <div class="clock-container">
     <!-- Decorações nos cantos -->
-    <div class="corner-decoration top-left">🎁</div>
-    <div class="corner-decoration top-right">⭐</div>
-    <div class="corner-decoration bottom-left">🔔</div>
-    <div class="corner-decoration bottom-right">🎀</div>
+    <div class="corner-decoration top-left">🎊</div>
+    <div class="corner-decoration top-right">🎪</div>
+    <div class="corner-decoration bottom-left">🎺</div>
+    <div class="corner-decoration bottom-right">🥁</div>
 
-    <div class="clock-header">Feliz Natal!</div>
+    <div class="clock-header">Feliz Carnaval!</div>
     <div class="time-display" id="time"></div>
     <div class="seconds-display" id="seconds"></div>
     <div class="date-display" id="date"></div>
     <div class="timezone" id="timezone"></div>
-    <div class="christmas-message">🎄 Boas Festas! ✨</div>
+    <div class="carnival-message">🎭 Vamos Sambar! 🎉</div>
   </div>
 
   <script>
-    // Criar neve caindo
-    function createSnowflakes() {
-      const snowflakesContainer = document.getElementById('snowflakes');
-      const snowflakeChars = ['❄', '❅', '❆', '✻', '✼', '❇', '❈', '❉'];
-      const numberOfSnowflakes = 80;
+    // Criar confetes caindo
+    function createConfetti() {
+      const confettiContainer = document.getElementById('confetti-container');
+      const confettiChars = ['🎊', '🎉', '🎭', '🎪', '🎺', '🥁', '🎸', '🎷'];
+      const numberOfConfetti = 80;
 
-      for (let i = 0; i < numberOfSnowflakes; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
-        snowflake.style.left = Math.random() * 100 + '%';
-        snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
-        snowflake.style.animationDelay = Math.random() * 2 + 's';
-        snowflake.style.fontSize = (Math.random() * 1 + 1) + 'em';
-        snowflakesContainer.appendChild(snowflake);
+      for (let i = 0; i < numberOfConfetti; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.textContent = confettiChars[Math.floor(Math.random() * confettiChars.length)];
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.fontSize = (Math.random() * 1 + 1) + 'em';
+        confettiContainer.appendChild(confetti);
       }
     }
 
@@ -406,7 +453,7 @@
     }
     
     // Inicializar
-    createSnowflakes();
+    createConfetti();
     updateClock();
     setInterval(updateClock, 1000);
   </script>
