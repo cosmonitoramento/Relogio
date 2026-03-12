@@ -3,22 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Relógio Digital - Carnaval 🎭</title>
+  <title>Relógio Digital - Páscoa 🐣</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --carnival-red: #FF0066;
-      --carnival-pink: #FF1493;
-      --carnival-yellow: #FFD700;
-      --carnival-blue: #0066FF;
-      --carnival-orange: #FF8C00;
-      --carnival-purple: #9B30FF;
-      --carnival-white: #ffffff;
+      --egg-yellow:  #F9E04B;
+      --egg-orange:  #FB923C;
+      --egg-pink:    #F472B6;
+      --egg-lilac:   #C084FC;
+      --egg-mint:    #34D399;
+      --egg-sky:     #60A5FA;
+      --choco:       #110802;
     }
 
     body {
@@ -27,436 +23,360 @@
       align-items: flex-start;
       justify-content: center;
       padding-top: 5vh;
-      background: linear-gradient(135deg, #1a0520 0%, #0a0310 50%, #1a0520 100%);
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+      background: radial-gradient(ellipse at 30% 20%, #2a1005 0%, #110802 60%, #0d1a0a 100%);
+      font-family: 'Inter', system-ui, sans-serif;
       overflow: hidden;
       position: relative;
     }
 
-    /* Imagem de fundo - COLE O LINK DA IMAGEM AQUI */
+    /* Fundo com imagem */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('https://raw.githubusercontent.com/cosmonitoramento/natal_tema/refs/heads/main/Gemini_Generated_Image_pftdl0pftdl0pftd.png');
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/cosmonitoramento/natal_tema/refs/heads/main/PASCOA.png');
       background-size: cover;
       background-position: center;
-      opacity: 0.3;
+      opacity: 0.12;
       z-index: 0;
-      filter: brightness(0.8);
+      filter: brightness(0.7) hue-rotate(30deg);
     }
 
-    /* Overlay colorido */
+    /* Overlay gradiente Páscoa */
     body::after {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(255, 0, 102, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(249,224,75,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(192,132,252,0.08) 0%, transparent 60%);
       z-index: 1;
     }
 
-    /* Confetes caindo */
-    .confetti-container {
+    /* ── ELEMENTOS FLUTUANTES ── */
+    .floaties {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       pointer-events: none;
       z-index: 9999;
       overflow: hidden;
     }
 
-    .confetti {
+    .floaty {
       position: absolute;
-      top: -10px;
-      font-size: 1.5em;
+      top: -40px;
       animation: fall linear infinite;
       opacity: 0.85;
-      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.6));
+      filter: drop-shadow(0 0 4px rgba(249,224,75,0.5));
     }
+
+    .floaty:nth-child(1)  { left: 5%;  font-size: 1.6em; animation-duration: 10s; animation-delay: 0s; }
+    .floaty:nth-child(2)  { left: 13%; font-size: 1.2em; animation-duration: 13s; animation-delay: 1s; }
+    .floaty:nth-child(3)  { left: 22%; font-size: 1.8em; animation-duration: 11s; animation-delay: 2s; }
+    .floaty:nth-child(4)  { left: 33%; font-size: 1.3em; animation-duration: 14s; animation-delay: 0.5s; }
+    .floaty:nth-child(5)  { left: 44%; font-size: 1.5em; animation-duration: 10s; animation-delay: 1.5s; }
+    .floaty:nth-child(6)  { left: 55%; font-size: 1.1em; animation-duration: 12s; animation-delay: 2.5s; }
+    .floaty:nth-child(7)  { left: 64%; font-size: 1.6em; animation-duration: 11s; animation-delay: 0.8s; }
+    .floaty:nth-child(8)  { left: 74%; font-size: 1.2em; animation-duration: 13s; animation-delay: 1.8s; }
+    .floaty:nth-child(9)  { left: 83%; font-size: 1.4em; animation-duration: 10s; animation-delay: 2.2s; }
+    .floaty:nth-child(10) { left: 92%; font-size: 1.5em; animation-duration: 14s; animation-delay: 3s; }
 
     @keyframes fall {
-      0% {
-        top: -10%;
-        opacity: 0;
-        transform: translateX(0) rotate(0deg);
-      }
-      10% { opacity: 0.85; }
-      90% { opacity: 0.6; }
-      100% {
-        top: 110%;
-        opacity: 0;
-        transform: translateX(50px) rotate(360deg);
-      }
+      0%   { top: -8%;  opacity: 0;   transform: translateX(0) rotate(0deg); }
+      10%  { opacity: 0.85; }
+      90%  { opacity: 0.6; }
+      100% { top: 110%; opacity: 0;   transform: translateX(40px) rotate(360deg); }
     }
 
+    /* ── CARD RELÓGIO ── */
     .clock-container {
       text-align: center;
-      background: linear-gradient(135deg, 
-        rgba(255, 0, 102, 0.4) 0%, 
-        rgba(255, 215, 0, 0.4) 25%,
-        rgba(0, 102, 255, 0.4) 50%,
-        rgba(255, 140, 0, 0.4) 75%,
-        rgba(255, 20, 147, 0.4) 100%
+      background: linear-gradient(145deg,
+        rgba(249,224,75,0.12) 0%,
+        rgba(251,146,60,0.10) 20%,
+        rgba(244,114,182,0.10) 40%,
+        rgba(192,132,252,0.10) 60%,
+        rgba(52,211,153,0.10) 80%,
+        rgba(96,165,250,0.10) 100%
       );
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 24px;
-      padding: 35px 50px;
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.6),
-        0 0 60px rgba(255, 20, 147, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      border: 3px solid var(--carnival-yellow);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 28px;
+      padding: 38px 54px;
+      box-shadow:
+        0 8px 40px rgba(0,0,0,0.7),
+        0 0 60px rgba(249,224,75,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+      border: 2px solid rgba(249,224,75,0.35);
       position: relative;
       min-width: 320px;
-      max-width: 600px;
+      max-width: 580px;
       z-index: 10;
-      animation: glow 3s ease-in-out infinite alternate;
+      animation: cardGlow 4s ease-in-out infinite alternate;
     }
 
-    @keyframes glow {
-      0% { 
-        box-shadow: 
-          0 8px 32px rgba(0, 0, 0, 0.6),
-          0 0 40px rgba(255, 20, 147, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      }
-      100% { 
-        box-shadow: 
-          0 8px 32px rgba(0, 0, 0, 0.6),
-          0 0 80px rgba(255, 20, 147, 0.7),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      }
+    @keyframes cardGlow {
+      0%   { box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 40px rgba(249,224,75,0.12), inset 0 1px 0 rgba(255,255,255,0.1); }
+      100% { box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 80px rgba(244,114,182,0.25), inset 0 1px 0 rgba(255,255,255,0.18); }
     }
 
-    .clock-header {
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, 
-        var(--carnival-red) 0%,
-        var(--carnival-yellow) 25%,
-        var(--carnival-blue) 50%,
-        var(--carnival-orange) 75%,
-        var(--carnival-pink) 100%
+    /* Borda conica girando */
+    .clock-container::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 30px;
+      background: conic-gradient(
+        var(--egg-yellow), var(--egg-orange), var(--egg-pink),
+        var(--egg-lilac), var(--egg-mint), var(--egg-sky),
+        var(--egg-yellow)
       );
-      background-size: 200% auto;
+      z-index: -1;
+      animation: spinBorder 6s linear infinite;
+      opacity: 0.55;
+    }
+
+    .clock-container::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 26px;
+      background: #1a0a03;
+      z-index: -1;
+    }
+
+    @keyframes spinBorder { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ── HEADER ── */
+    .clock-header {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg,
+        var(--egg-yellow), var(--egg-orange), var(--egg-pink),
+        var(--egg-lilac), var(--egg-mint), var(--egg-yellow)
+      );
+      background-size: 300% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      margin-bottom: 18px;
       letter-spacing: 2px;
-      animation: rainbow-slide 3s linear infinite;
-      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+      animation: rainbowSlide 4s linear infinite;
+      filter: drop-shadow(0 0 8px rgba(249,224,75,0.4));
+      font-family: 'Arial Black', Arial, sans-serif;
     }
 
-    @keyframes rainbow-slide {
-      0% { background-position: 0% center; }
-      100% { background-position: 200% center; }
+    @keyframes rainbowSlide {
+      0%   { background-position: 0% center; }
+      100% { background-position: 300% center; }
     }
 
-    .clock-header::before {
-      content: '🎭 ';
-      -webkit-text-fill-color: var(--carnival-pink);
-    }
-
-    .clock-header::after {
-      content: ' 🎉';
-      -webkit-text-fill-color: var(--carnival-yellow);
-    }
-
+    /* ── HORA ── */
     .time-display {
-      font-size: 5rem;
+      font-size: 5.5rem;
       font-weight: 700;
-      color: var(--carnival-white);
-      margin-bottom: 10px;
-      letter-spacing: 0.1em;
+      color: #fff;
+      letter-spacing: 0.08em;
       font-family: 'Courier New', monospace;
-      text-shadow: 
-        3px 3px 6px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(255, 20, 147, 0.6);
+      margin-bottom: 4px;
+      text-shadow:
+        3px 3px 6px rgba(0,0,0,0.9),
+        0 0 30px rgba(249,224,75,0.5);
       animation: timeGlow 2s ease-in-out infinite alternate;
     }
 
     @keyframes timeGlow {
-      0% { 
-        text-shadow: 
-          3px 3px 6px rgba(0, 0, 0, 0.8),
-          0 0 20px rgba(255, 20, 147, 0.4);
-      }
-      100% { 
-        text-shadow: 
-          3px 3px 6px rgba(0, 0, 0, 0.8),
-          0 0 40px rgba(255, 20, 147, 0.8);
-      }
+      0%   { text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 20px rgba(249,224,75,0.3); }
+      100% { text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 50px rgba(244,114,182,0.6); }
     }
 
+    /* ── SEGUNDOS ── */
+    .seconds-display {
+      font-size: 1.3rem;
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      background: linear-gradient(90deg,
+        var(--egg-yellow), var(--egg-pink), var(--egg-lilac),
+        var(--egg-mint), var(--egg-yellow)
+      );
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      animation: rainbowSlide 3s linear infinite, tickPulse 1s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px rgba(249,224,75,0.5));
+    }
+
+    @keyframes tickPulse {
+      0%, 100% { opacity: 1;   transform: scale(1); }
+      50%       { opacity: 0.7; transform: scale(1.06); }
+    }
+
+    /* ── DATA ── */
     .date-display {
-      font-size: 1.1rem;
-      color: var(--carnival-white);
-      margin-bottom: 10px;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
       font-weight: 500;
       text-transform: capitalize;
       letter-spacing: 1px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+      margin-bottom: 10px;
     }
 
-    .seconds-display {
-      font-size: 1.2rem;
-      background: linear-gradient(90deg, 
-        var(--carnival-yellow) 0%,
-        var(--carnival-pink) 50%,
-        var(--carnival-blue) 100%
-      );
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 700;
-      margin-top: 8px;
-      animation: pulse 1s ease-in-out infinite, rainbow-slide 3s linear infinite;
-      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
-    }
-
-    @keyframes pulse {
-      0%, 100% { 
-        opacity: 1;
-        transform: scale(1);
-      }
-      50% { 
-        opacity: 0.8;
-        transform: scale(1.05);
-      }
-    }
-
+    /* ── FUSO ── */
     .timezone {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.9);
-      margin-top: 12px;
-      font-weight: 500;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-      padding: 6px 14px;
-      background: rgba(255, 20, 147, 0.2);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+      padding: 5px 14px;
+      background: rgba(249,224,75,0.1);
+      border: 1px solid rgba(249,224,75,0.3);
       border-radius: 20px;
       display: inline-block;
-      border: 2px solid var(--carnival-yellow);
+      font-weight: 600;
+      margin-bottom: 14px;
     }
 
-    .carnival-message {
+    /* ── MENSAGEM PÁSCOA ── */
+    .easter-message {
       font-size: 1rem;
-      background: linear-gradient(90deg, 
-        var(--carnival-red) 0%,
-        var(--carnival-yellow) 25%,
-        var(--carnival-blue) 50%,
-        var(--carnival-orange) 75%,
-        var(--carnival-pink) 100%
+      font-weight: 700;
+      background: linear-gradient(90deg,
+        var(--egg-yellow), var(--egg-orange), var(--egg-pink),
+        var(--egg-lilac), var(--egg-mint), var(--egg-yellow)
       );
-      background-size: 200% auto;
+      background-size: 300% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-top: 15px;
-      font-weight: 600;
-      animation: rainbow-slide 3s linear infinite, messageGlow 3s ease-in-out infinite alternate;
-      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+      animation: rainbowSlide 4s linear infinite;
+      filter: drop-shadow(0 0 8px rgba(249,224,75,0.4));
+      margin-top: 4px;
     }
 
-    @keyframes messageGlow {
-      0% { 
-        filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
-      }
-      100% { 
-        filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8));
-      }
-    }
-
-    /* Decoração de canto */
-    .corner-decoration {
+    /* ── DECORAÇÕES DE CANTO ── */
+    .corner-deco {
       position: absolute;
-      font-size: 1.5rem;
-      opacity: 0.8;
-      animation: float 3s ease-in-out infinite;
-      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 6px rgba(249,224,75,0.5));
+      animation: floatDeco 3s ease-in-out infinite;
     }
 
-    .corner-decoration.top-left {
-      top: 12px;
-      left: 12px;
+    .corner-deco.tl { top: 14px; left: 16px; animation-delay: 0s; }
+    .corner-deco.tr { top: 14px; right: 16px; animation-delay: 0.8s; }
+    .corner-deco.bl { bottom: 14px; left: 16px; animation-delay: 1.6s; }
+    .corner-deco.br { bottom: 14px; right: 16px; animation-delay: 1.2s; }
+
+    @keyframes floatDeco {
+      0%, 100% { transform: translateY(0) rotate(-8deg) scale(1); }
+      50%       { transform: translateY(-8px) rotate(8deg) scale(1.1); }
     }
 
-    .corner-decoration.top-right {
-      top: 12px;
-      right: 12px;
-      animation-delay: 1s;
-    }
-
-    .corner-decoration.bottom-left {
-      bottom: 12px;
-      left: 12px;
-      animation-delay: 2s;
-    }
-
-    .corner-decoration.bottom-right {
-      bottom: 12px;
-      right: 12px;
-      animation-delay: 1.5s;
-    }
-
-    @keyframes float {
-      0%, 100% { 
-        transform: translateY(0px) rotate(0deg); 
-      }
-      50% { 
-        transform: translateY(-10px) rotate(10deg); 
-      }
-    }
-
-    /* Responsividade */
+    /* ── RESPONSIVO ── */
     @media (max-width: 768px) {
-      .clock-container {
-        padding: 40px 50px;
-        margin: 20px;
-        min-width: 320px;
-      }
-      
-      .clock-header {
-        font-size: 1.6rem;
-      }
-      
-      .time-display {
-        font-size: 4.5rem;
-      }
-      
-      .date-display {
-        font-size: 1.1rem;
-      }
-      
-      .seconds-display {
-        font-size: 1.2rem;
-      }
-
-      .corner-decoration {
-        font-size: 1.5rem;
-      }
+      .clock-container { padding: 36px 40px; margin: 20px; }
+      .time-display    { font-size: 4.5rem; }
+      .clock-header    { font-size: 1.3rem; }
     }
 
     @media (max-width: 480px) {
-      .clock-container {
-        padding: 30px 35px;
-        margin: 15px;
-        min-width: 280px;
-      }
-      
-      .clock-header {
-        font-size: 1.4rem;
-      }
-      
-      .time-display {
-        font-size: 3.5rem;
-      }
-      
-      .date-display {
-        font-size: 1rem;
-      }
-      
-      .seconds-display {
-        font-size: 1rem;
-      }
-
-      .timezone {
-        font-size: 0.85rem;
-      }
-
-      .carnival-message {
-        font-size: 0.95rem;
-      }
-
-      .corner-decoration {
-        font-size: 1.2rem;
-      }
+      .clock-container { padding: 28px 28px; margin: 14px; min-width: 280px; }
+      .time-display    { font-size: 3.5rem; }
+      .clock-header    { font-size: 1.1rem; }
+      .seconds-display { font-size: 1.1rem; }
+      .corner-deco     { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Confetes caindo -->
-  <div class="confetti-container" id="confetti-container"></div>
+
+  <!-- Elementos flutuantes Páscoa -->
+  <div class="floaties">
+    <div class="floaty">🥚</div>
+    <div class="floaty">🐰</div>
+    <div class="floaty">🌸</div>
+    <div class="floaty">🍫</div>
+    <div class="floaty">🐣</div>
+    <div class="floaty">🌼</div>
+    <div class="floaty">🥚</div>
+    <div class="floaty">🌷</div>
+    <div class="floaty">🐰</div>
+    <div class="floaty">🍫</div>
+  </div>
 
   <div class="clock-container">
-    <!-- Decorações nos cantos -->
-    <div class="corner-decoration top-left">🎊</div>
-    <div class="corner-decoration top-right">🎪</div>
-    <div class="corner-decoration bottom-left">🎺</div>
-    <div class="corner-decoration bottom-right">🥁</div>
 
-    <div class="clock-header">🎊', '🎉', '🎭', '🎪', '🎺', '🥁', '🎸', '🎷</div>
+    <!-- Cantos decorativos -->
+    <div class="corner-deco tl">🥚</div>
+    <div class="corner-deco tr">🌸</div>
+    <div class="corner-deco bl">🐣</div>
+    <div class="corner-deco br">🌷</div>
+
+    <div class="clock-header">🐰 FELIZ PÁSCOA — JIRAU ENERGIA 🐣</div>
     <div class="time-display" id="time"></div>
     <div class="seconds-display" id="seconds"></div>
     <div class="date-display" id="date"></div>
     <div class="timezone" id="timezone"></div>
-    <div class="carnival-message">🎊', '🎉', '🎭', '🎪', '🎺', '🥁', '🎸', '🎷</div>
+    <div class="easter-message" id="easter-msg"></div>
+
   </div>
 
   <script>
-    // Criar confetes caindo
-    function createConfetti() {
-      const confettiContainer = document.getElementById('confetti-container');
-      const confettiChars = ['🎊', '🎉', '🎭', '🎪', '🎺', '🥁', '🎸', '🎷'];
-      const numberOfConfetti = 80;
-
-      for (let i = 0; i < numberOfConfetti; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        confetti.textContent = confettiChars[Math.floor(Math.random() * confettiChars.length)];
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.animationDuration = (Math.random() * 3 + 4) + 's';
-        confetti.style.animationDelay = Math.random() * 2 + 's';
-        confetti.style.fontSize = (Math.random() * 1 + 1) + 'em';
-        confettiContainer.appendChild(confetti);
+    // Elementos flutuantes dinâmicos
+    (function() {
+      const container = document.querySelector('.floaties');
+      const icons = ['🥚','🐰','🌸','🍫','🐣','🌼','🌷','🐝','🌻'];
+      for (let i = 0; i < 5; i++) {
+        const el = document.createElement('div');
+        el.className = 'floaty';
+        el.textContent = icons[Math.floor(Math.random() * icons.length)];
+        el.style.left = (Math.random() * 100) + '%';
+        el.style.fontSize = (Math.random() * 0.8 + 1) + 'em';
+        el.style.animationDuration = (Math.random() * 5 + 9) + 's';
+        el.style.animationDelay = (Math.random() * 4) + 's';
+        container.appendChild(el);
       }
-    }
+    })();
+
+    const mensagens = [
+      '🌸 Que a Páscoa renove sua alegria! 🌸',
+      '🍫 Feliz Páscoa, Equipe Jirau! 🥚',
+      '🐣 Renovação, paz e muito chocolate! 🌷',
+      '🐰 Que esta Páscoa seja abençoada! 🌼',
+      '🌻 Jirau Energia deseja Feliz Páscoa! 🥚',
+    ];
+
+    let msgIdx = 0;
 
     function updateClock() {
       const now = new Date();
-      
-      // Formatação da hora
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      
-      // Formatação da data
-      const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      };
-      const dateStr = now.toLocaleDateString('pt-BR', options);
-      
-      // Fuso horário
-      const timezoneStr = Intl.DateTimeFormat('pt-BR', {
-        timeZoneName: 'short'
-      }).formatToParts(now).find(part => part.type === 'timeZoneName')?.value || 'UTC-4';
-      
-      // Atualizando os elementos
-      document.getElementById('time').textContent = `${hours}:${minutes}`;
-      document.getElementById('seconds').textContent = `${seconds}s`;
+
+      const h  = String(now.getHours()).padStart(2, '0');
+      const m  = String(now.getMinutes()).padStart(2, '0');
+      const s  = String(now.getSeconds()).padStart(2, '0');
+
+      document.getElementById('time').textContent = `${h}:${m}`;
+      document.getElementById('seconds').textContent = `${s}s`;
+
+      const dateStr = now.toLocaleDateString('pt-BR', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
       document.getElementById('date').textContent = dateStr;
-      document.getElementById('timezone').textContent = `Fuso Horário: ${timezoneStr}`;
+
+      const tz = Intl.DateTimeFormat('pt-BR', { timeZoneName: 'short' })
+        .formatToParts(now).find(p => p.type === 'timeZoneName')?.value || 'UTC-4';
+      document.getElementById('timezone').textContent = `Fuso Horário: ${tz}`;
+
+      // Trocar mensagem a cada 5 segundos
+      if (now.getSeconds() % 5 === 0) {
+        msgIdx = (msgIdx + 1) % mensagens.length;
+        document.getElementById('easter-msg').textContent = mensagens[msgIdx];
+      }
     }
-    
-    // Inicializar
-    createConfetti();
+
+    document.getElementById('easter-msg').textContent = mensagens[0];
     updateClock();
     setInterval(updateClock, 1000);
   </script>
 </body>
 </html>
-
