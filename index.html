@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Relógio Digital - Dia do Trabalhador 🏆</title>
+  <title>Jogos do Trabalhador 🏆</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -13,7 +13,6 @@
       --worker-green: #2DC653;
       --worker-blue:  #1B98E0;
       --worker-white: #FFFFFF;
-      --dark-bg:      #0D1B2A;
     }
 
     body {
@@ -22,24 +21,50 @@
       align-items: flex-start;
       justify-content: center;
       padding-top: 4vh;
-      background: radial-gradient(ellipse at 30% 20%, #0a1628 0%, #0D1B2A 60%, #050e1a 100%);
-      font-family: 'Arial Black', Arial, sans-serif;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
+      font-family: 'Arial Black', Arial, sans-serif;
+    }
+
+    /* Vídeo de fundo */
+    #background-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    #background-video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 1;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    /* Overlay escuro */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(13, 27, 42, 0.78), rgba(13, 27, 42, 0.88));
+      z-index: -1;
     }
 
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(244,160,17,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(27,152,224,0.07) 0%, transparent 60%);
+      background: 
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(244,160,17,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(27,152,224,0.08) 0%, transparent 60%);
       z-index: 1;
       pointer-events: none;
     }
 
-    /* ── ELEMENTOS CAINDO ── */
+    /* Emojis caindo - MAIS ROBUSTO */
     .floaties {
       position: fixed;
       inset: 0;
@@ -50,37 +75,29 @@
 
     .floaty {
       position: absolute;
-      top: -80px;
+      top: -100px;
       animation: fall linear infinite;
-      font-size: 2.8em;
-      opacity: 0.92;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+      opacity: 0.85;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+      user-select: none;
     }
-
-    .floaty:nth-child(1)  { left: 4%;  font-size: 3em;   animation-duration: 10s; animation-delay: 0s; }
-    .floaty:nth-child(2)  { left: 12%; font-size: 2.5em; animation-duration: 13s; animation-delay: 1s; }
-    .floaty:nth-child(3)  { left: 21%; font-size: 3.2em; animation-duration: 11s; animation-delay: 2s; }
-    .floaty:nth-child(4)  { left: 30%; font-size: 2.8em; animation-duration: 14s; animation-delay: 0.5s; }
-    .floaty:nth-child(5)  { left: 40%; font-size: 3em;   animation-duration: 10s; animation-delay: 1.5s; }
-    .floaty:nth-child(6)  { left: 51%; font-size: 2.6em; animation-duration: 12s; animation-delay: 2.5s; }
-    .floaty:nth-child(7)  { left: 61%; font-size: 3.1em; animation-duration: 11s; animation-delay: 0.8s; }
-    .floaty:nth-child(8)  { left: 70%; font-size: 2.7em; animation-duration: 13s; animation-delay: 1.8s; }
-    .floaty:nth-child(9)  { left: 80%; font-size: 3em;   animation-duration: 10s; animation-delay: 2.2s; }
-    .floaty:nth-child(10) { left: 90%; font-size: 2.9em; animation-duration: 14s; animation-delay: 3s; }
-    .floaty:nth-child(11) { left: 7%;  font-size: 2.5em; animation-duration: 12s; animation-delay: 4s; }
-    .floaty:nth-child(12) { left: 46%; font-size: 3em;   animation-duration: 9s;  animation-delay: 0.3s; }
-    .floaty:nth-child(13) { left: 66%; font-size: 2.6em; animation-duration: 15s; animation-delay: 1.2s; }
-    .floaty:nth-child(14) { left: 35%; font-size: 2.8em; animation-duration: 11s; animation-delay: 3.5s; }
-    .floaty:nth-child(15) { left: 56%; font-size: 3.2em; animation-duration: 13s; animation-delay: 2.8s; }
 
     @keyframes fall {
-      0%   { top: -10%; opacity: 0;    transform: translateX(0)    rotate(0deg); }
-      8%   { opacity: 0.92; }
-      92%  { opacity: 0.7; }
-      100% { top: 110%;  opacity: 0;   transform: translateX(60px) rotate(450deg); }
+      0%   { 
+        top: -120px; 
+        opacity: 0; 
+        transform: translateX(0) rotate(0deg); 
+      }
+      10%  { opacity: 0.9; }
+      90%  { opacity: 0.75; }
+      100% { 
+        top: 110vh; 
+        opacity: 0; 
+        transform: translateX(var(--drift)) rotate(var(--rotate)); 
+      }
     }
 
-    /* ── LAYOUT CENTRAL ── */
+    /* Layout Central */
     .main-wrap {
       display: flex;
       flex-direction: column;
@@ -93,951 +110,220 @@
       z-index: 10;
     }
 
-    /* ── PLACAR ARENA ── */
     .arena-board {
       background: #0a0f1a;
       border: 3px solid var(--worker-gold);
       border-radius: 20px;
       padding: 26px 44px 22px;
       width: 100%;
-      box-shadow:
-        0 0 0 1px #000,
-        0 0 50px rgba(244,160,17,0.2),
-        0 10px 40px rgba(0,0,0,0.85),
-        inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: 0 0 0 1px #000, 0 0 50px rgba(244,160,17,0.25), 0 10px 40px rgba(0,0,0,0.85),
+                  inset 0 1px 0 rgba(255,255,255,0.06);
       position: relative;
       overflow: hidden;
       text-align: center;
     }
 
-    .arena-board::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -55deg,
-        transparent 0px, transparent 18px,
-        rgba(255,255,255,0.013) 18px, rgba(255,255,255,0.013) 20px
-      );
-      pointer-events: none;
-    }
-
-    /* Borda LED girando */
     .led-ring {
       position: absolute;
       inset: -3px;
       border-radius: 22px;
-      background: conic-gradient(
-        var(--worker-gold), var(--worker-red), var(--worker-blue),
-        var(--worker-green), var(--worker-gold)
-      );
+      background: conic-gradient(var(--worker-gold), var(--worker-red), var(--worker-blue), var(--worker-green), var(--worker-gold));
       animation: rotateLED 5s linear infinite;
       opacity: 0.45;
       z-index: -1;
     }
+
     .led-ring-cover {
-      position: absolute;
-      inset: 3px;
-      border-radius: 18px;
-      background: #0a0f1a;
-      z-index: -1;
+      position: absolute; inset: 3px; border-radius: 18px; background: #0a0f1a; z-index: -1;
     }
 
     @keyframes rotateLED { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-    /* ── TÍTULO ── */
     .clock-header {
-      font-size: 1.3rem;
+      font-size: 1.45rem;
       font-weight: 900;
-      background: linear-gradient(90deg,
-        var(--worker-gold), #fff, var(--worker-red), var(--worker-gold), #fff
-      );
+      background: linear-gradient(90deg, var(--worker-gold), #fff, var(--worker-red), var(--worker-gold), #fff);
       background-size: 300% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 2px;
-      text-transform: uppercase;
       animation: shineText 4s linear infinite;
       margin-bottom: 12px;
+      letter-spacing: 1px;
     }
 
-    @keyframes shineText {
-      0%   { background-position: 0% center; }
-      100% { background-position: 300% center; }
-    }
+    @keyframes shineText { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
 
-    /* ── HORA LED ── */
     .time-display {
       font-size: 5.8rem;
       font-weight: 900;
       color: var(--worker-gold);
-      letter-spacing: 0.06em;
       font-family: 'Courier New', monospace;
-      margin-bottom: 2px;
-      text-shadow:
-        0 0 30px rgba(244,160,17,0.9),
-        0 0 60px rgba(244,160,17,0.4),
-        3px 3px 6px rgba(0,0,0,0.95);
+      text-shadow: 0 0 30px rgba(244,160,17,0.9);
       animation: ledPulse 1s ease-in-out infinite alternate;
     }
 
     @keyframes ledPulse {
-      0%   { text-shadow: 0 0 20px rgba(244,160,17,0.8), 3px 3px 6px rgba(0,0,0,0.9); }
-      100% { text-shadow: 0 0 50px rgba(244,160,17,1), 0 0 90px rgba(244,160,17,0.3), 3px 3px 6px rgba(0,0,0,0.9); }
+      0%   { text-shadow: 0 0 20px rgba(244,160,17,0.8); }
+      100% { text-shadow: 0 0 50px rgba(244,160,17,1); }
     }
 
     .seconds-display {
       font-size: 1.4rem;
-      font-family: 'Courier New', monospace;
-      font-weight: 900;
       color: var(--worker-red);
-      text-shadow: 0 0 14px rgba(230,57,70,0.9);
-      margin-bottom: 10px;
+      font-family: 'Courier New', monospace;
       animation: blinkSecs 1s ease-in-out infinite;
     }
 
-    @keyframes blinkSecs {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.65; transform: scale(1.1); }
-    }
-
-    .date-display {
-      font-size: 0.92rem;
-      color: rgba(255,255,255,0.8);
-      font-weight: 700;
-      text-transform: capitalize;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-      font-family: Arial, sans-serif;
-    }
-
-    .timezone {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.7);
-      background: rgba(244,160,17,0.1);
-      border: 1px solid rgba(244,160,17,0.3);
-      border-radius: 20px;
-      padding: 4px 14px;
-      display: inline-block;
-      font-weight: 700;
-      margin-bottom: 12px;
-      font-family: Arial, sans-serif;
-    }
+    @keyframes blinkSecs { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.1); } }
 
     .worker-message {
-      font-size: 0.9rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      background: linear-gradient(90deg,
-        var(--worker-green), var(--worker-blue), var(--worker-gold),
-        var(--worker-red), var(--worker-green)
-      );
-      background-size: 300% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shineText 3s linear infinite;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Cantos do card */
-    .corner-deco {
-      position: absolute;
-      font-size: 2rem;
-      animation: floatCorner 3s ease-in-out infinite;
-      line-height: 1;
-    }
-    .corner-deco.tl { top: 10px; left: 12px; animation-delay: 0s; }
-    .corner-deco.tr { top: 10px; right: 12px; animation-delay: 0.7s; }
-    .corner-deco.bl { bottom: 10px; left: 12px; animation-delay: 1.4s; }
-    .corner-deco.br { bottom: 10px; right: 12px; animation-delay: 1s; }
-
-    @keyframes floatCorner {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50%       { transform: translateY(-7px) scale(1.15); }
-    }
-
-    /* ── GRADE DE JOGOS ── */
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      width: 100%;
-    }
-
-    .game-card {
-      background: rgba(255,255,255,0.04);
-      border-radius: 12px;
-      padding: 10px 6px;
-      text-align: center;
-      backdrop-filter: blur(8px);
-      animation: cardPop 0.5s ease both;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .game-card:nth-child(1) { border: 1.5px solid rgba(230,57,70,0.45);   animation-delay: 0.1s; }
-    .game-card:nth-child(2) { border: 1.5px solid rgba(244,160,17,0.45);  animation-delay: 0.15s; }
-    .game-card:nth-child(3) { border: 1.5px solid rgba(27,152,224,0.45);  animation-delay: 0.2s; }
-    .game-card:nth-child(4) { border: 1.5px solid rgba(45,198,83,0.45);   animation-delay: 0.25s; }
-    .game-card:nth-child(5) { border: 1.5px solid rgba(244,160,17,0.45);  animation-delay: 0.3s; }
-    .game-card:nth-child(6) { border: 1.5px solid rgba(230,57,70,0.45);   animation-delay: 0.35s; }
-    .game-card:nth-child(7) { border: 1.5px solid rgba(27,152,224,0.45);  animation-delay: 0.4s; }
-    .game-card:nth-child(8) { border: 1.5px solid rgba(45,198,83,0.45);   animation-delay: 0.45s; }
-
-    @keyframes cardPop {
-      0%   { opacity: 0; transform: scale(0.8) translateY(12px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .game-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px) scale(1.04); transition: all 0.3s; }
-
-    .game-icon {
-      font-size: 2.4rem;
-      display: block;
-      margin-bottom: 4px;
-      animation: bounceIcon 2s ease-in-out infinite;
-    }
-
-    .game-card:nth-child(1) .game-icon { animation-delay: 0s; }
-    .game-card:nth-child(2) .game-icon { animation-delay: 0.25s; }
-    .game-card:nth-child(3) .game-icon { animation-delay: 0.5s; }
-    .game-card:nth-child(4) .game-icon { animation-delay: 0.75s; }
-    .game-card:nth-child(5) .game-icon { animation-delay: 1s; }
-    .game-card:nth-child(6) .game-icon { animation-delay: 1.25s; }
-    .game-card:nth-child(7) .game-icon { animation-delay: 1.5s; }
-    .game-card:nth-child(8) .game-icon { animation-delay: 1.75s; }
-
-    @keyframes bounceIcon {
-      0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-      30%       { transform: translateY(-8px) rotate(-10deg) scale(1.1); }
-      60%       { transform: translateY(-4px) rotate(6deg) scale(1.05); }
-    }
-
-    .game-label {
-      font-size: 0.58rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.7);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-family: Arial, sans-serif;
-    }
-
-    .score-live {
-      font-size: 0.78rem;
-      font-weight: 900;
-      color: var(--worker-gold);
-      font-family: 'Courier New', monospace;
-      margin-top: 2px;
-    }
-
-    /* ── BANNER ── */
-    .worker-banner {
-      width: 100%;
-    }
-
-    .banner-inner {
-      background: linear-gradient(90deg,
-        rgba(230,57,70,0.14), rgba(244,160,17,0.14), rgba(27,152,224,0.14)
-      );
-      border: 1.5px solid rgba(244,160,17,0.28);
-      border-radius: 12px;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .banner-flag {
-      font-size: 1.6rem;
-      animation: wavFlag 1.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes wavFlag {
-      0%   { transform: rotate(-6deg); }
-      100% { transform: rotate(6deg); }
-    }
-
-    .banner-text {
-      font-size: 0.8rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.9);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-family: Arial, sans-serif;
-    }
-
-    /* ════════════════════════════════════
-       BONEQUINHOS SVG — MODAL OVERLAY
-    ════════════════════════════════════ */
-    #athlete-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
-    }
-
-    #athlete-modal.active {
-      display: flex;
-    }
-
-    .athlete-box {
-      background: linear-gradient(145deg, #0d1f38, #0a1220);
-      border: 3px solid var(--worker-gold);
-      border-radius: 24px;
-      padding: 30px 40px 24px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 0 60px rgba(244,160,17,0.3), 0 20px 60px rgba(0,0,0,0.8);
-      max-width: 360px;
-      width: 90%;
-      animation: modalIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
-
-    @keyframes modalIn {
-      0%   { opacity: 0; transform: scale(0.6) translateY(40px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .athlete-sport-label {
       font-size: 1rem;
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 8px;
-      background: linear-gradient(90deg, var(--worker-gold), var(--worker-red), var(--worker-gold));
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shineText 2s linear infinite;
-    }
-
-    .athlete-svg-wrap {
-      margin: 8px auto;
-      width: 200px;
-      height: 200px;
-    }
-
-    .athlete-svg-wrap svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .athlete-close-btn {
-      margin-top: 16px;
-      background: rgba(244,160,17,0.15);
-      border: 1.5px solid rgba(244,160,17,0.5);
-      border-radius: 30px;
-      color: var(--worker-gold);
-      font-size: 0.82rem;
-      font-weight: 900;
+      color: var(--worker-white);
+      margin-top: 12px;
       letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 8px 28px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      transition: all 0.2s;
     }
 
-    .athlete-close-btn:hover {
-      background: rgba(244,160,17,0.3);
+    .games-grid { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 8px; 
+      width: 100%; 
     }
-
-    /* Countdown no canto do modal */
-    .modal-countdown {
-      position: absolute;
-      top: 12px;
-      right: 16px;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.4);
-      font-family: 'Courier New', monospace;
+    
+    .game-card { 
+      background: rgba(255,255,255,0.06); 
+      border-radius: 12px; 
+      padding: 12px 8px; 
+      text-align: center; 
+      border: 1px solid rgba(255,255,255,0.12); 
+      backdrop-filter: blur(8px); 
     }
-
-    /* ── RESPONSIVO ── */
-    @media (max-width: 520px) {
-      .arena-board { padding: 20px 18px 16px; }
-      .time-display { font-size: 3.8rem; }
-      .clock-header { font-size: 1rem; }
-      .games-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
-      .game-icon { font-size: 1.8rem; }
-      .game-label { font-size: 0.5rem; }
-      .corner-deco { font-size: 1.4rem; }
+    
+    .game-icon { 
+      font-size: 2.4rem; 
+      display: block; 
+      margin-bottom: 6px; 
     }
-
-    @media (max-width: 380px) {
-      .games-grid { grid-template-columns: repeat(4, 1fr); }
-      .game-icon { font-size: 1.5rem; }
+    
+    .score-live { 
+      font-size: 0.82rem; 
+      font-weight: 900; 
+      color: var(--worker-gold); 
+      font-family: 'Courier New', monospace; 
     }
   </style>
 </head>
 <body>
 
-  <!-- ELEMENTOS CAINDO (emojis esportivos grandes) -->
-  <div class="floaties">
-    <div class="floaty">⚽</div>
-    <div class="floaty">🏀</div>
-    <div class="floaty">🏓</div>
-    <div class="floaty">🏐</div>
-    <div class="floaty">⚡</div>
-    <div class="floaty">🏆</div>
-    <div class="floaty">🎾</div>
-    <div class="floaty">🏅</div>
-    <div class="floaty">🤸</div>
-    <div class="floaty">🎯</div>
-    <div class="floaty">🏋️</div>
-    <div class="floaty">🤾</div>
-    <div class="floaty">⚽</div>
-    <div class="floaty">🏀</div>
-    <div class="floaty">🏓</div>
+  <!-- Vídeos de fundo em sequência -->
+  <div id="background-container">
+    <video id="background-video" autoplay muted playsinline></video>
   </div>
 
-  <!-- MODAL BONEQUINHO ATLETA -->
-  <div id="athlete-modal">
-    <div class="athlete-box">
-      <div class="modal-countdown" id="modal-cd">Fechando em 8s</div>
-      <div class="athlete-sport-label" id="athlete-label">Basquete</div>
-      <div class="athlete-svg-wrap" id="athlete-svg-wrap"></div>
-      <button class="athlete-close-btn" onclick="closeAthleteModal()">✕ fechar</button>
-    </div>
-  </div>
+  <div class="floaties" id="float-wrap"></div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <div class="main-wrap">
-
-    <!-- PLACAR PRINCIPAL -->
     <div class="arena-board">
       <div class="led-ring"></div>
       <div class="led-ring-cover"></div>
-
-      <div class="corner-deco tl">⚡</div>
-      <div class="corner-deco tr">🏆</div>
-      <div class="corner-deco bl">⚽</div>
-      <div class="corner-deco br">🏀</div>
-
-      <div class="clock-header">🏆 DIA DO TRABALHADOR 🏆</div>
+      <div class="clock-header">🏆 JOGOS DO TRABALHADOR 🏆</div>
       <div class="time-display" id="time">--:--</div>
       <div class="seconds-display" id="seconds">--s</div>
-      <div class="date-display" id="date"></div>
-      <div class="timezone" id="timezone"></div>
-      <div class="worker-message" id="worker-msg"></div>
+      <div class="worker-message" id="worker-msg">ESPÍRITO DE EQUIPE E SUPERAÇÃO</div>
     </div>
 
-    <!-- GRADE 8 ESPORTES -->
     <div class="games-grid">
-      <div class="game-card"><span class="game-icon">🏀</span><div class="game-label">Basquete</div><div class="score-live" id="sc1">--</div></div>
-      <div class="game-card"><span class="game-icon">⚽</span><div class="game-label">Futebol</div><div class="score-live" id="sc2">--</div></div>
-      <div class="game-card"><span class="game-icon">🏓</span><div class="game-label">Ping Pong</div><div class="score-live" id="sc3">--</div></div>
-      <div class="game-card"><span class="game-icon">🏐</span><div class="game-label">Vôlei</div><div class="score-live" id="sc4">--</div></div>
-      <div class="game-card"><span class="game-icon">🎾</span><div class="game-label">Tênis</div><div class="score-live" id="sc5">--</div></div>
-      <div class="game-card"><span class="game-icon">🏊</span><div class="game-label">Natação</div><div class="score-live" id="sc6">--</div></div>
-      <div class="game-card"><span class="game-icon">🤸</span><div class="game-label">Ginástica</div><div class="score-live" id="sc7">--</div></div>
-      <div class="game-card"><span class="game-icon">🏋️</span><div class="game-label">Levant.</div><div class="score-live" id="sc8">--</div></div>
+      <div class="game-card"><span class="game-icon">🏀</span><div class="score-live" id="sc1">--</div></div>
+      <div class="game-card"><span class="game-icon">⚽</span><div class="score-live" id="sc2">--</div></div>
+      <div class="game-card"><span class="game-icon">🏐</span><div class="score-live" id="sc3">--</div></div>
+      <div class="game-card"><span class="game-icon">🎾</span><div class="score-live" id="sc4">--</div></div>
     </div>
 
-    <!-- BANNER -->
-    <div class="worker-banner">
-      <div class="banner-inner">
-        <span class="banner-flag">🚩</span>
-        <span class="banner-text">1° DE MAIO — FORÇA E ORGULHO DO TRABALHADOR</span>
-        <span class="banner-flag">🚩</span>
-      </div>
-    </div>
-
+    <div style="width:100%; height:2px; background:rgba(255,255,255,0.1); margin:12px 0;"></div>
+    <div style="color:white; font-size:0.75rem; opacity:0.65; text-align:center; letter-spacing:3px;"> • WORKER EDITION •</div>
   </div>
 
   <script>
-    /* ══ EMOJIS EXTRAS CAINDO ══ */
-    (function() {
-      const container = document.querySelector('.floaties');
-      const icons = ['⚽','🏀','🏓','🏐','🎾','🏅','⚡','🏋️','🎯','🤾','🏆','🤸','🏊'];
-      for (let i = 0; i < 8; i++) {
-        const el = document.createElement('div');
-        el.className = 'floaty';
-        el.textContent = icons[Math.floor(Math.random() * icons.length)];
-        el.style.left = (Math.random() * 100) + '%';
-        el.style.fontSize = (Math.random() * 1 + 2.2) + 'em';
-        el.style.animationDuration = (Math.random() * 5 + 9) + 's';
-        el.style.animationDelay = (Math.random() * 6) + 's';
-        container.appendChild(el);
-      }
-    })();
+    // Emojis caindo - Versão mais robusta
+    const icons = ['⚽','🏀','🏐','🏆','🥇','🏅','🎖️','🏸','🎾','🏊','🚴','🏃','🥳','🔥','💪'];
+    const fw = document.getElementById('float-wrap');
 
-    /* ══ RELÓGIO ══ */
-    const mensagens = [
-      '⚡ PARABÉNS A TODOS OS TRABALHADORES! ⚡',
-      '🏆 CELEBRANDO O DIA 1° DE MAIO! 🏆',
-      '💪 FORÇA, GARRA E DEDICAÇÃO DA NOSSA EQUIPE!',
-      '🌊 ENERGIA QUE MOVE O BRASIL! 🌊',
-      '🎉 FELIZ DIA DO TRABALHADOR! 🎉',
-      '⚽ JOGAR JUNTO É A NOSSA FORÇA! 🏀',
-    ];
-
-    let msgIdx = 0;
-
-    function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-
-    function updateScores() {
-      document.getElementById('sc1').textContent = rnd(60,110) + '-' + rnd(50,100);
-      document.getElementById('sc2').textContent = rnd(0,4) + ' x ' + rnd(0,4);
-      document.getElementById('sc3').textContent = rnd(8,21) + '-' + rnd(8,21);
-      document.getElementById('sc4').textContent = rnd(0,3) + ' x ' + rnd(0,3);
-      document.getElementById('sc5').textContent = rnd(0,7) + '-' + rnd(0,7);
-      document.getElementById('sc6').textContent = rnd(1,8) + '°';
-      document.getElementById('sc7').textContent = rnd(12,16) + '.0 pts';
-      document.getElementById('sc8').textContent = rnd(120,200) + 'kg';
+    for(let i = 0; i < 25; i++) {   // Aumentado para 25 emojis
+      const d = document.createElement('div');
+      d.className = 'floaty';
+      d.textContent = icons[Math.floor(Math.random() * icons.length)];
+      
+      const size = Math.random() * 1.4 + 1.8; // tamanho variado entre 1.8em e 3.2em
+      d.style.fontSize = size + 'em';
+      d.style.left = Math.random() * 100 + '%';
+      d.style.animationDuration = (Math.random() * 7 + 11) + 's'; // 11 a 18 segundos
+      d.style.animationDelay = '-' + (Math.random() * 15) + 's'; // inicia em momentos diferentes
+      
+      // Movimento lateral aleatório
+      d.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+      d.style.setProperty('--rotate', (Math.random() * 720 - 360) + 'deg');
+      
+      fw.appendChild(d);
     }
 
-    function updateClock() {
+    // Relógio + Scores
+    function rnd(min, max) { 
+      return Math.floor(Math.random() * (max - min + 1)) + min; 
+    }
+
+    function update() {
       const now = new Date();
-      const h = String(now.getHours()).padStart(2,'0');
-      const m = String(now.getMinutes()).padStart(2,'0');
-      const s = String(now.getSeconds()).padStart(2,'0');
-
-      document.getElementById('time').textContent = h + ':' + m;
-      document.getElementById('seconds').textContent = s + 's';
-
-      const dateStr = now.toLocaleDateString('pt-BR', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-      });
-      document.getElementById('date').textContent = dateStr;
-
-      const tz = Intl.DateTimeFormat('pt-BR', { timeZoneName: 'short' })
-        .formatToParts(now).find(p => p.type === 'timeZoneName')?.value || 'UTC-4';
-      document.getElementById('timezone').textContent = 'Fuso Horário: ' + tz;
-
-      if (now.getSeconds() % 5 === 0) {
-        msgIdx = (msgIdx + 1) % mensagens.length;
-        document.getElementById('worker-msg').textContent = mensagens[msgIdx];
-        updateScores();
+      document.getElementById('time').textContent = 
+        now.getHours().toString().padStart(2,'0') + ":" + 
+        now.getMinutes().toString().padStart(2,'0');
+      
+      document.getElementById('seconds').textContent = 
+        now.getSeconds().toString().padStart(2,'0') + "s";
+      
+      if(now.getSeconds() % 5 === 0) {
+        document.getElementById('worker-msg').textContent = "ESPÍRITO DE EQUIPE E SUPERAÇÃO!";
+        document.getElementById('sc1').textContent = rnd(75,105) + '-' + rnd(72,98);
+        document.getElementById('sc2').textContent = rnd(0,4) + ' x ' + rnd(0,4);
+        document.getElementById('sc3').textContent = rnd(15,25) + ' x ' + rnd(12,22);
+        document.getElementById('sc4').textContent = rnd(3,7) + '-' + rnd(2,6);
       }
     }
+    setInterval(update, 1000);
+    update();
 
-    document.getElementById('worker-msg').textContent = mensagens[0];
-    updateScores();
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    /* ══ BONEQUINHOS SVG ══
-       Aparece a cada 3 minutos (180s), rodando cada esporte por vez
-    ══════════════════════ */
-
-    const sports = [
-      {
-        label: '🏀 Basquete!',
-        color: '#E63946',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Bola de basquete caindo/subindo -->
-          <circle cx="150" cy="140" r="22" fill="#E63946" stroke="#fff" stroke-width="2">
-            <animate attributeName="cy" values="140;115;140" dur="0.7s" repeatCount="indefinite"/>
-          </circle>
-          <line x1="128" y1="140" x2="172" y2="140" stroke="#fff" stroke-width="2">
-            <animate attributeName="y1" values="140;115;140" dur="0.7s" repeatCount="indefinite"/>
-            <animate attributeName="y2" values="140;115;140" dur="0.7s" repeatCount="indefinite"/>
-          </line>
-          <line x1="150" y1="118" x2="150" y2="162" stroke="#fff" stroke-width="2">
-            <animate attributeName="y1" values="118;93;118" dur="0.7s" repeatCount="indefinite"/>
-            <animate attributeName="y2" values="162;137;162" dur="0.7s" repeatCount="indefinite"/>
-          </line>
-          <!-- Cesta -->
-          <rect x="20" y="45" width="6" height="70" fill="#F4A011" rx="2"/>
-          <rect x="26" y="55" width="40" height="4" fill="#F4A011" rx="1"/>
-          <ellipse cx="66" cy="59" rx="18" ry="6" fill="none" stroke="#F4A011" stroke-width="3"/>
-          <!-- Boneco -->
-          <!-- Cabeça -->
-          <circle cx="80" cy="75" r="14" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <!-- Olhos -->
-          <circle cx="75" cy="73" r="2" fill="#333"/>
-          <circle cx="85" cy="73" r="2" fill="#333"/>
-          <path d="M74 80 Q80 85 86 80" fill="none" stroke="#333" stroke-width="1.5"/>
-          <!-- Corpo -->
-          <line x1="80" y1="89" x2="80" y2="135" stroke="#E63946" stroke-width="8" stroke-linecap="round"/>
-          <!-- Braço levantado (jogando) -->
-          <line x1="80" y1="100" x2="130" y2="75" stroke="#E63946" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="x2" values="130;135;130" dur="0.7s" repeatCount="indefinite"/>
-            <animate attributeName="y2" values="75;65;75" dur="0.7s" repeatCount="indefinite"/>
-          </line>
-          <!-- Braço outro lado -->
-          <line x1="80" y1="100" x2="50" y2="115" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-          <!-- Pernas -->
-          <line x1="80" y1="135" x2="60" y2="175" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <line x1="80" y1="135" x2="100" y2="175" stroke="#1B98E0" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="x2" values="100;105;100" dur="0.7s" repeatCount="indefinite"/>
-          </line>
-        </svg>`
-      },
-      {
-        label: '⚽ Futebol!',
-        color: '#2DC653',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Grama -->
-          <rect x="0" y="180" width="200" height="20" fill="#2DC653" rx="4"/>
-          <!-- Bola voando -->
-          <g>
-            <circle cx="150" cy="110" r="18" fill="#fff" stroke="#333" stroke-width="2"/>
-            <polygon points="150,95 143,108 157,108" fill="#333"/>
-            <polygon points="136,115 143,108 136,122" fill="#333"/>
-            <polygon points="164,115 157,108 164,122" fill="#333"/>
-            <animateTransform attributeName="transform" type="translate"
-              values="0,0; -60,-30; -90,-10" dur="1s" repeatCount="indefinite"/>
-          </g>
-          <!-- Boneco chutando -->
-          <!-- Cabeça -->
-          <circle cx="110" cy="72" r="14" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="105" cy="70" r="2" fill="#333"/>
-          <circle cx="115" cy="70" r="2" fill="#333"/>
-          <path d="M104 77 Q110 82 116 77" fill="none" stroke="#333" stroke-width="1.5"/>
-          <!-- Corpo -->
-          <line x1="110" y1="86" x2="110" y2="130" stroke="#2DC653" stroke-width="8" stroke-linecap="round"/>
-          <!-- Braços abertas -->
-          <line x1="110" y1="98" x2="75" y2="110" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <line x1="110" y1="98" x2="145" y2="110" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <!-- Perna apoio -->
-          <line x1="110" y1="130" x2="95" y2="175" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <!-- Perna chutando (animada) -->
-          <line x1="110" y1="130" x2="150" y2="120" stroke="#1B98E0" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="x2" values="150;165;150" dur="0.5s" repeatCount="indefinite"/>
-            <animate attributeName="y2" values="120;105;120" dur="0.5s" repeatCount="indefinite"/>
-          </line>
-        </svg>`
-      },
-      {
-        label: '🏓 Ping Pong!',
-        color: '#1B98E0',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Mesa -->
-          <rect x="10" y="155" width="180" height="8" fill="#1B98E0" rx="3"/>
-          <line x1="100" y1="155" x2="100" y2="163" stroke="#fff" stroke-width="2"/>
-          <!-- Rede -->
-          <rect x="95" y="140" width="10" height="15" fill="#fff" rx="1"/>
-          <!-- Bolinha animada -->
-          <circle r="7" fill="#fff" stroke="#E63946" stroke-width="2">
-            <animate attributeName="cx" values="40;160;40" dur="0.8s" repeatCount="indefinite"/>
-            <animate attributeName="cy" values="120;110;120" dur="0.4s" repeatCount="indefinite"/>
-          </circle>
-          <!-- Boneco esquerdo -->
-          <circle cx="30" cy="70" r="13" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="25" cy="68" r="2" fill="#333"/>
-          <circle cx="35" cy="68" r="2" fill="#333"/>
-          <path d="M24 75 Q30 80 36 75" fill="none" stroke="#333" stroke-width="1.5"/>
-          <line x1="30" y1="83" x2="30" y2="125" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-          <!-- Raquete -->
-          <ellipse cx="62" cy="105" rx="14" ry="18" fill="#E63946" stroke="#fff" stroke-width="2">
-            <animate attributeName="cy" values="105;95;105" dur="0.8s" repeatCount="indefinite"/>
-          </ellipse>
-          <line x1="30" y1="100" x2="50" y2="108" stroke="#E63946" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="x2" values="50;52;50" dur="0.8s" repeatCount="indefinite"/>
-          </line>
-          <line x1="30" y1="100" x2="18" y2="115" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-          <line x1="30" y1="125" x2="18" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <line x1="30" y1="125" x2="42" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <!-- Boneco direito -->
-          <circle cx="170" cy="70" r="13" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="165" cy="68" r="2" fill="#333"/>
-          <circle cx="175" cy="68" r="2" fill="#333"/>
-          <path d="M164 75 Q170 80 176 75" fill="none" stroke="#333" stroke-width="1.5"/>
-          <line x1="170" y1="83" x2="170" y2="125" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <!-- Raquete dir -->
-          <ellipse cx="140" cy="105" rx="14" ry="18" fill="#2DC653" stroke="#fff" stroke-width="2">
-            <animate attributeName="cy" values="115;105;115" dur="0.8s" repeatCount="indefinite"/>
-          </ellipse>
-          <line x1="170" y1="100" x2="152" y2="110" stroke="#2DC653" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="x2" values="152;150;152" dur="0.8s" repeatCount="indefinite"/>
-          </line>
-          <line x1="170" y1="100" x2="182" y2="115" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <line x1="170" y1="125" x2="158" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <line x1="170" y1="125" x2="182" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-        </svg>`
-      },
-      {
-        label: '🏐 Vôlei!',
-        color: '#F4A011',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Rede -->
-          <rect x="90" y="80" width="20" height="5" fill="#F4A011" rx="2"/>
-          <line x1="0" y1="82" x2="200" y2="82" stroke="#F4A011" stroke-width="3" stroke-dasharray="6,4"/>
-          <!-- Bola animada -->
-          <circle r="16" fill="#fff" stroke="#1B98E0" stroke-width="2">
-            <animate attributeName="cx" values="50;100;155;100;50" dur="1.2s" repeatCount="indefinite"/>
-            <animate attributeName="cy" values="120;50;120;50;120" dur="1.2s" repeatCount="indefinite"/>
-          </circle>
-          <!-- Linha na bola -->
-          <line stroke="#E63946" stroke-width="2" stroke-linecap="round">
-            <animate attributeName="x1" values="38;88;143;88;38" dur="1.2s" repeatCount="indefinite"/>
-            <animate attributeName="y1" values="120;50;120;50;120" dur="1.2s" repeatCount="indefinite"/>
-            <animate attributeName="x2" values="62;112;167;112;62" dur="1.2s" repeatCount="indefinite"/>
-            <animate attributeName="y2" values="120;50;120;50;120" dur="1.2s" repeatCount="indefinite"/>
-          </line>
-          <!-- Boneco esq -->
-          <circle cx="35" cy="100" r="13" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="30" cy="98" r="2" fill="#333"/>
-          <circle cx="40" cy="98" r="2" fill="#333"/>
-          <line x1="35" y1="113" x2="35" y2="155" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-          <!-- Braços levantados esq -->
-          <line x1="35" y1="125" x2="10" y2="108" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-          <line x1="35" y1="125" x2="60" y2="105" stroke="#E63946" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="y2" values="105;95;105" dur="0.6s" repeatCount="indefinite"/>
-          </line>
-          <line x1="35" y1="155" x2="20" y2="190" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <line x1="35" y1="155" x2="50" y2="190" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <!-- Boneco dir -->
-          <circle cx="165" cy="100" r="13" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="160" cy="98" r="2" fill="#333"/>
-          <circle cx="170" cy="98" r="2" fill="#333"/>
-          <line x1="165" y1="113" x2="165" y2="155" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <line x1="165" y1="125" x2="190" y2="108" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <line x1="165" y1="125" x2="140" y2="105" stroke="#2DC653" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="y2" values="105;95;105" dur="0.6s" repeatCount="indefinite" begin="0.3s"/>
-          </line>
-          <line x1="165" y1="155" x2="150" y2="190" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <line x1="165" y1="155" x2="180" y2="190" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-        </svg>`
-      },
-      {
-        label: '🎾 Tênis!',
-        color: '#2DC653',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Quadra fundo -->
-          <rect x="10" y="160" width="180" height="8" fill="#C8A900" rx="3"/>
-          <!-- Rede -->
-          <line x1="100" y1="100" x2="100" y2="168" stroke="#fff" stroke-width="3" stroke-dasharray="5,3"/>
-          <line x1="95" y1="100" x2="105" y2="100" stroke="#fff" stroke-width="4"/>
-          <!-- Bola -->
-          <circle r="10" fill="#C8FF00" stroke="#8CC000" stroke-width="1.5">
-            <animate attributeName="cx" values="50;150;50" dur="0.9s" repeatCount="indefinite"/>
-            <animate attributeName="cy" values="110;100;110" dur="0.45s" repeatCount="indefinite"/>
-          </circle>
-          <!-- Boneco esq -->
-          <circle cx="30" cy="72" r="13" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="25" cy="70" r="2" fill="#333"/>
-          <circle cx="35" cy="70" r="2" fill="#333"/>
-          <path d="M24 77 Q30 82 36 77" fill="none" stroke="#333" stroke-width="1.5"/>
-          <line x1="30" y1="85" x2="30" y2="128" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-          <!-- Raquete animada -->
-          <ellipse cx="65" cy="100" rx="12" ry="18" fill="none" stroke="#E63946" stroke-width="3">
-            <animate attributeName="cy" values="100;90;100" dur="0.9s" repeatCount="indefinite"/>
-          </ellipse>
-          <line x1="58" y1="115" x2="70" y2="90" stroke="#E63946" stroke-width="2"/>
-          <line x1="30" y1="105" x2="55" y2="105" stroke="#E63946" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="x2" values="55;60;55" dur="0.9s" repeatCount="indefinite"/>
-          </line>
-          <line x1="30" y1="105" x2="15" y2="118" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-          <line x1="30" y1="128" x2="15" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <line x1="30" y1="128" x2="45" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <!-- Boneco dir -->
-          <circle cx="170" cy="72" r="13" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="165" cy="70" r="2" fill="#333"/>
-          <circle cx="175" cy="70" r="2" fill="#333"/>
-          <line x1="170" y1="85" x2="170" y2="128" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <ellipse cx="135" cy="100" rx="12" ry="18" fill="none" stroke="#2DC653" stroke-width="3">
-            <animate attributeName="cy" values="110;100;110" dur="0.9s" repeatCount="indefinite" begin="0.45s"/>
-          </ellipse>
-          <line x1="170" y1="105" x2="145" y2="105" stroke="#2DC653" stroke-width="7" stroke-linecap="round">
-            <animate attributeName="x2" values="145;140;145" dur="0.9s" repeatCount="indefinite" begin="0.45s"/>
-          </line>
-          <line x1="170" y1="105" x2="185" y2="118" stroke="#2DC653" stroke-width="7" stroke-linecap="round"/>
-          <line x1="170" y1="128" x2="155" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          <line x1="170" y1="128" x2="185" y2="165" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-        </svg>`
-      },
-      {
-        label: '🏊 Natação!',
-        color: '#1B98E0',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Água -->
-          <rect x="0" y="145" width="200" height="55" fill="#1B98E0" rx="0"/>
-          <path d="M0 145 Q25 135 50 145 Q75 155 100 145 Q125 135 150 145 Q175 155 200 145" fill="#60C3F5" stroke="none"/>
-          <!-- Ondas animadas -->
-          <path fill="rgba(255,255,255,0.3)">
-            <animate attributeName="d"
-              values="M0 155 Q25 145 50 155 Q75 165 100 155 Q125 145 150 155 Q175 165 200 155 L200 200 L0 200 Z;
-                      M0 155 Q25 165 50 155 Q75 145 100 155 Q125 165 150 155 Q175 145 200 155 L200 200 L0 200 Z;
-                      M0 155 Q25 145 50 155 Q75 165 100 155 Q125 145 150 155 Q175 165 200 155 L200 200 L0 200 Z"
-              dur="1.5s" repeatCount="indefinite"/>
-          </path>
-          <!-- Boneco nadando -->
-          <g>
-            <animateTransform attributeName="transform" type="translate"
-              values="0,0; 30,0; 0,0" dur="1.5s" repeatCount="indefinite"/>
-            <!-- Cabeça -->
-            <circle cx="50" cy="130" r="13" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-            <circle cx="45" cy="128" r="2" fill="#333"/>
-            <circle cx="55" cy="128" r="2" fill="#333"/>
-            <!-- Óculos natação -->
-            <rect x="40" y="124" width="8" height="6" rx="3" fill="none" stroke="#1B98E0" stroke-width="2"/>
-            <rect x="52" y="124" width="8" height="6" rx="3" fill="none" stroke="#1B98E0" stroke-width="2"/>
-            <line x1="48" y1="127" x2="52" y2="127" stroke="#1B98E0" stroke-width="1.5"/>
-            <!-- Corpo -->
-            <line x1="63" y1="132" x2="120" y2="138" stroke="#E63946" stroke-width="8" stroke-linecap="round"/>
-            <!-- Braço crawl -->
-            <line x1="63" y1="132" x2="30" y2="112" stroke="#FBBF24" stroke-width="7" stroke-linecap="round">
-              <animate attributeName="x2" values="30;20;30" dur="0.6s" repeatCount="indefinite"/>
-              <animate attributeName="y2" values="112;125;112" dur="0.6s" repeatCount="indefinite"/>
-            </line>
-            <line x1="90" y1="135" x2="120" y2="115" stroke="#FBBF24" stroke-width="7" stroke-linecap="round">
-              <animate attributeName="x2" values="120;130;120" dur="0.6s" repeatCount="indefinite" begin="0.3s"/>
-              <animate attributeName="y2" values="115;130;115" dur="0.6s" repeatCount="indefinite" begin="0.3s"/>
-            </line>
-            <!-- Pernas batendo -->
-            <line x1="120" y1="138" x2="150" y2="130" stroke="#1B98E0" stroke-width="7" stroke-linecap="round">
-              <animate attributeName="y2" values="130;145;130" dur="0.35s" repeatCount="indefinite"/>
-            </line>
-            <line x1="120" y1="138" x2="150" y2="148" stroke="#1B98E0" stroke-width="7" stroke-linecap="round">
-              <animate attributeName="y2" values="148;133;148" dur="0.35s" repeatCount="indefinite"/>
-            </line>
-          </g>
-        </svg>`
-      },
-      {
-        label: '🏋️ Levantamento!',
-        color: '#F4A011',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Plataforma -->
-          <rect x="40" y="175" width="120" height="10" fill="#888" rx="3"/>
-          <!-- Boneco levantando -->
-          <!-- Cabeça -->
-          <circle cx="100" cy="60" r="14" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-          <circle cx="94" cy="58" r="2.5" fill="#333"/>
-          <circle cx="106" cy="58" r="2.5" fill="#333"/>
-          <path d="M93 67 Q100 73 107 67" fill="none" stroke="#333" stroke-width="2"/>
-          <!-- Corpo inclinado -->
-          <line x1="100" y1="74" x2="100" y2="125" stroke="#E63946" stroke-width="9" stroke-linecap="round"/>
-          <!-- Braços segurando barra -->
-          <line x1="100" y1="90" x2="55" y2="100" stroke="#FBBF24" stroke-width="8" stroke-linecap="round"/>
-          <line x1="100" y1="90" x2="145" y2="100" stroke="#FBBF24" stroke-width="8" stroke-linecap="round"/>
-          <!-- Barra (animada sobe/desce levemente) -->
-          <g>
-            <animate attributeName="transform" type="translate"
-              values="0,0; 0,-8; 0,0" dur="1.2s" repeatCount="indefinite"/>
-            <!-- Barra -->
-            <rect x="30" y="96" width="140" height="8" rx="4" fill="#aaa"/>
-            <!-- Peso esq -->
-            <rect x="20" y="86" width="22" height="28" rx="5" fill="#444" stroke="#222" stroke-width="2"/>
-            <rect x="22" y="90" width="18" height="20" rx="3" fill="#666"/>
-            <!-- Peso dir -->
-            <rect x="158" y="86" width="22" height="28" rx="5" fill="#444" stroke="#222" stroke-width="2"/>
-            <rect x="160" y="90" width="18" height="20" rx="3" fill="#666"/>
-            <!-- Pesos extras -->
-            <rect x="12" y="90" width="12" height="20" rx="3" fill="#333"/>
-            <rect x="176" y="90" width="12" height="20" rx="3" fill="#333"/>
-          </g>
-          <!-- Pernas -->
-          <line x1="100" y1="125" x2="75" y2="170" stroke="#1B98E0" stroke-width="9" stroke-linecap="round"/>
-          <line x1="100" y1="125" x2="125" y2="170" stroke="#1B98E0" stroke-width="9" stroke-linecap="round"/>
-          <!-- Pés -->
-          <ellipse cx="72" cy="173" rx="12" ry="5" fill="#555"/>
-          <ellipse cx="128" cy="173" rx="12" ry="5" fill="#555"/>
-          <!-- Gotas de suor -->
-          <circle cx="80" cy="52" r="3" fill="#60C3F5" opacity="0.8">
-            <animate attributeName="cy" values="52;70;90" dur="0.8s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.8;0.4;0" dur="0.8s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="118" cy="55" r="2.5" fill="#60C3F5" opacity="0.8">
-            <animate attributeName="cy" values="55;75;95" dur="1s" repeatCount="indefinite" begin="0.3s"/>
-            <animate attributeName="opacity" values="0.8;0.4;0" dur="1s" repeatCount="indefinite" begin="0.3s"/>
-          </circle>
-        </svg>`
-      },
-      {
-        label: '🤸 Ginástica!',
-        color: '#E63946',
-        svg: `
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Solo -->
-          <rect x="10" y="175" width="180" height="8" fill="#C8A900" rx="3"/>
-          <!-- Estrelas ao redor -->
-          <text x="15" y="55" font-size="18" fill="#F4A011" opacity="0.9">⭐</text>
-          <text x="165" y="55" font-size="18" fill="#F4A011" opacity="0.9">⭐</text>
-          <text x="90" y="30" font-size="16" fill="#F4A011" opacity="0.9">✨</text>
-          <!-- Boneco estrela/roue -->
-          <g>
-            <animateTransform attributeName="transform" type="rotate"
-              values="0 100 120; 15 100 120; 0 100 120; -15 100 120; 0 100 120"
-              dur="1.5s" repeatCount="indefinite"/>
-            <!-- Cabeça -->
-            <circle cx="100" cy="65" r="14" fill="#FBBF24" stroke="#fff" stroke-width="2"/>
-            <circle cx="94" cy="63" r="2" fill="#333"/>
-            <circle cx="106" cy="63" r="2" fill="#333"/>
-            <path d="M93 71 Q100 77 107 71" fill="none" stroke="#333" stroke-width="1.5"/>
-            <!-- Laço no cabelo -->
-            <ellipse cx="92" cy="54" rx="8" ry="5" fill="#E63946" opacity="0.8"/>
-            <!-- Corpo -->
-            <line x1="100" y1="79" x2="100" y2="128" stroke="#E63946" stroke-width="8" stroke-linecap="round"/>
-            <!-- Braços abertos para lado -->
-            <line x1="100" y1="95" x2="55" y2="80" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-            <line x1="100" y1="95" x2="145" y2="80" stroke="#E63946" stroke-width="7" stroke-linecap="round"/>
-            <!-- Pernas abertas (splits) -->
-            <line x1="100" y1="128" x2="60" y2="168" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-            <line x1="100" y1="128" x2="140" y2="168" stroke="#1B98E0" stroke-width="7" stroke-linecap="round"/>
-          </g>
-          <!-- Fita girando -->
-          <path fill="none" stroke="#E63946" stroke-width="3" stroke-linecap="round" opacity="0.7">
-            <animate attributeName="d"
-              values="M100 80 Q130 50 160 70 Q180 90 160 110;
-                      M100 80 Q70 50 40 70 Q20 90 40 110;
-                      M100 80 Q130 50 160 70 Q180 90 160 110"
-              dur="1s" repeatCount="indefinite"/>
-          </path>
-        </svg>`
-      },
+    // Vídeos de fundo em sequência
+    const backgroundVideos = [
+      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5e60158c58.mp4",
+      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5db9e98937.mp4",
+      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5dd6de2f38.mp4",
+      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5dfd112c59.mp4",
+      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5e0acd1bd0.mp4",
+      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5e2519693c.mp4"
     ];
 
-    let currentSportIdx = 0;
-    let modalCountdownTimer = null;
-    let cdSecs = 8;
+    let currentBgIndex = 0;
+    const bgVideo = document.getElementById('background-video');
 
-    function openAthleteModal() {
-      const sport = sports[currentSportIdx];
-      document.getElementById('athlete-label').textContent = sport.label;
-      document.getElementById('athlete-svg-wrap').innerHTML = sport.svg;
+    function playNextBackground() {
+      bgVideo.style.opacity = 0;
 
-      const modal = document.getElementById('athlete-modal');
-      modal.classList.add('active');
+      setTimeout(() => {
+        bgVideo.src = backgroundVideos[currentBgIndex];
+        bgVideo.load();
+        bgVideo.play().catch(() => {});
+        bgVideo.style.opacity = 1;
 
-      cdSecs = 8;
-      updateCountdownDisplay();
-
-      if (modalCountdownTimer) clearInterval(modalCountdownTimer);
-      modalCountdownTimer = setInterval(() => {
-        cdSecs--;
-        updateCountdownDisplay();
-        if (cdSecs <= 0) {
-          clearInterval(modalCountdownTimer);
-          closeAthleteModal();
-        }
-      }, 1000);
-
-      currentSportIdx = (currentSportIdx + 1) % sports.length;
+        currentBgIndex = (currentBgIndex + 1) % backgroundVideos.length;
+      }, 1200);
     }
 
-    function updateCountdownDisplay() {
-      document.getElementById('modal-cd').textContent = 'Fechando em ' + cdSecs + 's';
-    }
+    bgVideo.addEventListener('ended', playNextBackground);
 
-    function closeAthleteModal() {
-      document.getElementById('athlete-modal').classList.remove('active');
-      if (modalCountdownTimer) clearInterval(modalCountdownTimer);
-    }
-
-    // Abre o modal na primeira vez após 5s, depois a cada 3 minutos (180s)
-    setTimeout(() => {
-      openAthleteModal();
-      setInterval(openAthleteModal, 180000);
-    }, 5000);
+    // Inicia o primeiro vídeo
+    bgVideo.src = backgroundVideos[0];
+    bgVideo.play().catch(() => {});
   </script>
 </body>
 </html>
