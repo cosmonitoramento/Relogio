@@ -1,329 +1,143 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jogos do Trabalhador 🏆</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --worker-red:   #E63946;
-      --worker-gold:  #F4A011;
-      --worker-green: #2DC653;
-      --worker-blue:  #1B98E0;
-      --worker-white: #FFFFFF;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 4vh;
-      position: relative;
-      overflow: hidden;
-      font-family: 'Arial Black', Arial, sans-serif;
-    }
-
-    /* Vídeo de fundo */
-    #background-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -2;
-      overflow: hidden;
-    }
-
-    #background-video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 1;
-      transition: opacity 1.2s ease-in-out;
-    }
-
-    /* Overlay escuro */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(rgba(13, 27, 42, 0.78), rgba(13, 27, 42, 0.88));
-      z-index: -1;
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: 
-        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(244,160,17,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(27,152,224,0.08) 0%, transparent 60%);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Emojis caindo - MAIS ROBUSTO */
-    .floaties {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      overflow: hidden;
-    }
-
-    .floaty {
-      position: absolute;
-      top: -100px;
-      animation: fall linear infinite;
-      opacity: 0.85;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
-      user-select: none;
-    }
-
-    @keyframes fall {
-      0%   { 
-        top: -120px; 
-        opacity: 0; 
-        transform: translateX(0) rotate(0deg); 
-      }
-      10%  { opacity: 0.9; }
-      90%  { opacity: 0.75; }
-      100% { 
-        top: 110vh; 
-        opacity: 0; 
-        transform: translateX(var(--drift)) rotate(var(--rotate)); 
-      }
-    }
-
-    /* Layout Central */
-    .main-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      width: 100%;
-      max-width: 620px;
-      padding: 0 14px;
-      position: relative;
-      z-index: 10;
-    }
-
-    .arena-board {
-      background: #0a0f1a;
-      border: 3px solid var(--worker-gold);
-      border-radius: 20px;
-      padding: 26px 44px 22px;
-      width: 100%;
-      box-shadow: 0 0 0 1px #000, 0 0 50px rgba(244,160,17,0.25), 0 10px 40px rgba(0,0,0,0.85),
-                  inset 0 1px 0 rgba(255,255,255,0.06);
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .led-ring {
-      position: absolute;
-      inset: -3px;
-      border-radius: 22px;
-      background: conic-gradient(var(--worker-gold), var(--worker-red), var(--worker-blue), var(--worker-green), var(--worker-gold));
-      animation: rotateLED 5s linear infinite;
-      opacity: 0.45;
-      z-index: -1;
-    }
-
-    .led-ring-cover {
-      position: absolute; inset: 3px; border-radius: 18px; background: #0a0f1a; z-index: -1;
-    }
-
-    @keyframes rotateLED { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-    .clock-header {
-      font-size: 1.45rem;
-      font-weight: 900;
-      background: linear-gradient(90deg, var(--worker-gold), #fff, var(--worker-red), var(--worker-gold), #fff);
-      background-size: 300% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shineText 4s linear infinite;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
-    }
-
-    @keyframes shineText { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
-
-    .time-display {
-      font-size: 5.8rem;
-      font-weight: 900;
-      color: var(--worker-gold);
-      font-family: 'Courier New', monospace;
-      text-shadow: 0 0 30px rgba(244,160,17,0.9);
-      animation: ledPulse 1s ease-in-out infinite alternate;
-    }
-
-    @keyframes ledPulse {
-      0%   { text-shadow: 0 0 20px rgba(244,160,17,0.8); }
-      100% { text-shadow: 0 0 50px rgba(244,160,17,1); }
-    }
-
-    .seconds-display {
-      font-size: 1.4rem;
-      color: var(--worker-red);
-      font-family: 'Courier New', monospace;
-      animation: blinkSecs 1s ease-in-out infinite;
-    }
-
-    @keyframes blinkSecs { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.1); } }
-
-    .worker-message {
-      font-size: 1rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: var(--worker-white);
-      margin-top: 12px;
-      letter-spacing: 2px;
-    }
-
-    .games-grid { 
-      display: grid; 
-      grid-template-columns: repeat(4, 1fr); 
-      gap: 8px; 
-      width: 100%; 
-    }
-    
-    .game-card { 
-      background: rgba(255,255,255,0.06); 
-      border-radius: 12px; 
-      padding: 12px 8px; 
-      text-align: center; 
-      border: 1px solid rgba(255,255,255,0.12); 
-      backdrop-filter: blur(8px); 
-    }
-    
-    .game-icon { 
-      font-size: 2.4rem; 
-      display: block; 
-      margin-bottom: 6px; 
-    }
-    
-    .score-live { 
-      font-size: 0.82rem; 
-      font-weight: 900; 
-      color: var(--worker-gold); 
-      font-family: 'Courier New', monospace; 
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--pink:#FF69B4;--rose:#FF1493;--gold:#F4A011;--soft:#FFB6C1;}
+body{
+  min-height:100vh;display:flex;align-items:flex-start;justify-content:center;
+  padding:28px 14px 40px;
+  font-family:'Arial Black',Arial,sans-serif;
+  background:linear-gradient(135deg,#1a0010 0%,#3d0020 40%,#1a0515 100%);
+  overflow-x:hidden;position:relative;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 25% 30%,rgba(255,20,147,0.14) 0%,transparent 55%),
+             radial-gradient(ellipse 60% 50% at 75% 70%,rgba(255,105,180,0.11) 0%,transparent 55%);
+  animation:bgPulse 6s ease-in-out infinite alternate;z-index:0;pointer-events:none;
+}
+@keyframes bgPulse{0%{opacity:0.7;}100%{opacity:1;}}
+.floaties{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
+.floaty{position:absolute;top:-100px;animation:fall linear infinite;user-select:none;}
+@keyframes fall{
+  0%{top:-120px;opacity:0;transform:translateX(0) rotate(0deg);}
+  10%{opacity:0.9;}90%{opacity:0.7;}
+  100%{top:110vh;opacity:0;transform:translateX(var(--drift)) rotate(var(--rot));}
+}
+.main-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:640px;position:relative;z-index:10;}
+.arena-board{
+  background:rgba(30,0,18,0.88);border:3px solid var(--pink);border-radius:24px;
+  padding:30px 36px 26px;width:100%;position:relative;overflow:hidden;text-align:center;
+  backdrop-filter:blur(8px);
+}
+.led-ring{
+  position:absolute;inset:-3px;border-radius:27px;
+  background:conic-gradient(var(--rose),var(--gold),var(--soft),var(--pink),var(--rose));
+  animation:rotateLED 6s linear infinite;opacity:0.5;z-index:-1;
+}
+.led-cover{position:absolute;inset:3px;border-radius:21px;background:rgba(30,0,18,0.92);z-index:-1;}
+@keyframes rotateLED{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.title{
+  font-size:1.8rem;font-weight:900;
+  background:linear-gradient(90deg,#FF1493,#FFB6C1,#FF69B4,#FF1493);
+  background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shineText 4s linear infinite;letter-spacing:2px;margin-bottom:4px;
+}
+@keyframes shineText{0%{background-position:0% center;}100%{background-position:300% center;}}
+.heart-big{font-size:4rem;animation:pulseHeart 1.2s ease-in-out infinite;margin:6px 0;}
+@keyframes pulseHeart{0%,100%{transform:scale(1);}50%{transform:scale(1.18);}}
+.clock-wrap{margin:10px 0 6px;}
+.clock-time{
+  font-size:5rem;font-weight:900;font-family:'Courier New',monospace;
+  color:var(--pink);animation:clockGlow 1.5s ease-in-out infinite alternate;
+  letter-spacing:4px;line-height:1;
+}
+@keyframes clockGlow{
+  0%{text-shadow:0 0 18px rgba(255,105,180,0.7),0 0 40px rgba(255,20,147,0.3);}
+  100%{text-shadow:0 0 40px rgba(255,105,180,1),0 0 80px rgba(255,20,147,0.6);}
+}
+.clock-date{font-size:0.85rem;color:rgba(255,182,193,0.75);font-family:'Courier New',monospace;letter-spacing:3px;margin-top:2px;}
+.clock-secs{font-size:1.3rem;color:var(--rose);font-family:'Courier New',monospace;animation:blinkSecs 1s ease-in-out infinite;margin-top:2px;}
+@keyframes blinkSecs{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.subtitle{font-size:1.05rem;color:#f48fb1;margin:14px 0 16px;font-weight:700;letter-spacing:1px;}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:4px;}
+.c-card{
+  background:rgba(255,105,180,0.1);border:1px solid rgba(255,105,180,0.3);
+  border-radius:16px;padding:14px 8px;text-align:center;transition:transform 0.2s;cursor:default;
+}
+.c-card:hover{transform:scale(1.04);}
+.c-icon{font-size:2.4rem;display:block;margin-bottom:6px;}
+.c-label{font-size:0.78rem;font-weight:700;color:#f48fb1;letter-spacing:1px;}
+.sep{width:100%;height:1px;background:rgba(255,105,180,0.25);margin:4px 0;}
+.footer{color:#f48fb1;font-size:0.85rem;font-weight:700;text-align:center;letter-spacing:2px;}
+.footer small{color:rgba(255,182,193,0.6);font-size:0.7rem;letter-spacing:3px;}
+.rotating-msg{font-size:0.85rem;color:rgba(255,182,193,0.7);letter-spacing:2px;font-weight:700;margin-top:12px;min-height:20px;transition:opacity 0.5s;}
+</style>
 </head>
 <body>
-
-  <!-- Vídeos de fundo em sequência -->
-  <div id="background-container">
-    <video id="background-video" autoplay muted playsinline></video>
-  </div>
-
-  <div class="floaties" id="float-wrap"></div>
-
-  <div class="main-wrap">
-    <div class="arena-board">
-      <div class="led-ring"></div>
-      <div class="led-ring-cover"></div>
-      <div class="clock-header">🏆 JOGOS DO TRABALHADOR 🏆</div>
-      <div class="time-display" id="time">--:--</div>
-      <div class="seconds-display" id="seconds">--s</div>
-      <div class="worker-message" id="worker-msg">ESPÍRITO DE EQUIPE E SUPERAÇÃO</div>
+<div class="floaties" id="fw"></div>
+<div class="main-wrap">
+  <div class="arena-board">
+    <div class="led-ring"></div>
+    <div class="led-cover"></div>
+    <div class="title">🌸 DIA DAS MÃES 🌸</div>
+    <div class="heart-big">❤️</div>
+    <div class="clock-wrap">
+      <div class="clock-time" id="ct">--:--</div>
+      <div class="clock-secs" id="cs">00s</div>
+      <div class="clock-date" id="cd">-- -- ----</div>
     </div>
-
-    <div class="games-grid">
-      <div class="game-card"><span class="game-icon">🏀</span><div class="score-live" id="sc1">--</div></div>
-      <div class="game-card"><span class="game-icon">⚽</span><div class="score-live" id="sc2">--</div></div>
-      <div class="game-card"><span class="game-icon">🏐</span><div class="score-live" id="sc3">--</div></div>
-      <div class="game-card"><span class="game-icon">🎾</span><div class="score-live" id="sc4">--</div></div>
+    <div class="subtitle">Jirau Energia agradece todas as mães guerreiras!</div>
+    <div class="cards-grid">
+      <div class="c-card"><span class="c-icon">👩‍❤️‍👧</span><div class="c-label">Mãe &amp; Filha</div></div>
+      <div class="c-card"><span class="c-icon">🌹</span><div class="c-label">Flores</div></div>
+      <div class="c-card"><span class="c-icon">💝</span><div class="c-label">Amor Eterno</div></div>
+      <div class="c-card"><span class="c-icon">🙏</span><div class="c-label">Gratidão</div></div>
+      <div class="c-card"><span class="c-icon">🌸</span><div class="c-label">Esperança</div></div>
+      <div class="c-card"><span class="c-icon">💪</span><div class="c-label">Força</div></div>
     </div>
-
-    <div style="width:100%; height:2px; background:rgba(255,255,255,0.1); margin:12px 0;"></div>
-    <div style="color:white; font-size:0.75rem; opacity:0.65; text-align:center; letter-spacing:3px;"> • WORKER EDITION •</div>
+    <div class="rotating-msg" id="rmsg">• AMOR QUE NÃO TEM FIM •</div>
   </div>
-
-  <script>
-    // Emojis caindo - Versão mais robusta
-    const icons = ['⚽','🏀','🏐','🏆','🥇','🏅','🎖️','🏸','🎾','🏊','🚴','🏃','🥳','🔥','💪'];
-    const fw = document.getElementById('float-wrap');
-
-    for(let i = 0; i < 25; i++) {   // Aumentado para 25 emojis
-      const d = document.createElement('div');
-      d.className = 'floaty';
-      d.textContent = icons[Math.floor(Math.random() * icons.length)];
-      
-      const size = Math.random() * 1.4 + 1.8; // tamanho variado entre 1.8em e 3.2em
-      d.style.fontSize = size + 'em';
-      d.style.left = Math.random() * 100 + '%';
-      d.style.animationDuration = (Math.random() * 7 + 11) + 's'; // 11 a 18 segundos
-      d.style.animationDelay = '-' + (Math.random() * 15) + 's'; // inicia em momentos diferentes
-      
-      // Movimento lateral aleatório
-      d.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
-      d.style.setProperty('--rotate', (Math.random() * 720 - 360) + 'deg');
-      
-      fw.appendChild(d);
-    }
-
-    // Relógio + Scores
-    function rnd(min, max) { 
-      return Math.floor(Math.random() * (max - min + 1)) + min; 
-    }
-
-    function update() {
-      const now = new Date();
-      document.getElementById('time').textContent = 
-        now.getHours().toString().padStart(2,'0') + ":" + 
-        now.getMinutes().toString().padStart(2,'0');
-      
-      document.getElementById('seconds').textContent = 
-        now.getSeconds().toString().padStart(2,'0') + "s";
-      
-      if(now.getSeconds() % 5 === 0) {
-        document.getElementById('worker-msg').textContent = "ESPÍRITO DE EQUIPE E SUPERAÇÃO!";
-        document.getElementById('sc1').textContent = rnd(75,105) + '-' + rnd(72,98);
-        document.getElementById('sc2').textContent = rnd(0,4) + ' x ' + rnd(0,4);
-        document.getElementById('sc3').textContent = rnd(15,25) + ' x ' + rnd(12,22);
-        document.getElementById('sc4').textContent = rnd(3,7) + '-' + rnd(2,6);
-      }
-    }
-    setInterval(update, 1000);
-    update();
-
-    // Vídeos de fundo em sequência
-    const backgroundVideos = [
-      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5e60158c58.mp4",
-      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5db9e98937.mp4",
-      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5dd6de2f38.mp4",
-      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5dfd112c59.mp4",
-      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5e0acd1bd0.mp4",
-      "https://darksalmon-grasshopper-449102.hostingersite.com/uploads/videos/vid_69d5e2519693c.mp4"
-    ];
-
-    let currentBgIndex = 0;
-    const bgVideo = document.getElementById('background-video');
-
-    function playNextBackground() {
-      bgVideo.style.opacity = 0;
-
-      setTimeout(() => {
-        bgVideo.src = backgroundVideos[currentBgIndex];
-        bgVideo.load();
-        bgVideo.play().catch(() => {});
-        bgVideo.style.opacity = 1;
-
-        currentBgIndex = (currentBgIndex + 1) % backgroundVideos.length;
-      }, 1200);
-    }
-
-    bgVideo.addEventListener('ended', playNextBackground);
-
-    // Inicia o primeiro vídeo
-    bgVideo.src = backgroundVideos[0];
-    bgVideo.play().catch(() => {});
-  </script>
+  <div class="sep"></div>
+  <div class="footer">
+    ❤️ Feliz Dia das Mães 2026 ❤️<br>
+    <small>COM CARINHO DA JIRAU ENERGIA</small>
+  </div>
+</div>
+<script>
+const icons=['❤️','🌹','💐','👩‍❤️‍👧','🌸','💖','😍','🙏','🌺','🧸','🎀','💘','🌼','👩‍👦','💕','🌷','✨'];
+const fw=document.getElementById('fw');
+for(let i=0;i<32;i++){
+  const d=document.createElement('div');d.className='floaty';
+  d.textContent=icons[Math.floor(Math.random()*icons.length)];
+  const sz=Math.random()*1.5+1.5;d.style.fontSize=sz+'em';
+  d.style.left=Math.random()*100+'%';
+  d.style.animationDuration=(Math.random()*8+12)+'s';
+  d.style.animationDelay='-'+(Math.random()*20)+'s';
+  d.style.setProperty('--drift',(Math.random()*100-50)+'px');
+  d.style.setProperty('--rot',(Math.random()*600-300)+'deg');
+  fw.appendChild(d);
+}
+const MESES=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+const DIAS=['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
+function pad(n){return String(n).padStart(2,'0');}
+function tickClock(){
+  const n=new Date();
+  document.getElementById('ct').textContent=pad(n.getHours())+':'+pad(n.getMinutes());
+  document.getElementById('cs').textContent=pad(n.getSeconds())+'s';
+  document.getElementById('cd').textContent=DIAS[n.getDay()]+' • '+pad(n.getDate())+' '+MESES[n.getMonth()]+' '+n.getFullYear();
+}
+setInterval(tickClock,1000);tickClock();
+const msgs=['• AMOR QUE NÃO TEM FIM •','• FORÇA E INSPIRAÇÃO •','• ORGULHO DE CADA MÃE •','• JIRAU COM VOCÊS •','• FELIZ DIA DAS MÃES •'];
+let mi=0;const rm=document.getElementById('rmsg');
+setInterval(()=>{
+  rm.style.opacity=0;
+  setTimeout(()=>{mi=(mi+1)%msgs.length;rm.textContent=msgs[mi];rm.style.opacity=1;},500);
+},3000);
+</script>
 </body>
 </html>
