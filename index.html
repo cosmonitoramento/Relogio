@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,138 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{--pink:#FF69B4;--rose:#FF1493;--gold:#F4A011;--soft:#FFB6C1;}
+:root{
+  --orange:#FF8C42;
+  --blue:#0033A0;
+  --light-orange:#FFB366;
+}
 body{
   min-height:100vh;display:flex;align-items:flex-start;justify-content:center;
   padding:28px 14px 40px;
   font-family:'Arial Black',Arial,sans-serif;
-  background:linear-gradient(135deg,#1a0010 0%,#3d0020 40%,#1a0515 100%);
+  background:linear-gradient(135deg,#FF8C42 0%,#FFB366 50%,#FF8C42 100%);
   overflow-x:hidden;position:relative;
+  color:#0033A0;
 }
 body::before{
   content:'';position:fixed;inset:0;
-  background:radial-gradient(ellipse 70% 60% at 25% 30%,rgba(255,20,147,0.14) 0%,transparent 55%),
-             radial-gradient(ellipse 60% 50% at 75% 70%,rgba(255,105,180,0.11) 0%,transparent 55%);
-  animation:bgPulse 6s ease-in-out infinite alternate;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at 30% 20%,rgba(255,140,66,0.3) 0%,transparent 50%),
+             radial-gradient(circle at 70% 70%,rgba(0,51,160,0.25) 0%,transparent 60%);
+  animation:bgPulse 8s ease-in-out infinite alternate;
+  z-index:0;pointer-events:none;
 }
-@keyframes bgPulse{0%{opacity:0.7;}100%{opacity:1;}}
+@keyframes bgPulse{0%{opacity:0.8;}100%{opacity:1;}}
+
 .floaties{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
-.floaty{position:absolute;top:-100px;animation:fall linear infinite;user-select:none;}
+.floaty{
+  position:absolute;top:-100px;animation:fall linear infinite;
+  user-select:none;opacity:0.85;color:white;
+  text-shadow:0 0 8px rgba(0,51,160,0.8);
+  font-weight:900;letter-spacing:1px;
+}
 @keyframes fall{
   0%{top:-120px;opacity:0;transform:translateX(0) rotate(0deg);}
-  10%{opacity:0.9;}90%{opacity:0.7;}
+  10%{opacity:0.9;}
   100%{top:110vh;opacity:0;transform:translateX(var(--drift)) rotate(var(--rot));}
 }
-.main-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:640px;position:relative;z-index:10;}
+
+.main-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  width:100%;max-width:640px;position:relative;z-index:10;
+}
 .arena-board{
-  background:rgba(30,0,18,0.88);border:3px solid var(--pink);border-radius:24px;
-  padding:30px 36px 26px;width:100%;position:relative;overflow:hidden;text-align:center;
+  background:rgba(0,51,160,0.92);border:4px solid #FF8C42;
+  border-radius:24px;padding:32px 36px 28px;width:100%;
+  position:relative;overflow:hidden;text-align:center;
+  box-shadow:0 0 30px rgba(255,140,66,0.6);
   backdrop-filter:blur(8px);
 }
 .led-ring{
-  position:absolute;inset:-3px;border-radius:27px;
-  background:conic-gradient(var(--rose),var(--gold),var(--soft),var(--pink),var(--rose));
-  animation:rotateLED 6s linear infinite;opacity:0.5;z-index:-1;
+  position:absolute;inset:-4px;border-radius:27px;
+  background:conic-gradient(#FF8C42,#FFB366,#0033A0,#FF8C42);
+  animation:rotateLED 7s linear infinite;opacity:0.45;z-index:-1;
 }
-.led-cover{position:absolute;inset:3px;border-radius:21px;background:rgba(30,0,18,0.92);z-index:-1;}
+.led-cover{position:absolute;inset:4px;border-radius:20px;background:rgba(0,51,160,0.95);z-index:-1;}
 @keyframes rotateLED{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
 .title{
-  font-size:1.8rem;font-weight:900;
-  background:linear-gradient(90deg,#FF1493,#FFB6C1,#FF69B4,#FF1493);
-  background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:shineText 4s linear infinite;letter-spacing:2px;margin-bottom:4px;
+  font-size:2.1rem;font-weight:900;color:white;
+  text-shadow:0 0 15px #FF8C42;
+  margin-bottom:8px;letter-spacing:2px;
 }
-@keyframes shineText{0%{background-position:0% center;}100%{background-position:300% center;}}
-.heart-big{font-size:4rem;animation:pulseHeart 1.2s ease-in-out infinite;margin:6px 0;}
-@keyframes pulseHeart{0%,100%{transform:scale(1);}50%{transform:scale(1.18);}}
-.clock-wrap{margin:10px 0 6px;}
+.heart-big{font-size:4.2rem;animation:pulseHeart 1.4s ease-in-out infinite;}
+@keyframes pulseHeart{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+
+.clock-wrap{margin:12px 0 8px;}
 .clock-time{
-  font-size:5rem;font-weight:900;font-family:'Courier New',monospace;
-  color:var(--pink);animation:clockGlow 1.5s ease-in-out infinite alternate;
-  letter-spacing:4px;line-height:1;
+  font-size:4.8rem;font-weight:900;font-family:'Courier New',monospace;
+  color:#FF8C42;text-shadow:0 0 20px #FF8C42;
+  letter-spacing:4px;
 }
-@keyframes clockGlow{
-  0%{text-shadow:0 0 18px rgba(255,105,180,0.7),0 0 40px rgba(255,20,147,0.3);}
-  100%{text-shadow:0 0 40px rgba(255,105,180,1),0 0 80px rgba(255,20,147,0.6);}
+.clock-date{font-size:0.95rem;color:#FFB366;font-family:'Courier New',monospace;letter-spacing:2px;margin-top:4px;}
+
+.subtitle{
+  font-size:1.25rem;color:#FFB366;font-weight:700;
+  margin:18px 0 20px;line-height:1.3;
 }
-.clock-date{font-size:0.85rem;color:rgba(255,182,193,0.75);font-family:'Courier New',monospace;letter-spacing:3px;margin-top:2px;}
-.clock-secs{font-size:1.3rem;color:var(--rose);font-family:'Courier New',monospace;animation:blinkSecs 1s ease-in-out infinite;margin-top:2px;}
-@keyframes blinkSecs{0%,100%{opacity:1;}50%{opacity:0.5;}}
-.subtitle{font-size:1.05rem;color:#f48fb1;margin:14px 0 16px;font-weight:700;letter-spacing:1px;}
-.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:4px;}
+
+.cards-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;
+}
 .c-card{
-  background:rgba(255,105,180,0.1);border:1px solid rgba(255,105,180,0.3);
-  border-radius:16px;padding:14px 8px;text-align:center;transition:transform 0.2s;cursor:default;
+  background:rgba(255,140,66,0.15);border:2px solid #FF8C42;
+  border-radius:16px;padding:16px 8px;text-align:center;
+  transition:transform 0.3s;
 }
-.c-card:hover{transform:scale(1.04);}
-.c-icon{font-size:2.4rem;display:block;margin-bottom:6px;}
-.c-label{font-size:0.78rem;font-weight:700;color:#f48fb1;letter-spacing:1px;}
-.sep{width:100%;height:1px;background:rgba(255,105,180,0.25);margin:4px 0;}
-.footer{color:#f48fb1;font-size:0.85rem;font-weight:700;text-align:center;letter-spacing:2px;}
-.footer small{color:rgba(255,182,193,0.6);font-size:0.7rem;letter-spacing:3px;}
-.rotating-msg{font-size:0.85rem;color:rgba(255,182,193,0.7);letter-spacing:2px;font-weight:700;margin-top:12px;min-height:20px;transition:opacity 0.5s;}
+.c-card:hover{transform:scale(1.08);}
+.c-icon{font-size:2.6rem;display:block;margin-bottom:8px;}
+.c-label{font-size:0.82rem;font-weight:700;color:#FFB366;letter-spacing:1px;}
+
+.footer{
+  color:white;font-size:1rem;font-weight:700;text-align:center;
+  text-shadow:0 2px 8px rgba(0,0,0,0.6);
+}
+.footer small{color:#FFB366;font-size:0.8rem;}
+.rotating-msg{
+  font-size:1.05rem;color:#FFB366;font-weight:700;
+  margin-top:16px;min-height:28px;letter-spacing:2px;
+}
 </style>
 </head>
 <body>
+
 <div class="floaties" id="fw"></div>
+
 <div class="main-wrap">
   <div class="arena-board">
     <div class="led-ring"></div>
     <div class="led-cover"></div>
-    <div class="title">🌸 DIA DAS MÃES 🌸</div>
-    <div class="heart-big">❤️</div>
+    
+    <div class="title">SEMANA DE ÉTICA</div>
+    <div class="heart-big">💡❤️</div>
+    
     <div class="clock-wrap">
       <div class="clock-time" id="ct">--:--</div>
-      <div class="clock-secs" id="cs">00s</div>
       <div class="clock-date" id="cd">-- -- ----</div>
     </div>
-    <div class="subtitle">Jirau Energia agradece todas as mães guerreiras!</div>
-    <div class="cards-grid">
-      <div class="c-card"><span class="c-icon">👩‍❤️‍👧</span><div class="c-label">Mãe &amp; Filha</div></div>
-      <div class="c-card"><span class="c-icon">🌹</span><div class="c-label">Flores</div></div>
-      <div class="c-card"><span class="c-icon">💝</span><div class="c-label">Amor Eterno</div></div>
-      <div class="c-card"><span class="c-icon">🙏</span><div class="c-label">Gratidão</div></div>
-      <div class="c-card"><span class="c-icon">🌸</span><div class="c-label">Esperança</div></div>
-      <div class="c-card"><span class="c-icon">💪</span><div class="c-label">Força</div></div>
+
+    <div class="subtitle">
+      <strong>Na dúvida, pense:</strong><br>
+      <span style="font-size:1.45rem;color:#FF8C42;">É ÉTICO?</span>
     </div>
-    <div class="rotating-msg" id="rmsg">• AMOR QUE NÃO TEM FIM •</div>
+
+    <div class="cards-grid">
+      <div class="c-card"><span class="c-icon">🤝</span><div class="c-label">INTEGRIDADE</div></div>
+      <div class="c-card"><span class="c-icon">⚖️</span><div class="c-label">RESPEITO</div></div>
+      <div class="c-card"><span class="c-icon">💡</span><div class="c-label">TRANSPARÊNCIA</div></div>
+      <div class="c-card"><span class="c-icon">🛑</span><div class="c-label">PARE</div></div>
+      <div class="c-card"><span class="c-icon">🧠</span><div class="c-label">PENSE</div></div>
+      <div class="c-card"><span class="c-icon">🌟</span><div class="c-label">ÉTICA</div></div>
+    </div>
+
+    <div class="rotating-msg" id="rmsg">• SE A RESPOSTA FOR NÃO, PARE! •</div>
   </div>
-  <div class="sep"></div>
+
   <div class="footer">
-    ❤️ Feliz Dia das Mães 2026 ❤️<br>
-    <small>COM CARINHO DA JIRAU ENERGIA</small>
+    ❤️ JIRAU ENERGIA ❤️<br>
+    <small>ÉTICA É A NOSSA ENERGIA</small>
   </div>
 </div>
+
 <script>
-const icons=['❤️','🌹','💐','👩‍❤️‍👧','🌸','💖','😍','🙏','🌺','🧸','🎀','💘','🌼','👩‍👦','💕','🌷','✨'];
-const fw=document.getElementById('fw');
-for(let i=0;i<32;i++){
-  const d=document.createElement('div');d.className='floaty';
-  d.textContent=icons[Math.floor(Math.random()*icons.length)];
-  const sz=Math.random()*1.5+1.5;d.style.fontSize=sz+'em';
-  d.style.left=Math.random()*100+'%';
-  d.style.animationDuration=(Math.random()*8+12)+'s';
-  d.style.animationDelay='-'+(Math.random()*20)+'s';
-  d.style.setProperty('--drift',(Math.random()*100-50)+'px');
-  d.style.setProperty('--rot',(Math.random()*600-300)+'deg');
+// Palavras que vão cair
+const ethicsWords = [
+  "ÉTICA", "INTEGRIDADE", "RESPEITO", "HONESTIDADE", 
+  "TRANSPARÊNCIA", "ÉTICO", "PAREE", "PENSE", 
+  "JIRAU", "INTEGRIDADE", "ÉTICA", "RESPEITO"
+];
+
+const icons = ['💡','❤️','🛑','⚖️','🤝','🌟','🔍','✅','🧠'];
+
+const fw = document.getElementById('fw');
+
+function createFloatingItem() {
+  const d = document.createElement('div');
+  d.className = 'floaty';
+  
+  // Alterna entre ícone e palavra
+  if (Math.random() > 0.5) {
+    d.textContent = icons[Math.floor(Math.random()*icons.length)];
+    d.style.fontSize = (Math.random()*2.2 + 2.2) + 'em';
+  } else {
+    d.textContent = ethicsWords[Math.floor(Math.random()*ethicsWords.length)];
+    d.style.fontSize = (Math.random()*1.4 + 1.6) + 'em';
+  }
+  
+  d.style.left = Math.random()*100 + '%';
+  d.style.animationDuration = (Math.random()*11 + 13) + 's';
+  d.style.animationDelay = '-' + (Math.random()*28) + 's';
+  d.style.setProperty('--drift', (Math.random()*140 - 70) + 'px');
+  d.style.setProperty('--rot', (Math.random()*800 - 400) + 'deg');
+  
   fw.appendChild(d);
+  
+  // Remove depois de cair para não sobrecarregar
+  setTimeout(() => d.remove(), 30000);
 }
-const MESES=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
-const DIAS=['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
+
+// Cria vários itens flutuantes
+for(let i = 0; i < 28; i++){
+  createFloatingItem();
+}
+
+// Cria novos itens periodicamente
+setInterval(() => {
+  if (Math.random() > 0.3) createFloatingItem();
+}, 800);
+
+// Clock
+const MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
 function pad(n){return String(n).padStart(2,'0');}
 function tickClock(){
-  const n=new Date();
-  document.getElementById('ct').textContent=pad(n.getHours())+':'+pad(n.getMinutes());
-  document.getElementById('cs').textContent=pad(n.getSeconds())+'s';
-  document.getElementById('cd').textContent=DIAS[n.getDay()]+' • '+pad(n.getDate())+' '+MESES[n.getMonth()]+' '+n.getFullYear();
+  const n = new Date();
+  document.getElementById('ct').textContent = pad(n.getHours()) + ':' + pad(n.getMinutes());
+  document.getElementById('cd').textContent = pad(n.getDate()) + ' ' + MESES[n.getMonth()] + ' ' + n.getFullYear();
 }
-setInterval(tickClock,1000);tickClock();
-const msgs=['• AMOR QUE NÃO TEM FIM •','• FORÇA E INSPIRAÇÃO •','• ORGULHO DE CADA MÃE •','• JIRAU COM VOCÊS •','• FELIZ DIA DAS MÃES •'];
-let mi=0;const rm=document.getElementById('rmsg');
-setInterval(()=>{
-  rm.style.opacity=0;
-  setTimeout(()=>{mi=(mi+1)%msgs.length;rm.textContent=msgs[mi];rm.style.opacity=1;},500);
-},3000);
+setInterval(tickClock,1000); tickClock();
+
+// Mensagens rotativas
+const msgs = [
+  '• SE A RESPOSTA FOR NÃO, PARE! •',
+  '• ÉTICA NOS UNE •',
+  '• INTEGRIDADE É NOSSA ENERGIA •',
+  '• NA DÚVIDA, PARE E PENSE •'
+];
+let mi = 0;
+const rm = document.getElementById('rmsg');
+setInterval(() => {
+  rm.style.opacity = 0;
+  setTimeout(() => {
+    mi = (mi + 1) % msgs.length;
+    rm.textContent = msgs[mi];
+    rm.style.opacity = 1;
+  }, 600);
+}, 3800);
 </script>
 </body>
 </html>
