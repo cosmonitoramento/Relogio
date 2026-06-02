@@ -2,412 +2,262 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  min-height:100vh;
-  font-family:'Bebas Neue',sans-serif;
-  background:#0a0a0a;
-  overflow-x:hidden;
-  display:flex;flex-direction:column;align-items:center;
-  position:relative;
-}
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>FIFA World Cup 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap');
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{ min-height:100vh; font-family:'Bebas Neue',sans-serif; background:#0a0a0a; overflow:hidden; display:flex; flex-direction:column; align-items:center; position:relative; }
+        .sky{ position:fixed;inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%, #1a0a3a 0%, #0a0a1a 50%, #000 100%); z-index:0; }
+        .spotlight{ position:fixed;top:-60px; width:3px;height:100vh; transform-origin:top center; opacity:0.08; pointer-events:none;z-index:1; }
+        .spotlight.l1{left:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(15deg);animation:spotAnim 6s ease-in-out infinite alternate;}
+        .spotlight.l2{left:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(-10deg);animation:spotAnim 8s ease-in-out infinite alternate-reverse;}
+        .spotlight.l3{right:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(-15deg);animation:spotAnim 7s ease-in-out infinite alternate;}
+        .spotlight.l4{right:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(10deg);animation:spotAnim 5s ease-in-out infinite alternate-reverse;}
+        @keyframes spotAnim{0%{opacity:0.06;}100%{opacity:0.14;}}
+        .stadium-light{ position:fixed; width:900px; height:900px; left:50%; top:45%; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(255,215,0,.25), rgba(255,215,0,.08), transparent 70%); filter:blur(60px); animation:stadiumGlow 4s ease-in-out infinite; z-index:4; }
+        @keyframes stadiumGlow{ 0%,100%{ transform: translate(-50%,-50%) scale(1); } 50%{ transform: translate(-50%,-50%) scale(1.08); } }
+        .field{ position:fixed;bottom:0;left:0;right:0;height:35vh; background:repeating-linear-gradient( 180deg, #1a5c2a 0px,#1a5c2a 28px, #1e6830 28px,#1e6830 56px ); z-index:2; }
+        .field::before{ content:'';position:absolute;inset:0; background:radial-gradient(ellipse 90% 40% at 50% 100%,rgba(0,200,80,0.08),transparent 70%);}
+        .field::after{ content:'';position:absolute;top:0;left:50%;transform:translateX(-50%); width:2px;height:100%;background:rgba(255,255,255,0.12); }
+        .wrap{position:relative;z-index:20;width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;padding-top:24px;}
+        .fifa-label{ font-size:1.1rem;letter-spacing:8px;color:rgba(255,255,255,0.6); font-family:'Oswald',sans-serif;font-weight:400; margin-bottom:6px; }
+        .world-cup-title{ font-size:4.5rem;color:#FFD700; letter-spacing:6px;line-height:1; text-shadow:0 0 60px rgba(255,215,0,0.6); text-align:center; }
+        .world-cup-sub{ font-size:1.4rem;color:#fff;letter-spacing:4px; margin-top:4px;text-align:center; text-shadow:0 2px 20px rgba(0,0,0,0.8); font-family:'Oswald',sans-serif;}
+        .clock-box{ margin:10px 0; display:flex;flex-direction:column;align-items:center; }
+        .clock-time{ font-size:4.5rem;color:#FFD700;letter-spacing:6px; text-shadow:0 0 30px rgba(255,215,0,0.8); line-height:1; }
+        .clock-date{font-size:1rem;color:rgba(255,255,255,0.6);letter-spacing:4px;font-family:'Oswald',sans-serif;font-weight:400;margin-top:4px;}
+        .trophy-area{width:100%;display:flex;justify-content:center;margin:0;}
+        .rotating-msg{ font-size:1.2rem;color:rgba(255,255,255,0.8);letter-spacing:4px; text-align:center;transition:opacity 0.6s; margin:10px 0;font-family:'Oswald',sans-serif;font-weight:400;height:24px;}
+        .side-panel{ position:fixed; top:40px; width:26%; height:calc(100vh - 80px); background:rgba(10, 20, 50, 0.65); border:2px solid rgba(255,255,255,.1); backdrop-filter:blur(12px); box-shadow: 0 0 30px rgba(0,0,0,.6); z-index:25; overflow:hidden; border-radius: 20px; }
+        .left-panel{ left:30px; background:linear-gradient(180deg, rgba(0,0,0,.85), rgba(0,0,0,.30)); }
+        .right-panel{ right:30px; border: 2px solid rgba(255, 215, 0, 0.3); }
+        .panel-title{ text-align:center; padding:20px 10px; color:#fff; font-size:2rem; letter-spacing:2px; background: linear-gradient(90deg, #c8a100, #ffd700, #c8a100); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family: 'Bebas Neue', sans-serif; border-bottom: 1px solid rgba(255,255,255,0.1); }
 
-/* Céu gradiente noturno de estádio */
-.sky{
-  position:fixed;inset:0;
-  background:radial-gradient(ellipse 80% 60% at 50% 0%, #1a0a3a 0%, #0a0a1a 50%, #000 100%);
-  z-index:0;
-}
+        /* BANDEIRAS CAINDO */
+        .flag-fall{
+            position:absolute;
+            top:-220px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            animation:flagDrop linear forwards;
+        }
+        .flag-img{
+            width:110px;
+            height:73px;
+            border-radius:4px;
+            box-shadow: 0 0 18px rgba(255,215,0,.35), 0 0 6px rgba(0,0,0,.7);
+            animation: sway 4s ease-in-out infinite, pulseFlag 2s ease-in-out infinite;
+            object-fit:cover;
+        }
+        .flag-pole{
+            width:3px;
+            height:30px;
+            background:linear-gradient(180deg,#bbb,#888);
+            border-radius:2px;
+            margin-bottom: 0;
+            order: -1;
+        }
+        .name{
+            color:#fff;
+            font-family:'Oswald';
+            letter-spacing:3px;
+            font-size:0.9rem;
+            margin-top:8px;
+            background:rgba(0,0,0,.6);
+            padding:5px 12px;
+            border-radius:20px;
+            backdrop-filter:blur(6px);
+            border:1px solid rgba(255,255,255,.15);
+        }
 
-/* Holofotes */
-.spotlight{
-  position:fixed;top:-60px;
-  width:3px;height:100vh;
-  transform-origin:top center;
-  opacity:0.08;
-  pointer-events:none;z-index:1;
-}
-.spotlight.l1{left:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(15deg);animation:spotAnim 6s ease-in-out infinite alternate;}
-.spotlight.l2{left:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(-10deg);animation:spotAnim 8s ease-in-out infinite alternate-reverse;}
-.spotlight.l3{right:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(-15deg);animation:spotAnim 7s ease-in-out infinite alternate;}
-.spotlight.l4{right:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(10deg);animation:spotAnim 5s ease-in-out infinite alternate-reverse;}
-@keyframes spotAnim{0%{opacity:0.06;}100%{opacity:0.14;}}
+        @keyframes flagDrop{
+            from{ transform: translateY(-220px) rotate(-5deg); opacity:0; }
+            8%{ opacity:1; }
+            92%{ opacity:1; }
+            100%{ transform: translateY(110vh) rotate(5deg); opacity:0; }
+        }
+        @keyframes sway{
+            0%, 100%{ transform:rotate(-7deg) scaleX(0.97); }
+            50%{ transform:rotate(7deg) scaleX(1.03); }
+        }
+        @keyframes pulseFlag{
+            0%, 100%{ filter:brightness(1); }
+            50%{ filter:brightness(1.25); }
+        }
 
-/* Gramado */
-.field{
-  position:fixed;bottom:0;left:0;right:0;height:35vh;
-  background:repeating-linear-gradient(
-    180deg,
-    #1a5c2a 0px,#1a5c2a 28px,
-    #1e6830 28px,#1e6830 56px
-  );
-  z-index:2;
-}
-.field::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 90% 40% at 50% 100%,rgba(0,200,80,0.08),transparent 70%);
-}
-/* Linha do meio campo */
-.field::after{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:2px;height:100%;background:rgba(255,255,255,0.12);
-}
-
-/* Países caindo */
-.floaties{position:fixed;inset:0;pointer-events:none;z-index:10;overflow:hidden;}
-.floaty{
-  position:absolute;top:-160px;
-  display:flex;flex-direction:column;align-items:center;gap:5px;
-  animation:fallSmooth linear forwards;
-  opacity:0;
-}
-@keyframes fallSmooth{
-  0%{top:-160px;opacity:0;}
-  5%{opacity:1;}
-  85%{opacity:1;}
-  100%{top:105vh;opacity:0;}
-}
-.floaty .flag{
-  font-size:3rem;
-  filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8));
-  animation:flagWave 2s ease-in-out infinite;
-}
-@keyframes flagWave{
-  0%,100%{transform:rotate(-4deg) scale(1);}
-  50%{transform:rotate(4deg) scale(1.05);}
-}
-.floaty .cname{
-  font-size:0.75rem;font-weight:700;
-  color:#fff;letter-spacing:2px;
-  font-family:'Oswald',sans-serif;
-  text-shadow:0 2px 8px rgba(0,0,0,1),0 0 16px rgba(0,0,0,1);
-  background:rgba(0,0,0,0.55);
-  padding:2px 8px;border-radius:4px;
-}
-
-/* Partículas de confete */
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden;}
-.conf{
-  position:absolute;top:-20px;width:8px;height:8px;border-radius:1px;
-  animation:confFall linear infinite;opacity:0;
-}
-@keyframes confFall{
-  0%{top:-20px;opacity:0;transform:rotate(0deg) translateX(0);}
-  10%{opacity:0.9;}
-  100%{top:110vh;opacity:0;transform:rotate(var(--rot)) translateX(var(--sx));}
-}
-
-/* Conteúdo principal */
-.wrap{position:relative;z-index:20;width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;padding-top:24px;}
-
-/* Título FIFA */
-.fifa-label{
-  font-size:0.9rem;letter-spacing:8px;color:rgba(255,255,255,0.5);
-  font-family:'Oswald',sans-serif;font-weight:400;
-  margin-bottom:6px;
-}
-.world-cup-title{
-  font-size:3.8rem;color:#FFD700;
-  letter-spacing:6px;line-height:1;
-  text-shadow:0 0 60px rgba(255,215,0,0.6),0 0 20px rgba(255,215,0,0.4);
-  text-align:center;
-}
-.world-cup-sub{
-  font-size:1.6rem;color:#fff;letter-spacing:4px;
-  margin-top:2px;text-align:center;
-  text-shadow:0 2px 20px rgba(0,0,0,0.8);
-}
-
-/* Relógio */
-.clock-box{
-  margin:16px 0;
-  display:flex;flex-direction:column;align-items:center;
-}
-.clock-time{
-  font-size:5rem;color:#FFD700;letter-spacing:8px;
-  text-shadow:0 0 30px rgba(255,215,0,0.8),0 0 60px rgba(255,215,0,0.3);
-  line-height:1;
-}
-.clock-date{font-size:0.9rem;color:rgba(255,255,255,0.5);letter-spacing:4px;font-family:'Oswald',sans-serif;font-weight:400;margin-top:4px;}
-
-/* Troféu SVG área */
-.trophy-area{width:100%;display:flex;justify-content:center;margin:0;}
-
-/* Msg rotativa */
-.rotating-msg{
-  font-size:1.1rem;color:rgba(255,255,255,0.7);letter-spacing:4px;
-  text-align:center;transition:opacity 0.6s;
-  margin:10px 0 60px;font-family:'Oswald',sans-serif;font-weight:400;
-}
-</style>
+        .games-list{ padding:15px; overflow-y:auto; height: calc(100% - 80px); }
+        .game-card{ margin-bottom:14px; padding:12px; background:rgba(255,255,255,.05); border-left:5px solid #FFD700; border-radius:8px; font-family: 'Oswald', sans-serif; }
+        .game-date{ color:#FFD700; font-size:0.9rem; letter-spacing: 1px; }
+        .game-match{ margin-top:4px; color:white; font-size:1.2rem; letter-spacing: 1px; }
+        .game-hour{ color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 2px; }
+    </style>
 </head>
 <body>
+    <div class="sky"></div>
+    <div class="spotlight l1"></div>
+    <div class="spotlight l2"></div>
+    <div class="spotlight l3"></div>
+    <div class="spotlight l4"></div>
+    <div class="field"></div>
+    <div class="stadium-light"></div>
 
-<div class="sky"></div>
-<div class="spotlight l1"></div>
-<div class="spotlight l2"></div>
-<div class="spotlight l3"></div>
-<div class="spotlight l4"></div>
-<div class="field"></div>
-<div class="confetti" id="conf"></div>
-<div class="floaties" id="fw"></div>
+    <div class="side-panel left-panel" id="flagsPanel">
+        <div class="panel-title">SELEÇÕES 2026</div>
+    </div>
 
-<div class="wrap">
-  <div class="fifa-label">FIFA</div>
-  <div class="world-cup-title">WORLD CUP</div>
-  <div class="world-cup-sub">2026</div>
+    <div class="side-panel right-panel">
+        <div class="panel-title">🇧🇷 JOGOS DO BRASIL 🇧🇷</div>
+        <div class="games-list">
+            <div class="game-card">
+                <div class="game-date">11 JUN 2026</div>
+                <div class="game-match">BRASIL 🇧🇷 x 🇯🇵 JAPÃO</div>
+                <div class="game-hour">16:00</div>
+            </div>
+            <div class="game-card">
+                <div class="game-date">17 JUN 2026</div>
+                <div class="game-match">BRASIL 🇧🇷 x 🇪🇸 ESPANHA</div>
+                <div class="game-hour">19:00</div>
+            </div>
+            <div class="game-card">
+                <div class="game-date">23 JUN 2026</div>
+                <div class="game-match">BRASIL 🇧🇷 x 🇲🇽 MÉXICO</div>
+                <div class="game-hour">21:00</div>
+            </div>
+            <div class="game-card">
+                <div class="game-date">29 JUN 2026</div>
+                <div class="game-match">BRASIL 🇧🇷 x 🇩🇪 ALEMANHA</div>
+                <div class="game-hour">20:00</div>
+            </div>
+        </div>
+    </div>
 
-  <div class="clock-box">
-    <div class="clock-time" id="ct">--:--</div>
-    <div class="clock-date" id="cd">-- -- ----</div>
-  </div>
+    <div class="wrap">
+        <div class="fifa-label">FIFA WORLD CUP™</div>
+        <div class="world-cup-title">2026</div>
+        <div class="world-cup-sub">UNITED STATES • CANADA • MEXICO</div>
+        <div class="clock-box">
+            <div id="ct" class="clock-time">--:--:--</div>
+            <div id="cd" class="clock-date">LOADING...</div>
+        </div>
+        <div class="trophy-area">
+            <svg viewBox="0 0 600 600" width="100%" style="max-width:450px" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="gold"><stop offset="0%" stop-color="#fff8b5"/><stop offset="30%" stop-color="#FFD700"/><stop offset="100%" stop-color="#a36d00"/></radialGradient>
+                    <radialGradient id="glow"><stop offset="0%" stop-color="#FFD700" stop-opacity=".5"/><stop offset="100%" stop-color="#FFD700" stop-opacity="0"/></radialGradient>
+                    <filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
+                </defs>
+                <circle cx="300" cy="260" r="180" fill="url(#glow)" filter="url(#blur)"><animate attributeName="r" values="160;200;160" dur="4s" repeatCount="indefinite"/></circle>
+                <g transform="translate(300 290)">
+                    <path d="M-80,-140 C-100,-40 -80,90 -40,160 C-20,190 20,190 40,160 C80,90 100,-40 80,-140 Z" fill="url(#gold)"/>
+                    <path d="M-85,-120 C-170,-100 -170,30 -90,40" stroke="url(#gold)" stroke-width="25" fill="none" stroke-linecap="round"/>
+                    <path d="M85,-120 C170,-100 170,30 90,40" stroke="url(#gold)" stroke-width="25" fill="none" stroke-linecap="round"/>
+                    <rect x="-18" y="160" width="36" height="60" fill="url(#gold)"/>
+                    <rect x="-60" y="220" width="120" height="20" fill="#d1a200"/>
+                    <rect x="-75" y="240" width="150" height="30" fill="#8f6500"/>
+                </g>
+            </svg>
+        </div>
+        <div id="rmsg" class="rotating-msg">THE WORLD'S GAME</div>
+    </div>
 
-  <div class="trophy-area">
-    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:500px;">
-      <defs>
-        <radialGradient id="aura" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#FFD700" stop-opacity="0.25"/>
-          <stop offset="60%" stop-color="#FF8C00" stop-opacity="0.08"/>
-          <stop offset="100%" stop-color="#000" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="gold" cx="35%" cy="25%" r="70%">
-          <stop offset="0%" stop-color="#FFFDE0"/>
-          <stop offset="25%" stop-color="#FFD700"/>
-          <stop offset="65%" stop-color="#C8970A"/>
-          <stop offset="100%" stop-color="#7a5500"/>
-        </radialGradient>
-        <radialGradient id="goldHandle" cx="30%" cy="30%" r="60%">
-          <stop offset="0%" stop-color="#FFE066"/>
-          <stop offset="100%" stop-color="#9a6800"/>
-        </radialGradient>
-        <filter id="bigGlow">
-          <feGaussianBlur stdDeviation="12" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="medGlow">
-          <feGaussianBlur stdDeviation="6" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#DAA520"/>
-          <stop offset="50%" stop-color="#FFD700"/>
-          <stop offset="100%" stop-color="#8B6914"/>
-        </linearGradient>
-      </defs>
+    <div id="particles"></div>
 
-      <!-- Aura brilhante atrás -->
-      <ellipse cx="250" cy="185" rx="200" ry="180" fill="url(#aura)">
-        <animate attributeName="rx" values="180;210;180" dur="4s" repeatCount="indefinite"/>
-        <animate attributeName="ry" values="160;190;160" dur="4s" repeatCount="indefinite"/>
-        <animate attributeName="stop-opacity" values="0.2;0.35;0.2" dur="4s" repeatCount="indefinite"/>
-      </ellipse>
+    <script>
+        const meses=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+        const dias=['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
+        function pad(n){ return String(n).padStart(2,'0'); }
+        function updateClock(){
+            const now=new Date();
+            document.getElementById('ct').innerHTML = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+            document.getElementById('cd').innerHTML = dias[now.getDay()]+' • '+pad(now.getDate())+' '+meses[now.getMonth()]+' '+now.getFullYear();
+        }
+        setInterval(updateClock,1000); updateClock();
 
-      <!-- Raios de luz girando -->
-      <g transform="translate(250,175)" opacity="0.18">
-        <g>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700"/>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700" transform="rotate(45)"/>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700" transform="rotate(90)"/>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700" transform="rotate(135)"/>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700" transform="rotate(180)"/>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700" transform="rotate(225)"/>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700" transform="rotate(270)"/>
-          <rect x="-4" y="-190" width="8" height="90" rx="4" fill="#FFD700" transform="rotate(315)"/>
-          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="20s" repeatCount="indefinite"/>
-        </g>
-      </g>
+        const messages=["THE WORLD'S GAME","ONE WORLD • ONE CUP","ROAD TO THE FINAL","FIFA WORLD CUP 2026","BRASIL RUMO AO HEXA","UNITED STATES • CANADA • MEXICO"];
+        let msgIndex=0;
+        const rmsg=document.getElementById('rmsg');
+        setInterval(()=>{ rmsg.style.opacity='0'; setTimeout(()=>{ msgIndex=(msgIndex+1)%messages.length; rmsg.innerHTML=messages[msgIndex]; rmsg.style.opacity='1'; },500); },4500);
 
-      <!-- TROFÉU -->
-      <g transform="translate(250,175)">
+        // Bandeiras usando flagcdn.com (imagens reais)
+        const flags = [
+            { code:'br', name:'BRASIL' },
+            { code:'ar', name:'ARGENTINA' },
+            { code:'de', name:'ALEMANHA' },
+            { code:'fr', name:'FRANÇA' },
+            { code:'es', name:'ESPANHA' },
+            { code:'pt', name:'PORTUGAL' },
+            { code:'it', name:'ITÁLIA' },
+            { code:'jp', name:'JAPÃO' },
+            { code:'nl', name:'HOLANDA' },
+            { code:'uy', name:'URUGUAI' },
+            { code:'be', name:'BÉLGICA' },
+            { code:'us', name:'EUA' },
+            { code:'mx', name:'MÉXICO' },
+            { code:'ma', name:'MARROCOS' },
+            { code:'hr', name:'CROÁCIA' },
+            { code:'sn', name:'SENEGAL' },
+            { code:'au', name:'AUSTRÁLIA' },
+            { code:'ca', name:'CANADÁ' },
+            { code:'gb-eng', name:'INGLATERRA' },
+            { code:'ec', name:'EQUADOR' }
+        ];
 
-        <!-- Alça esquerda -->
-        <path d="M-78,20 Q-148,28 -152,98 Q-154,158 -82,148" fill="none" stroke="url(#goldHandle)" stroke-width="28" stroke-linecap="round"/>
-        <path d="M-78,20 Q-148,28 -152,98 Q-154,158 -82,148" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="8" stroke-linecap="round"/>
+        const panel = document.getElementById('flagsPanel');
 
-        <!-- Alça direita -->
-        <path d="M78,20 Q148,28 152,98 Q154,158 82,148" fill="none" stroke="url(#goldHandle)" stroke-width="28" stroke-linecap="round"/>
-        <path d="M78,20 Q148,28 152,98 Q154,158 82,148" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="8" stroke-linecap="round"/>
+        function createFlag(){
+            const data = flags[Math.floor(Math.random()*flags.length)];
+            const el = document.createElement('div');
+            el.className='flag-fall';
 
-        <!-- Corpo taça - sombra -->
-        <path d="M-88,-118 Q-102,15 -84,108 Q-58,172 0,184 Q58,172 84,108 Q102,15 88,-118 Z" fill="rgba(0,0,0,0.4)" transform="translate(6,8)"/>
+            const duration = Math.random()*8 + 13;
+            el.style.left = (Math.random()*60 + 10)+'%';
+            el.style.animationDuration = duration+'s';
 
-        <!-- Corpo taça principal -->
-        <path d="M-88,-118 Q-102,15 -84,108 Q-58,172 0,184 Q58,172 84,108 Q102,15 88,-118 Z" fill="url(#gold)" stroke="#9a6800" stroke-width="1.5"/>
+            el.innerHTML = `
+                <div class="flag-pole"></div>
+                <img class="flag-img"
+                     src="https://flagcdn.com/w160/${data.code}.png"
+                     alt="${data.name}"
+                     loading="lazy"
+                     onerror="this.style.display='none'">
+                <div class="name">${data.name}</div>
+            `;
 
-        <!-- Reflexo interno -->
-        <path d="M-60,-100 Q-72,15 -58,95 Q-40,140 -12,158" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="12" stroke-linecap="round"/>
-        <path d="M-40,-108 Q-46,0 -36,80" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="5" stroke-linecap="round"/>
+            panel.appendChild(el);
+            setTimeout(()=>{ el.remove(); }, (duration+1)*1000);
+        }
 
-        <!-- Reflexo direito escuro -->
-        <path d="M68,-100 Q78,15 66,95" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="10" stroke-linecap="round"/>
+        for(let i=0;i<5;i++){ setTimeout(createFlag, i*900); }
+        setInterval(createFlag, 2600);
 
-        <!-- Haste -->
-        <rect x="-20" y="182" width="40" height="42" rx="3" fill="url(#baseGrad)"/>
-        <rect x="-12" y="182" width="14" height="42" fill="rgba(255,255,255,0.15)" rx="2"/>
+        // Partículas douradas
+        const particles=document.getElementById('particles');
+        function createParticle(){
+            const p=document.createElement('div');
+            p.style.cssText='position:fixed;width:4px;height:4px;border-radius:50%;background:#FFD700;left:'+Math.random()*100+'vw;top:110vh;opacity:.6;pointer-events:none;z-index:5;box-shadow:0 0 12px #FFD700;';
+            particles.appendChild(p);
+            const dur=Math.random()*4000+6000;
+            p.animate([{transform:'translateY(0px)'},{transform:'translateY(-'+(window.innerHeight+200)+'px)'}],{duration:dur,easing:'linear'});
+            setTimeout(()=>p.remove(),dur);
+        }
+        setInterval(createParticle,250);
 
-        <!-- Bases -->
-        <rect x="-52" y="222" width="104" height="18" rx="5" fill="url(#baseGrad)"/>
-        <rect x="-62" y="238" width="124" height="22" rx="6" fill="#B8860B"/>
-        <rect x="-52" y="238" width="104" height="10" rx="3" fill="rgba(255,220,0,0.3)"/>
-        <rect x="-70" y="260" width="140" height="12" rx="5" fill="#8B6914"/>
+        // Confetes
+        const colors=['#FFD700','#00FF99','#FFFFFF','#FF4444','#44AAFF'];
+        function confetti(){
+            const c=document.createElement('div');
+            c.style.cssText='position:fixed;width:8px;height:8px;left:'+Math.random()*100+'vw;top:-20px;background:'+colors[Math.floor(Math.random()*colors.length)]+';z-index:8;pointer-events:none;';
+            document.body.appendChild(c);
+            const dur=Math.random()*4000+4000;
+            c.animate([{transform:'translateY(0px) rotate(0deg)'},{transform:'translateY('+(window.innerHeight+100)+'px) rotate(720deg)'}],{duration:dur,easing:'linear'});
+            setTimeout(()=>c.remove(),dur);
+        }
+        setInterval(confetti,400);
 
-        <!-- Estrela topo -->
-        <text x="0" y="-136" text-anchor="middle" font-size="52" fill="#FFD700" filter="url(#bigGlow)" font-family="serif">★</text>
-        <!-- Pulsação estrela -->
-        <text x="0" y="-136" text-anchor="middle" font-size="52" fill="#FFFDE0" font-family="serif" opacity="0.6">
-          ★
-          <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2s" repeatCount="indefinite"/>
-          <animate attributeName="font-size" values="48;56;48" dur="2s" repeatCount="indefinite"/>
-        </text>
-
-        <!-- Estrelinhas ao redor -->
-        <text x="-50" y="-118" text-anchor="middle" font-size="22" fill="#FFF0A0" font-family="serif" filter="url(#medGlow)">★</text>
-        <text x="50" y="-118" text-anchor="middle" font-size="22" fill="#FFF0A0" font-family="serif" filter="url(#medGlow)">★</text>
-      </g>
-
-      <!-- Bola esquerda - maior e mais detalhada -->
-      <g transform="translate(62,295)">
-        <circle cx="0" cy="0" r="44" fill="#f8f8f8" stroke="#222" stroke-width="2"/>
-        <circle cx="0" cy="0" r="44" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
-        <!-- Reflexo -->
-        <ellipse cx="-12" cy="-14" rx="14" ry="10" fill="rgba(255,255,255,0.6)" transform="rotate(-20)"/>
-        <!-- Manchas -->
-        <polygon points="0,-40 13,18 0,27 -13,18" fill="#111" opacity="0.9"/>
-        <polygon points="32,14 38,38 20,46 7,32 13,12" fill="#111" opacity="0.9"/>
-        <polygon points="34,56 20,72 3,67 3,48 20,42" fill="#111" opacity="0.9"/>
-        <polygon points="0,72 -13,62 -18,46 0,40 13,48" fill="#111" opacity="0.9"/>
-        <polygon points="-32,56 -38,32 -22,20 -7,30 -7,48" fill="#111" opacity="0.9"/>
-        <polygon points="-35,14 -26,4 -8,9 -9,30 -26,36" fill="#111" opacity="0.9"/>
-        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="7s" repeatCount="indefinite" additive="sum"/>
-      </g>
-
-      <!-- Bola direita -->
-      <g transform="translate(438,295)">
-        <circle cx="0" cy="0" r="44" fill="#f8f8f8" stroke="#222" stroke-width="2"/>
-        <ellipse cx="-12" cy="-14" rx="14" ry="10" fill="rgba(255,255,255,0.6)" transform="rotate(-20)"/>
-        <polygon points="0,-40 13,18 0,27 -13,18" fill="#111" opacity="0.9"/>
-        <polygon points="32,14 38,38 20,46 7,32 13,12" fill="#111" opacity="0.9"/>
-        <polygon points="34,56 20,72 3,67 3,48 20,42" fill="#111" opacity="0.9"/>
-        <polygon points="0,72 -13,62 -18,46 0,40 13,48" fill="#111" opacity="0.9"/>
-        <polygon points="-32,56 -38,32 -22,20 -7,30 -7,48" fill="#111" opacity="0.9"/>
-        <polygon points="-35,14 -26,4 -8,9 -9,30 -26,36" fill="#111" opacity="0.9"/>
-        <animateTransform attributeName="transform" type="rotate" from="360 0 0" to="0 0 0" dur="7s" repeatCount="indefinite" additive="sum"/>
-      </g>
-
-      <!-- Grama detalhada -->
-      <rect x="0" y="355" width="500" height="25" fill="#15501f"/>
-      <g fill="#1a6626">
-        <polygon points="0,380 6,354 12,380"/><polygon points="10,380 16,357 22,380"/>
-        <polygon points="20,380 26,353 32,380"/><polygon points="30,380 36,356 42,380"/>
-        <polygon points="40,380 46,354 52,380"/><polygon points="50,380 56,358 62,380"/>
-        <polygon points="60,380 66,353 72,380"/><polygon points="70,380 76,356 82,380"/>
-        <polygon points="80,380 86,354 92,380"/><polygon points="90,380 96,357 102,380"/>
-        <polygon points="100,380 106,353 112,380"/><polygon points="110,380 116,356 122,380"/>
-        <polygon points="120,380 126,354 132,380"/><polygon points="130,380 136,358 142,380"/>
-        <polygon points="140,380 146,353 152,380"/><polygon points="150,380 156,356 162,380"/>
-        <polygon points="160,380 166,354 172,380"/><polygon points="170,380 176,357 182,380"/>
-        <polygon points="180,380 186,353 192,380"/><polygon points="190,380 196,356 202,380"/>
-        <polygon points="200,380 206,354 212,380"/><polygon points="210,380 216,358 222,380"/>
-        <polygon points="220,380 226,353 232,380"/><polygon points="230,380 236,356 242,380"/>
-        <polygon points="240,380 246,354 252,380"/><polygon points="250,380 256,357 262,380"/>
-        <polygon points="260,380 266,353 272,380"/><polygon points="270,380 276,356 282,380"/>
-        <polygon points="280,380 286,354 292,380"/><polygon points="290,380 296,358 302,380"/>
-        <polygon points="300,380 306,353 312,380"/><polygon points="310,380 316,356 322,380"/>
-        <polygon points="320,380 326,354 332,380"/><polygon points="330,380 336,357 342,380"/>
-        <polygon points="340,380 346,353 352,380"/><polygon points="350,380 356,356 362,380"/>
-        <polygon points="360,380 366,354 372,380"/><polygon points="370,380 376,358 382,380"/>
-        <polygon points="380,380 386,353 392,380"/><polygon points="390,380 396,356 402,380"/>
-        <polygon points="400,380 406,354 412,380"/><polygon points="410,380 416,357 422,380"/>
-        <polygon points="420,380 426,353 432,380"/><polygon points="430,380 436,356 442,380"/>
-        <polygon points="440,380 446,354 452,380"/><polygon points="450,380 456,358 462,380"/>
-        <polygon points="460,380 466,353 472,380"/><polygon points="470,380 476,356 482,380"/>
-        <polygon points="480,380 486,354 492,380"/><polygon points="490,380 496,357 502,380"/>
-      </g>
-    </svg>
-  </div>
-
-  <div class="rotating-msg" id="rmsg">THE WORLD'S GAME</div>
-</div>
-
-<script>
-// Confetes
-const confColors=['#FFD700','#FF4444','#4444FF','#44FF44','#FF44FF','#44FFFF','#fff','#FF8C00'];
-const confEl=document.getElementById('conf');
-for(let i=0;i<35;i++){
-  const c=document.createElement('div');
-  c.className='conf';
-  c.style.left=Math.random()*100+'%';
-  c.style.background=confColors[Math.floor(Math.random()*confColors.length)];
-  c.style.width=(Math.random()*6+4)+'px';
-  c.style.height=(Math.random()*10+5)+'px';
-  c.style.animationDuration=(Math.random()*8+10)+'s';
-  c.style.animationDelay='-'+(Math.random()*15)+'s';
-  c.style.setProperty('--rot',(Math.random()*720-360)+'deg');
-  c.style.setProperty('--sx',(Math.random()*80-40)+'px');
-  c.style.borderRadius=Math.random()>0.5?'50%':'2px';
-  confEl.appendChild(c);
-}
-
-// Países
-const paises=[
-  {flag:'🇧🇷',name:'BRASIL'},
-  {flag:'🇦🇷',name:'ARGENTINA'},
-  {flag:'🇫🇷',name:'FRANÇA'},
-  {flag:'🇩🇪',name:'ALEMANHA'},
-  {flag:'🇵🇹',name:'PORTUGAL'},
-  {flag:'🇪🇸',name:'ESPANHA'},
-  {flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'INGLATERRA'},
-  {flag:'🇮🇹',name:'ITÁLIA'},
-  {flag:'🇺🇾',name:'URUGUAI'},
-  {flag:'🇳🇱',name:'HOLANDA'},
-  {flag:'🇯🇵',name:'JAPÃO'},
-  {flag:'🇲🇦',name:'MARROCOS'},
-  {flag:'🇺🇸',name:'EUA'},
-  {flag:'🇧🇪',name:'BÉLGICA'},
-];
-
-const fw=document.getElementById('fw');
-let ativos=0;
-const MAX=3;
-
-function createFlag(){
-  if(ativos>=MAX) return;
-  ativos++;
-  const p=paises[Math.floor(Math.random()*paises.length)];
-  const d=document.createElement('div');
-  d.className='floaty';
-  d.innerHTML=`<div class="flag">${p.flag}</div><div class="cname">${p.name}</div>`;
-  const dur=Math.random()*5+18;
-  d.style.left=(Math.random()*82+6)+'%';
-  d.style.animationDuration=dur+'s';
-  fw.appendChild(d);
-  setTimeout(()=>{d.remove();ativos--;},dur*1000+200);
-}
-createFlag();
-setInterval(createFlag,5000);
-
-// Relógio
-const MESES=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
-const DIAS=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
-function pad(n){return String(n).padStart(2,'0');}
-function tick(){
-  const n=new Date();
-  document.getElementById('ct').textContent=pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
-  document.getElementById('cd').textContent=DIAS[n.getDay()]+' · '+pad(n.getDate())+' '+MESES[n.getMonth()]+' '+n.getFullYear();
-}
-setInterval(tick,1000);tick();
-
-// Msgs
-const msgs=['THE WORLD\'S GAME','ONE WORLD · ONE CUP','BRASIL 2026','THE GREATEST SHOW ON EARTH','VAMOS CAMPEÃO'];
-let mi=0;const rm=document.getElementById('rmsg');
-setInterval(()=>{
-  rm.style.opacity=0;
-  setTimeout(()=>{mi=(mi+1)%msgs.length;rm.textContent=msgs[mi];rm.style.opacity=1;},600);
-},4000);
-</script>
+        document.body.animate([{filter:'brightness(1)'},{filter:'brightness(1.05)'},{filter:'brightness(1)'}],{duration:5000,iterations:Infinity});
+    </script>
 </body>
 </html>
