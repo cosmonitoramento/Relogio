@@ -1,260 +1,215 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>FIFA World Cup 2026</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap');
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{ min-height:100vh; font-family:'Bebas Neue',sans-serif; background:#0a0a0a; overflow:hidden; display:flex; flex-direction:column; align-items:center; position:relative; }
-        .sky{ position:fixed;inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%, #1a0a3a 0%, #0a0a1a 50%, #000 100%); z-index:0; }
-        .spotlight{ position:fixed;top:-60px; width:3px;height:100vh; transform-origin:top center; opacity:0.08; pointer-events:none;z-index:1; }
-        .spotlight.l1{left:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(15deg);animation:spotAnim 6s ease-in-out infinite alternate;}
-        .spotlight.l2{left:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(-10deg);animation:spotAnim 8s ease-in-out infinite alternate-reverse;}
-        .spotlight.l3{right:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(-15deg);animation:spotAnim 7s ease-in-out infinite alternate;}
-        .spotlight.l4{right:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(10deg);animation:spotAnim 5s ease-in-out infinite alternate-reverse;}
-        @keyframes spotAnim{0%{opacity:0.06;}100%{opacity:0.14;}}
-        .stadium-light{ position:fixed; width:900px; height:900px; left:50%; top:45%; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(255,215,0,.25), rgba(255,215,0,.08), transparent 70%); filter:blur(60px); animation:stadiumGlow 4s ease-in-out infinite; z-index:4; }
-        @keyframes stadiumGlow{ 0%,100%{ transform: translate(-50%,-50%) scale(1); } 50%{ transform: translate(-50%,-50%) scale(1.08); } }
-        .field{ position:fixed;bottom:0;left:0;right:0;height:35vh; background:repeating-linear-gradient( 180deg, #1a5c2a 0px,#1a5c2a 28px, #1e6830 28px,#1e6830 56px ); z-index:2; }
-        .field::before{ content:'';position:absolute;inset:0; background:radial-gradient(ellipse 90% 40% at 50% 100%,rgba(0,200,80,0.08),transparent 70%);}
-        .field::after{ content:'';position:absolute;top:0;left:50%;transform:translateX(-50%); width:2px;height:100%;background:rgba(255,255,255,0.12); }
-        .wrap{position:relative;z-index:20;width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;padding-top:24px;}
-        .fifa-label{ font-size:1.1rem;letter-spacing:8px;color:rgba(255,255,255,0.6); font-family:'Oswald',sans-serif;font-weight:400; margin-bottom:6px; }
-        .world-cup-title{ font-size:4.5rem;color:#FFD700; letter-spacing:6px;line-height:1; text-shadow:0 0 60px rgba(255,215,0,0.6); text-align:center; }
-        .world-cup-sub{ font-size:1.4rem;color:#fff;letter-spacing:4px; margin-top:4px;text-align:center; text-shadow:0 2px 20px rgba(0,0,0,0.8); font-family:'Oswald',sans-serif;}
-        .clock-box{ margin:10px 0; display:flex;flex-direction:column;align-items:center; }
-        .clock-time{ font-size:4.5rem;color:#FFD700;letter-spacing:6px; text-shadow:0 0 30px rgba(255,215,0,0.8); line-height:1; }
-        .clock-date{font-size:1rem;color:rgba(255,255,255,0.6);letter-spacing:4px;font-family:'Oswald',sans-serif;font-weight:400;margin-top:4px;}
-        .trophy-area{width:100%;display:flex;justify-content:center;margin:0;}
-        .rotating-msg{ font-size:1.2rem;color:rgba(255,255,255,0.8);letter-spacing:4px; text-align:center;transition:opacity 0.6s; margin:10px 0;font-family:'Oswald',sans-serif;font-weight:400;height:24px;}
-        .side-panel{ position:fixed; top:40px; width:26%; height:calc(100vh - 80px); background:rgba(10, 20, 50, 0.65); border:2px solid rgba(255,255,255,.1); backdrop-filter:blur(12px); box-shadow: 0 0 30px rgba(0,0,0,.6); z-index:25; overflow:hidden; border-radius: 20px; }
-        .left-panel{ left:30px; background:linear-gradient(180deg, rgba(0,0,0,.85), rgba(0,0,0,.30)); }
-        .right-panel{ right:30px; border: 2px solid rgba(255, 215, 0, 0.3); }
-        .panel-title{ text-align:center; padding:20px 10px; color:#fff; font-size:2rem; letter-spacing:2px; background: linear-gradient(90deg, #c8a100, #ffd700, #c8a100); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family: 'Bebas Neue', sans-serif; border-bottom: 1px solid rgba(255,255,255,0.1); }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FIFA World Cup 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{ min-height:100vh; font-family:'Bebas Neue',sans-serif; background:#0a0a0a; overflow:hidden; display:flex; flex-direction:column; align-items:center; position:relative; }
+.sky { position:fixed;inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%, #1a0a3a 0%, #0a0a1a 50%, #000 100%); z-index:0; }
+.spotlight { position:fixed;top:-60px; width:3px;height:100vh; transform-origin:top center; opacity:0.08; pointer-events:none;z-index:1; }
+.spotlight.l1 {left:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(15deg);animation:spotAnim 6s ease-in-out infinite alternate;}
+.spotlight.l2 {left:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(-10deg);animation:spotAnim 8s ease-in-out infinite alternate-reverse;}
+.spotlight.l3 {right:15%;background:linear-gradient(180deg,#fff 0%,transparent 80%);transform:rotate(-15deg);animation:spotAnim 7s ease-in-out infinite alternate;}
+.spotlight.l4 {right:30%;background:linear-gradient(180deg,#fff 0%,transparent 70%);transform:rotate(10deg);animation:spotAnim 5s ease-in-out infinite alternate-reverse;}
+@keyframes spotAnim {0%{opacity:0.06;}100%{opacity:0.14;}}
+.stadium-light { position:fixed; width:900px; height:900px; left:50%; top:45%; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(255,215,0,.25), rgba(255,215,0,.08), transparent 70%); filter:blur(60px); animation:stadiumGlow 4s ease-in-out infinite; z-index:4; }
+@keyframes stadiumGlow { 0%,100%{ transform: translate(-50%,-50%) scale(1); } 50%{ transform: translate(-50%,-50%) scale(1.08); } }
+.field { position:fixed;bottom:0;left:0;right:0;height:35vh; background:repeating-linear-gradient( 180deg, #1a5c2a 0px,#1a5c2a 28px, #1e6830 28px,#1e6830 56px ); z-index:2; }
+.field::before { content:'';position:absolute;inset:0; background:radial-gradient(ellipse 90% 40% at 50% 100%,rgba(0,200,80,0.08),transparent 70%);}
+.field::after { content:'';position:absolute;top:0;left:50%;transform:translateX(-50%); width:2px;height:100%;background:rgba(255,255,255,0.12); }
+.wrap {position:relative;z-index:20;width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;padding-top:24px;}
+.fifa-label { font-size:1.1rem;letter-spacing:8px;color:rgba(255,255,255,0.6); font-family:'Oswald',sans-serif;font-weight:400; margin-bottom:6px; }
+.world-cup-title { font-size:4.5rem;color:#FFD700; letter-spacing:6px;line-height:1; text-shadow:0 0 60px rgba(255,215,0,0.6); text-align:center; }
+.world-cup-sub { font-size:1.4rem;color:#fff;letter-spacing:4px; margin-top:4px;text-align:center; text-shadow:0 2px 20px rgba(0,0,0,0.8); font-family:'Oswald',sans-serif;}
+.clock-box { margin:10px 0; display:flex;flex-direction:column;align-items:center; }
+.clock-time { font-size:4.5rem;color:#FFD700;letter-spacing:6px; text-shadow:0 0 30px rgba(255,215,0,0.8); line-height:1; }
+.clock-date {font-size:1rem;color:rgba(255,255,255,0.6);letter-spacing:4px;font-family:'Oswald',sans-serif;font-weight:400;margin-top:4px;}
+.trophy-area {width:100%;display:flex;justify-content:center;margin:0;}
+.rotating-msg { font-size:1.2rem;color:rgba(255,255,255,0.8);letter-spacing:4px; text-align:center;transition:opacity 0.6s; margin:10px 0;font-family:'Oswald',sans-serif;font-weight:400;height:24px;}
+.side-panel { position:fixed; top:40px; width:26%; height:calc(100vh - 80px); background:rgba(10, 20, 50, 0.65); border:2px solid rgba(255,255,255,.1); backdrop-filter:blur(12px); box-shadow: 0 0 30px rgba(0,0,0,.6); z-index:25; overflow:hidden; border-radius: 20px; }
+.left-panel { left:30px; background:linear-gradient(180deg, rgba(0,0,0,.85), rgba(0,0,0,.30)); }
+.right-panel { right:30px; border: 2px solid rgba(255, 215, 0, 0.3); }
+.panel-title { text-align:center; padding:20px 10px; color:#fff; font-size:2rem; letter-spacing:2px; background: linear-gradient(90deg, #c8a100, #ffd700, #c8a100); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family: 'Bebas Neue', sans-serif; border-bottom: 1px solid rgba(255,255,255,0.1); }
 
-        /* BANDEIRAS CAINDO */
-        .flag-fall{
-            position:absolute;
-            top:-220px;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            animation:flagDrop linear forwards;
-        }
-        .flag-img{
-            width:110px;
-            height:73px;
-            border-radius:4px;
-            box-shadow: 0 0 18px rgba(255,215,0,.35), 0 0 6px rgba(0,0,0,.7);
-            animation: sway 4s ease-in-out infinite, pulseFlag 2s ease-in-out infinite;
-            object-fit:cover;
-        }
-        .flag-pole{
-            width:3px;
-            height:30px;
-            background:linear-gradient(180deg,#bbb,#888);
-            border-radius:2px;
-            margin-bottom: 0;
-            order: -1;
-        }
-        .name{
-            color:#fff;
-            font-family:'Oswald';
-            letter-spacing:3px;
-            font-size:0.9rem;
-            margin-top:8px;
-            background:rgba(0,0,0,.6);
-            padding:5px 12px;
-            border-radius:20px;
-            backdrop-filter:blur(6px);
-            border:1px solid rgba(255,255,255,.15);
-        }
+/* BANDEIRAS CAINDO */
+.flag-fall { position:absolute; top:-220px; display:flex; flex-direction:column; align-items:center; animation:flagDrop linear forwards; }
+.flag-img { width:110px; height:73px; border-radius:4px; box-shadow: 0 0 18px rgba(255,215,0,.35), 0 0 6px rgba(0,0,0,.7); animation: sway 4s ease-in-out infinite, pulseFlag 2s ease-in-out infinite; object-fit:cover; }
+.flag-pole { width:3px; height:30px; background:linear-gradient(180deg,#bbb,#888); border-radius:2px; margin-bottom: 0; order: -1; }
+.name { color:#fff; font-family:'Oswald'; letter-spacing:3px; font-size:0.9rem; margin-top:8px; background:rgba(0,0,0,.6); padding:5px 12px; border-radius:20px; backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.15); }
+@keyframes flagDrop { from{ transform: translateY(-220px) rotate(-5deg); opacity:0; } 8%{ opacity:1; } 92%{ opacity:1; } 100%{ transform: translateY(110vh) rotate(5deg); opacity:0; } }
+@keyframes sway { 0%, 100%{ transform:rotate(-7deg) scaleX(0.97); } 50%{ transform:rotate(7deg) scaleX(1.03); } }
+@keyframes pulseFlag { 0%, 100%{ filter:brightness(1); } 50%{ filter:brightness(1.25); } }
 
-        @keyframes flagDrop{
-            from{ transform: translateY(-220px) rotate(-5deg); opacity:0; }
-            8%{ opacity:1; }
-            92%{ opacity:1; }
-            100%{ transform: translateY(110vh) rotate(5deg); opacity:0; }
-        }
-        @keyframes sway{
-            0%, 100%{ transform:rotate(-7deg) scaleX(0.97); }
-            50%{ transform:rotate(7deg) scaleX(1.03); }
-        }
-        @keyframes pulseFlag{
-            0%, 100%{ filter:brightness(1); }
-            50%{ filter:brightness(1.25); }
-        }
+.games-list { padding:15px; overflow-y:auto; height: calc(100% - 80px); }
+.game-card { margin-bottom:14px; padding:12px; background:rgba(255,255,255,.05); border-left:5px solid #FFD700; border-radius:8px; font-family: 'Oswald', sans-serif; }
+.game-date { color:#FFD700; font-size:0.9rem; letter-spacing: 1px; }
+.game-match { margin-top:4px; color:white; font-size:1.2rem; letter-spacing: 1px; }
+.game-hour { color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 2px; }
 
-        .games-list{ padding:15px; overflow-y:auto; height: calc(100% - 80px); }
-        .game-card{ margin-bottom:14px; padding:12px; background:rgba(255,255,255,.05); border-left:5px solid #FFD700; border-radius:8px; font-family: 'Oswald', sans-serif; }
-        .game-date{ color:#FFD700; font-size:0.9rem; letter-spacing: 1px; }
-        .game-match{ margin-top:4px; color:white; font-size:1.2rem; letter-spacing: 1px; }
-        .game-hour{ color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 2px; }
-    </style>
+/* RESTRUTURAÇÃO DO CARD COM IMAGEM E TEXTO MAIORES */
+.game-card-with-img { display: flex; align-items: center; gap: 14px; padding: 12px; }
+.game-info { flex: 1; }
+/* Imagem aumentada de 85px para 110px de largura e 75px de altura */
+.game-thumb { width: 110px; height: 75px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255, 215, 0, 0.6); flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.game-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Destaque aumentado no nome do jogo */
+.game-match-large { margin-top: 4px; color: white; font-size: 1.45rem; font-weight: 700; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+</style>
 </head>
 <body>
-    <div class="sky"></div>
-    <div class="spotlight l1"></div>
-    <div class="spotlight l2"></div>
-    <div class="spotlight l3"></div>
-    <div class="spotlight l4"></div>
-    <div class="field"></div>
-    <div class="stadium-light"></div>
+<div class="sky"></div>
+<div class="spotlight l1"></div>
+<div class="spotlight l2"></div>
+<div class="spotlight l3"></div>
+<div class="spotlight l4"></div>
+<div class="field"></div>
+<div class="stadium-light"></div>
 
-    <div class="side-panel left-panel" id="flagsPanel">
-        <div class="panel-title">SELEÇÕES 2026</div>
+<div class="side-panel left-panel" id="flagsPanel">
+<div class="panel-title">SELEÇÕES 2026</div>
+</div>
+
+<div class="side-panel right-panel">
+<div class="panel-title"> 🇧🇷 JOGOS DO BRASIL 🇧🇷 </div>
+<div class="games-list">
+
+<div class="game-card game-card-with-img">
+    <div class="game-thumb">
+        <img src="https://raw.githubusercontent.com/cosmonitoramento/imagem_usina/refs/heads/main/Captura%20de%20tela%202026-06-02%20113153.png" alt="Imagem do Jogo">
     </div>
-
-    <div class="side-panel right-panel">
-        <div class="panel-title">🇧🇷 JOGOS DO BRASIL 🇧🇷</div>
-        <div class="games-list">
-            <div class="game-card">
-                <div class="game-date">13 JUN 2026</div>
-                <div class="game-match"> "BRASIL 🇧🇷 x 🇲🇦 MARROCOS"
+    <div class="game-info">
+        <div class="game-date">13 JUN 2026</div>
+        <div class="game-match-large">BRASIL 🇧🇷 x 🇲🇦 MARROCOS</div>
+        <div class="game-hour">19:00</div>
     </div>
-                <div class="game-hour">19:00</div>
-            </div>
-            <div class="game-card">
-                <div class="game-date">19 JUN 2026</div>
-                <div class="game-match">BRASIL 🇧🇷 x 🇭🇹 HAITI</div>
-                <div class="game-hour">21:30</div>
-            </div>
-            <div class="game-card">
-                <div class="game-date">24 JUN 2026</div>
-                <div class="game-match">BRASIL 🇧🇷 x ESCOCIA</div>
-                <div class="game-hour">21:00</div>
-            </div>
-            
-        </div>
-    </div>
+</div>
 
-    <div class="wrap">
-        <div class="fifa-label">FIFA WORLD CUP™</div>
-        <div class="world-cup-title">2026</div>
-        <div class="world-cup-sub">UNITED STATES • CANADA • MEXICO</div>
-        <div class="clock-box">
-            <div id="ct" class="clock-time">--:--:--</div>
-            <div id="cd" class="clock-date">LOADING...</div>
-        </div>
-        <div class="trophy-area">
-            <svg viewBox="0 0 600 600" width="100%" style="max-width:450px" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="gold"><stop offset="0%" stop-color="#fff8b5"/><stop offset="30%" stop-color="#FFD700"/><stop offset="100%" stop-color="#a36d00"/></radialGradient>
-                    <radialGradient id="glow"><stop offset="0%" stop-color="#FFD700" stop-opacity=".5"/><stop offset="100%" stop-color="#FFD700" stop-opacity="0"/></radialGradient>
-                    <filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
-                </defs>
-                <circle cx="300" cy="260" r="180" fill="url(#glow)" filter="url(#blur)"><animate attributeName="r" values="160;200;160" dur="4s" repeatCount="indefinite"/></circle>
-                <g transform="translate(300 290)">
-                    <path d="M-80,-140 C-100,-40 -80,90 -40,160 C-20,190 20,190 40,160 C80,90 100,-40 80,-140 Z" fill="url(#gold)"/>
-                    <path d="M-85,-120 C-170,-100 -170,30 -90,40" stroke="url(#gold)" stroke-width="25" fill="none" stroke-linecap="round"/>
-                    <path d="M85,-120 C170,-100 170,30 90,40" stroke="url(#gold)" stroke-width="25" fill="none" stroke-linecap="round"/>
-                    <rect x="-18" y="160" width="36" height="60" fill="url(#gold)"/>
-                    <rect x="-60" y="220" width="120" height="20" fill="#d1a200"/>
-                    <rect x="-75" y="240" width="150" height="30" fill="#8f6500"/>
-                </g>
-            </svg>
-        </div>
-        <div id="rmsg" class="rotating-msg">O JOGO DO MUNDO</div>
-    </div>
+<div class="game-card">
+<div class="game-date">19 JUN 2026</div>
+<div class="game-match">BRASIL 🇧🇷 x 🇭🇹 HAITI</div>
+<div class="game-hour">21:30</div>
+</div>
+<div class="game-card">
+<div class="game-date">24 JUN 2026</div>
+<div class="game-match">BRASIL 🇧🇷 x ESCOCIA</div>
+<div class="game-hour">21:00</div>
+</div>
 
-    <div id="particles"></div>
+</div>
+</div>
 
-    <script>
-        const meses=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
-        const dias=['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
-        function pad(n){ return String(n).padStart(2,'0'); }
-        function updateClock(){
-            const now=new Date();
-            document.getElementById('ct').innerHTML = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
-            document.getElementById('cd').innerHTML = dias[now.getDay()]+' • '+pad(now.getDate())+' '+meses[now.getMonth()]+' '+now.getFullYear();
-        }
-        setInterval(updateClock,1000); updateClock();
+<div class="wrap">
+<div class="fifa-label">FIFA WORLD CUP™</div>
+<div class="world-cup-title">2026</div>
+<div class="world-cup-sub">UNITED STATES • CANADA • MEXICO</div>
+<div class="clock-box">
+<div id="ct" class="clock-time">--:--:--</div>
+<div id="cd" class="clock-date">LOADING...</div>
+</div>
+<div class="trophy-area">
+<svg viewBox="0 0 600 600" width="100%" style="max-width:450px" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="gold"><stop offset="0%" stop-color="#fff8b5"/><stop offset="30%" stop-color="#FFD700"/><stop offset="100%" stop-color="#a36d00"/></radialGradient>
+<radialGradient id="glow"><stop offset="0%" stop-color="#FFD700" stop-opacity =".5"/><stop offset="100%" stop-color="#FFD700" stop-opacity ="0"/></radialGradient>
+<filter id="blur"><feGaussianBlur stdDeviation ="12"/></filter>
+</defs>
+<circle cx="300" cy="260" r="180" fill="url(#glow)" filter="url(#blur)"><animate attributeName="r" values="160;200;160" dur="4s" repeatCount="indefinite"/></circle>
+<g transform="translate(300 290)">
+<path d="M-80,-140 C-100,-40 -80,90 -40,160 C-20,190 20,190 40,160 C80,90 100,-40 80,-140 Z" fill="url(#gold)"/>
+<path d="M-85,-120 C-170,-100 -170,30 -90,40" stroke="url(#gold)" stroke-width="25" fill="none" stroke-linecap="round"/>
+<path d="M85,-120 C170,-100 170,30 90,40" stroke="url(#gold)" stroke-width="25" fill="none" stroke-linecap="round"/>
+<rect x="-18" y="160" width="36" height="60" fill="url(#gold)"/>
+<rect x="-60" y="220" width="120" height="20" fill="#d1a200"/>
+<rect x="-75" y="240" width="150" height="30" fill="#8f6500"/>
+</g>
+</svg>
+</div>
+<div id="rmsg" class="rotating-msg">O JOGO DO MUNDO</div>
+</div>
+<div id="particles"></div>
 
-        const messages=["THE WORLD'S GAME","ONE WORLD • ONE CUP","ROAD TO THE FINAL","FIFA WORLD CUP 2026","BRASIL RUMO AO HEXA","UNITED STATES • CANADA • MEXICO"];
-        let msgIndex=0;
-        const rmsg=document.getElementById('rmsg');
-        setInterval(()=>{ rmsg.style.opacity='0'; setTimeout(()=>{ msgIndex=(msgIndex+1)%messages.length; rmsg.innerHTML=messages[msgIndex]; rmsg.style.opacity='1'; },500); },4500);
+<script>
+const meses=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+const dias=['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
+function pad( n ){ return String(n).padStart(2,'0'); }
+function updateClock(){
+const now= new Date();
+document.getElementById('ct').innerHTML = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+document.getElementById('cd').innerHTML = dias[now.getDay()]+' • '+pad(now.getDate())+' '+meses[now.getMonth()]+' '+now.getFullYear();
+}
+setInterval(updateClock,1000); updateClock();
+const messages=["THE WORLD'S GAME","ONE WORLD • ONE CUP","ROAD TO THE FINAL","FIFA WORLD CUP 2026","BRASIL RUMO AO HEXA","UNITED STATES • CANADA • MEXICO"];
+let msgIndex=0;
+const rmsg=document.getElementById('rmsg');
+setInterval(()=>{ rmsg.style.opacity='0'; setTimeout(()=>{ msgIndex=(msgIndex+1)%messages.length; rmsg.innerHTML=messages[msgIndex]; rmsg.style.opacity='1'; },500); },4500);
 
-        // Bandeiras usando flagcdn.com (imagens reais)
-        const flags = [
-            { code:'br', name:'BRASIL' },
-            { code:'ar', name:'ARGENTINA' },
-            { code:'de', name:'ALEMANHA' },
-            { code:'fr', name:'FRANÇA' },
-            { code:'es', name:'ESPANHA' },
-            { code:'pt', name:'PORTUGAL' },
-            { code:'it', name:'ITÁLIA' },
-            { code:'jp', name:'JAPÃO' },
-            { code:'nl', name:'HOLANDA' },
-            { code:'uy', name:'URUGUAI' },
-            { code:'be', name:'BÉLGICA' },
-            { code:'us', name:'EUA' },
-            { code:'mx', name:'MÉXICO' },
-            { code:'ma', name:'MARROCOS' },
-            { code:'hr', name:'CROÁCIA' },
-            { code:'sn', name:'SENEGAL' },
-            { code:'au', name:'AUSTRÁLIA' },
-            { code:'ca', name:'CANADÁ' },
-            { code:'gb-eng', name:'INGLATERRA' },
-            { code:'ec', name:'EQUADOR' }
-        ];
+const flags = [
+{ code:'br', name:'BRASIL' },
+{ code:'ar', name:'ARGENTINA' },
+{ code:'de', name:'ALEMANHA' },
+{ code:'fr', name:'FRANÇA' },
+{ code:'es', name:'ESPANHA' },
+{ code:'pt', name:'PORTUGAL' },
+{ code:'it', name:'ITÁLIA' },
+{ code:'jp', name:'JAPÃO' },
+{ code:'nl', name:'HOLANDA' },
+{ code:'uy', name:'URUGUAI' },
+{ code:'be', name:'BÉLGICA' },
+{ code:'us', name:'EUA' },
+{ code:'mx', name:'MÉXICO' },
+{ code:'ma', name:'MARROCOS' },
+{ code:'hr', name:'CROÁCIA' },
+{ code:'sn', name:'SENEGAL' },
+{ code:'au', name:'AUSTRÁLIA' },
+{ code:'ca', name:'CANADÁ' },
+{ code:'gb-eng', name:'INGLATERRA' },
+{ code:'ec', name:'EQUADOR' }
+];
+const panel = document.getElementById('flagsPanel');
+function createFlag(){
+const data = flags[Math.floor(Math.random()*flags.length)];
+const el = document.createElement('div');
+el.className='flag-fall';
+const duration = Math.random()*8 + 13;
+el.style.left = (Math.random()*60 + 10)+'%';
+el.style.animationDuration = duration+'s';
+el.innerHTML = `
+<div class="flag-pole"></div>
+<img class="flag-img" src="https://flagcdn.com/w160/${data.code}.png" alt="${data.name}" loading="lazy" onerror="this.style.display='none'">
+<div class="name">${data.name}</div>
+`;
+panel.appendChild(el);
+setTimeout(()=>{ el.remove(); }, (duration+1)*1000);
+}
+for(let i=0;i<5;i++){ setTimeout(createFlag, i*900); }
+setInterval(createFlag, 2600);
 
-        const panel = document.getElementById('flagsPanel');
+const particles=document.getElementById('particles');
+function createParticle(){
+const p=document.createElement('div');
+p.style.cssText='position:fixed;width:4px;height:4px;border-radius:50%;background:#FFD700;left:'+Math.random()*100+'vw;top:110vh;opacity:.6;pointer-events:none;z-index:5;box-shadow:0 0 12px #FFD700;';
+particles.appendChild(p);
+const dur=Math.random()*4000+6000;
+p.animate([{transform:'translateY(0px)'},{transform:'translateY(-'+(window.innerHeight+200)+'px)'}],{duration:dur,easing:'linear'});
+setTimeout(()=>p.remove(),dur);
+}
+setInterval(createParticle,250);
 
-        function createFlag(){
-            const data = flags[Math.floor(Math.random()*flags.length)];
-            const el = document.createElement('div');
-            el.className='flag-fall';
-
-            const duration = Math.random()*8 + 13;
-            el.style.left = (Math.random()*60 + 10)+'%';
-            el.style.animationDuration = duration+'s';
-
-            el.innerHTML = `
-                <div class="flag-pole"></div>
-                <img class="flag-img"
-                     src="https://flagcdn.com/w160/${data.code}.png"
-                     alt="${data.name}"
-                     loading="lazy"
-                     onerror="this.style.display='none'">
-                <div class="name">${data.name}</div>
-            `;
-
-            panel.appendChild(el);
-            setTimeout(()=>{ el.remove(); }, (duration+1)*1000);
-        }
-
-        for(let i=0;i<5;i++){ setTimeout(createFlag, i*900); }
-        setInterval(createFlag, 2600);
-
-        // Partículas douradas
-        const particles=document.getElementById('particles');
-        function createParticle(){
-            const p=document.createElement('div');
-            p.style.cssText='position:fixed;width:4px;height:4px;border-radius:50%;background:#FFD700;left:'+Math.random()*100+'vw;top:110vh;opacity:.6;pointer-events:none;z-index:5;box-shadow:0 0 12px #FFD700;';
-            particles.appendChild(p);
-            const dur=Math.random()*4000+6000;
-            p.animate([{transform:'translateY(0px)'},{transform:'translateY(-'+(window.innerHeight+200)+'px)'}],{duration:dur,easing:'linear'});
-            setTimeout(()=>p.remove(),dur);
-        }
-        setInterval(createParticle,250);
-
-        // Confetes
-        const colors=['#FFD700','#00FF99','#FFFFFF','#FF4444','#44AAFF'];
-        function confetti(){
-            const c=document.createElement('div');
-            c.style.cssText='position:fixed;width:8px;height:8px;left:'+Math.random()*100+'vw;top:-20px;background:'+colors[Math.floor(Math.random()*colors.length)]+';z-index:8;pointer-events:none;';
-            document.body.appendChild(c);
-            const dur=Math.random()*4000+4000;
-            c.animate([{transform:'translateY(0px) rotate(0deg)'},{transform:'translateY('+(window.innerHeight+100)+'px) rotate(720deg)'}],{duration:dur,easing:'linear'});
-            setTimeout(()=>c.remove(),dur);
-        }
-        setInterval(confetti,400);
-
-        document.body.animate([{filter:'brightness(1)'},{filter:'brightness(1.05)'},{filter:'brightness(1)'}],{duration:5000,iterations:Infinity});
-    </script>
+const colors=['#FFD700','#00FF99','#FFFFFF','#FF4444','#44AAFF'];
+function confetti(){
+const c=document.createElement('div');
+c.style.cssText='position:fixed;width:8px;height:8px;left:'+Math.random()*100+'vw;top:-20px;background:'+colors[Math.floor(Math.random()*colors.length)]+';z-index:8;pointer-events:none;';
+document.body.appendChild(c);
+const dur=Math.random()*4000+4000;
+c.animate([{transform:'translateY(0px) rotate(0deg)'},{transform:'translateY('+(window.innerHeight+100)+'px) rotate(720deg)'}],{duration:dur,easing:'linear'});
+setTimeout(()=>c.remove(),dur);
+}
+setInterval(confetti,400);
+document.body.animate([{filter:'brightness(1)'},{filter:'brightness(1.05)'},{filter:'brightness(1)'}],{duration:5000,iterations:Infinity});
+</script>
 </body>
 </html>
