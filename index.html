@@ -44,20 +44,21 @@ body{ min-height:100vh; font-family:'Bebas Neue',sans-serif; background:#0a0a0a;
 @keyframes pulseFlag { 0%, 100%{ filter:brightness(1); } 50%{ filter:brightness(1.25); } }
 
 .games-list { padding:15px; overflow-y:auto; height: calc(100% - 80px); }
-.game-card { margin-bottom:14px; padding:12px; background:rgba(255,255,255,.05); border-left:5px solid #FFD700; border-radius:8px; font-family: 'Oswald', sans-serif; }
-.game-date { color:#FFD700; font-size:0.9rem; letter-spacing: 1px; }
-.game-match { margin-top:4px; color:white; font-size:1.2rem; letter-spacing: 1px; }
+.game-card { margin-bottom:14px; padding:12px; background:rgba(255,255,255,.05); border-left:5px solid #FFD700; border-radius:8px; font-family: 'Oswald', sans-serif; transition: opacity .4s; }
+.game-card.next { border-left-color:#00FF99; background:rgba(0,255,153,.08); box-shadow:0 0 20px rgba(0,255,153,.2); }
+.game-card.live { border-left-color:#FF4444; background:rgba(255,68,68,.10); animation:livePulse 1.5s ease-in-out infinite; }
+@keyframes livePulse {0%,100%{box-shadow:0 0 10px rgba(255,68,68,.3);}50%{box-shadow:0 0 26px rgba(255,68,68,.6);}}
+.game-date { color:#FFD700; font-size:0.9rem; letter-spacing: 1px; display:flex; justify-content:space-between; align-items:center;}
+.badge { font-size:.7rem; padding:2px 8px; border-radius:20px; letter-spacing:1px; }
+.badge.next { background:#00FF99; color:#003322; }
+.badge.live { background:#FF4444; color:#fff; }
+.game-match { margin-top:4px; color:white; font-size:1.2rem; letter-spacing: 1px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.game-match img { width:26px; height:18px; object-fit:contain; vertical-align:middle; }
 .game-hour { color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 2px; }
-
-/* RESTRUTURAÇÃO DO CARD COM IMAGEM E TEXTO MAIORES */
-.game-card-with-img { display: flex; align-items: center; gap: 14px; padding: 12px; }
-.game-info { flex: 1; }
-/* Imagem aumentada de 85px para 110px de largura e 75px de altura */
-.game-thumb { width: 110px; height: 75px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255, 215, 0, 0.6); flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-.game-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Destaque aumentado no nome do jogo */
-.game-match-large { margin-top: 4px; color: white; font-size: 1.45rem; font-weight: 700; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.game-score { color:#FFD700; font-weight:700; font-size:1.3rem; }
+.countdown { margin-top:6px; color:#00FF99; font-size:1rem; letter-spacing:2px; font-weight:700; }
+.list-status { color:rgba(255,255,255,.55); font-family:'Oswald'; text-align:center; padding:20px; font-size:.95rem; line-height:1.5;}
+.list-status.err { color:#ffb3b3; }
 </style>
 </head>
 <body>
@@ -75,30 +76,8 @@ body{ min-height:100vh; font-family:'Bebas Neue',sans-serif; background:#0a0a0a;
 
 <div class="side-panel right-panel">
 <div class="panel-title"> 🇧🇷 JOGOS DO BRASIL 🇧🇷 </div>
-<div class="games-list">
-
-<div class="game-card game-card-with-img">
-    <div class="game-thumb">
-        <img src="https://raw.githubusercontent.com/cosmonitoramento/imagem_usina/refs/heads/main/Captura%20de%20tela%202026-06-02%20113153.png" alt="Imagem do Jogo">
-    </div>
-    <div class="game-info">
-        <div class="game-date">13 JUN 2026</div>
-        <div class="game-match-large">BRASIL 🇧🇷 x 🇲🇦 MARROCOS</div>
-        <div class="game-hour">19:00</div>
-    </div>
-</div>
-
-<div class="game-card">
-<div class="game-date">19 JUN 2026</div>
-<div class="game-match">BRASIL 🇧🇷 x 🇭🇹 HAITI</div>
-<div class="game-hour">21:30</div>
-</div>
-<div class="game-card">
-<div class="game-date">24 JUN 2026</div>
-<div class="game-match">BRASIL 🇧🇷 x ESCOCIA</div>
-<div class="game-hour">21:00</div>
-</div>
-
+<div class="games-list" id="gamesList">
+<div class="list-status" id="listStatus">Buscando jogos...</div>
 </div>
 </div>
 
@@ -133,80 +112,190 @@ body{ min-height:100vh; font-family:'Bebas Neue',sans-serif; background:#0a0a0a;
 <div id="particles"></div>
 
 <script>
+/* =========================================================
+   JOGOS DO BRASIL 2026  -  EDITE SOMENTE AQUI
+   =========================================================
+   - Datas em horario UTC (com +00:00). O telao converte pro seu fuso.
+   - Jogo que ja passou SOME sozinho.
+   - Mata-mata: o adversario esta como "A definir". Quando o Brasil
+     avancar, troque o nome e, se quiser, ajuste a data/hora.
+   - Se o Brasil for eliminado, e so apagar as linhas seguintes. */
+const BR_GAMES = [
+  // ---- FASE DE GRUPOS (Grupo C) ----
+  { home:{name:"Brasil"},  away:{name:"Marrocos"},  date:"2026-06-13T22:00:00+00:00", venue:"New York/New Jersey", round:"Fase de Grupos 1" },
+  { home:{name:"Brasil"},  away:{name:"Haiti"},     date:"2026-06-20T00:30:00+00:00", venue:"Philadelphia",        round:"Fase de Grupos 2" },
+  { home:{name:"Escócia"}, away:{name:"Brasil"},    date:"2026-06-24T22:00:00+00:00", venue:"Miami",               round:"Fase de Grupos 3" },
+
+  // ---- MATA-MATA (adversarios a confirmar conforme o Brasil avanca) ----
+  { home:{name:"Brasil"},  away:{name:"A definir"}, date:"2026-06-29T17:00:00+00:00", venue:"Houston / Monterrey", round:"Fase de 32" },
+  { home:{name:"Brasil"},  away:{name:"A definir"}, date:"2026-07-05T19:00:00+00:00", venue:"A definir",           round:"Oitavas de Final" },
+  { home:{name:"Brasil"},  away:{name:"A definir"}, date:"2026-07-10T19:00:00+00:00", venue:"A definir",           round:"Quartas de Final" },
+  { home:{name:"Brasil"},  away:{name:"A definir"}, date:"2026-07-14T23:00:00+00:00", venue:"A definir",           round:"Semifinal" },
+  { home:{name:"Brasil"},  away:{name:"A definir"}, date:"2026-07-19T19:00:00+00:00", venue:"New York/New Jersey", round:"FINAL" }
+];
+
+const FINISHED = ["FT","AET","PEN"];
+
 const meses=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+const diasSem=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
 const dias=['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
-function pad( n ){ return String(n).padStart(2,'0'); }
+function pad(n){ return String(n).padStart(2,'0'); }
+
+/* ---------- RELOGIO ---------- */
 function updateClock(){
-const now= new Date();
-document.getElementById('ct').innerHTML = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
-document.getElementById('cd').innerHTML = dias[now.getDay()]+' • '+pad(now.getDate())+' '+meses[now.getMonth()]+' '+now.getFullYear();
+  const now=new Date();
+  document.getElementById('ct').innerHTML = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+  document.getElementById('cd').innerHTML = dias[now.getDay()]+' • '+pad(now.getDate())+' '+meses[now.getMonth()]+' '+now.getFullYear();
 }
 setInterval(updateClock,1000); updateClock();
+
+/* ---------- MENSAGENS ROTATIVAS ---------- */
 const messages=["THE WORLD'S GAME","ONE WORLD • ONE CUP","ROAD TO THE FINAL","FIFA WORLD CUP 2026","BRASIL RUMO AO HEXA","UNITED STATES • CANADA • MEXICO"];
 let msgIndex=0;
 const rmsg=document.getElementById('rmsg');
 setInterval(()=>{ rmsg.style.opacity='0'; setTimeout(()=>{ msgIndex=(msgIndex+1)%messages.length; rmsg.innerHTML=messages[msgIndex]; rmsg.style.opacity='1'; },500); },4500);
 
+/* =========================================================
+   JOGOS DO BRASIL - busca automatica + render
+   ========================================================= */
+let GAMES = [];
+
+function loadGames(){
+  GAMES = BR_GAMES;
+  renderGames();
+}
+
+function isFinished(g){
+  if (FINISHED.includes(g.statusShort)) return true;
+  const start = new Date(g.date).getTime();
+  return Date.now() > start + 3*60*60*1000; // some 3h apos o inicio
+}
+function isLive(g){
+  return ["1H","2H","HT","ET","P","BT","LIVE"].includes(g.statusShort);
+}
+
+function fmtDate(d){
+  const dt = new Date(d);
+  return diasSem[dt.getDay()]+' '+pad(dt.getDate())+' '+meses[dt.getMonth()]+' '+dt.getFullYear();
+}
+function fmtHour(d){
+  const dt = new Date(d);
+  return pad(dt.getHours())+':'+pad(dt.getMinutes());
+}
+
+function renderGames(){
+  const list = document.getElementById('gamesList');
+  // mantem so os jogos que NAO terminaram, ordenados por data
+  const upcoming = GAMES
+    .filter(g => !isFinished(g))
+    .sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+  if (upcoming.length === 0){
+    list.innerHTML = '<div class="list-status">Sem jogos futuros do Brasil.<br>Aguardando o sorteio da proxima fase.</div>';
+    return;
+  }
+
+  let html = '';
+  upcoming.forEach((g, i) => {
+    const live = isLive(g);
+    const isNext = i === 0 && !live;
+    let cls = 'game-card';
+    if (live) cls += ' live';
+    else if (isNext) cls += ' next';
+
+    let badge = '';
+    if (live) badge = '<span class="badge live">● AO VIVO</span>';
+    else if (isNext) badge = '<span class="badge next">PRÓXIMO</span>';
+
+    const homeLogo = g.home.logo ? `<img src="${g.home.logo}" alt="">` : '';
+    const awayLogo = g.away.logo ? `<img src="${g.away.logo}" alt="">` : '';
+
+    let scoreOrCountdown = `<div class="game-hour">⏰ ${fmtHour(g.date)}</div>`;
+    if (live && g.goals){
+      scoreOrCountdown = `<div class="game-score">${g.goals.home ?? 0} x ${g.goals.away ?? 0}</div>`;
+    } else if (isNext){
+      scoreOrCountdown += `<div class="countdown" data-target="${new Date(g.date).getTime()}">--</div>`;
+    }
+
+    html += `
+      <div class="${cls}">
+        <div class="game-date"><span>${(g.round||"").toUpperCase()}</span>${badge}</div>\n        <div class="game-hour" style="color:#FFD700;margin-bottom:4px;">${fmtDate(g.date)}</div>
+        <div class="game-match">${homeLogo}<span>${g.home.name.toUpperCase()}</span> 🆚 <span>${g.away.name.toUpperCase()}</span>${awayLogo}</div>
+        ${scoreOrCountdown}
+        ${g.venue ? `<div class="game-hour">📍 ${g.venue}</div>` : ""}
+      </div>`;
+  });
+
+  list.innerHTML = html;
+}
+
+/* atualiza contagem regressiva a cada segundo */
+setInterval(()=>{
+  document.querySelectorAll('.countdown').forEach(el=>{
+    const target = Number(el.dataset.target);
+    let diff = Math.floor((target - Date.now())/1000);
+    if (diff <= 0){ el.textContent = "COMEÇANDO!"; return; }
+    const d = Math.floor(diff/86400); diff%=86400;
+    const h = Math.floor(diff/3600);  diff%=3600;
+    const m = Math.floor(diff/60);    const s = diff%60;
+    el.textContent = (d>0? d+"d " : "") + pad(h)+":"+pad(m)+":"+pad(s);
+  });
+},1000);
+
+loadGames();
+setInterval(loadGames, 60*1000); // re-checa a cada 1 min: faz sumir o que ja passou
+
+/* =========================================================
+   BANDEIRAS CAINDO (visual original)
+   ========================================================= */
 const flags = [
-{ code:'br', name:'BRASIL' },
-{ code:'ar', name:'ARGENTINA' },
-{ code:'de', name:'ALEMANHA' },
-{ code:'fr', name:'FRANÇA' },
-{ code:'es', name:'ESPANHA' },
-{ code:'pt', name:'PORTUGAL' },
-{ code:'it', name:'ITÁLIA' },
-{ code:'jp', name:'JAPÃO' },
-{ code:'nl', name:'HOLANDA' },
-{ code:'uy', name:'URUGUAI' },
-{ code:'be', name:'BÉLGICA' },
-{ code:'us', name:'EUA' },
-{ code:'mx', name:'MÉXICO' },
-{ code:'ma', name:'MARROCOS' },
-{ code:'hr', name:'CROÁCIA' },
-{ code:'sn', name:'SENEGAL' },
-{ code:'au', name:'AUSTRÁLIA' },
-{ code:'ca', name:'CANADÁ' },
-{ code:'gb-eng', name:'INGLATERRA' },
-{ code:'ec', name:'EQUADOR' }
+{ code:'br', name:'BRASIL' },{ code:'ar', name:'ARGENTINA' },{ code:'de', name:'ALEMANHA' },
+{ code:'fr', name:'FRANÇA' },{ code:'es', name:'ESPANHA' },{ code:'pt', name:'PORTUGAL' },
+{ code:'it', name:'ITÁLIA' },{ code:'jp', name:'JAPÃO' },{ code:'nl', name:'HOLANDA' },
+{ code:'uy', name:'URUGUAI' },{ code:'be', name:'BÉLGICA' },{ code:'us', name:'EUA' },
+{ code:'mx', name:'MÉXICO' },{ code:'ma', name:'MARROCOS' },{ code:'hr', name:'CROÁCIA' },
+{ code:'sn', name:'SENEGAL' },{ code:'au', name:'AUSTRÁLIA' },{ code:'ca', name:'CANADÁ' },
+{ code:'gb-eng', name:'INGLATERRA' },{ code:'ec', name:'EQUADOR' }
 ];
 const panel = document.getElementById('flagsPanel');
 function createFlag(){
-const data = flags[Math.floor(Math.random()*flags.length)];
-const el = document.createElement('div');
-el.className='flag-fall';
-const duration = Math.random()*8 + 13;
-el.style.left = (Math.random()*60 + 10)+'%';
-el.style.animationDuration = duration+'s';
-el.innerHTML = `
-<div class="flag-pole"></div>
-<img class="flag-img" src="https://flagcdn.com/w160/${data.code}.png" alt="${data.name}" loading="lazy" onerror="this.style.display='none'">
-<div class="name">${data.name}</div>
-`;
-panel.appendChild(el);
-setTimeout(()=>{ el.remove(); }, (duration+1)*1000);
+  const data = flags[Math.floor(Math.random()*flags.length)];
+  const el = document.createElement('div');
+  el.className='flag-fall';
+  const duration = Math.random()*8 + 13;
+  el.style.left = (Math.random()*60 + 10)+'%';
+  el.style.animationDuration = duration+'s';
+  el.innerHTML = `
+    <div class="flag-pole"></div>
+    <img class="flag-img" src="https://flagcdn.com/w160/${data.code}.png" alt="${data.name}" loading="lazy" onerror="this.style.display='none'">
+    <div class="name">${data.name}</div>`;
+  panel.appendChild(el);
+  setTimeout(()=>{ el.remove(); }, (duration+1)*1000);
 }
 for(let i=0;i<5;i++){ setTimeout(createFlag, i*900); }
 setInterval(createFlag, 2600);
 
+/* ---------- PARTICULAS ---------- */
 const particles=document.getElementById('particles');
 function createParticle(){
-const p=document.createElement('div');
-p.style.cssText='position:fixed;width:4px;height:4px;border-radius:50%;background:#FFD700;left:'+Math.random()*100+'vw;top:110vh;opacity:.6;pointer-events:none;z-index:5;box-shadow:0 0 12px #FFD700;';
-particles.appendChild(p);
-const dur=Math.random()*4000+6000;
-p.animate([{transform:'translateY(0px)'},{transform:'translateY(-'+(window.innerHeight+200)+'px)'}],{duration:dur,easing:'linear'});
-setTimeout(()=>p.remove(),dur);
+  const p=document.createElement('div');
+  p.style.cssText='position:fixed;width:4px;height:4px;border-radius:50%;background:#FFD700;left:'+Math.random()*100+'vw;top:110vh;opacity:.6;pointer-events:none;z-index:5;box-shadow:0 0 12px #FFD700;';
+  particles.appendChild(p);
+  const dur=Math.random()*4000+6000;
+  p.animate([{transform:'translateY(0px)'},{transform:'translateY(-'+(window.innerHeight+200)+'px)'}],{duration:dur,easing:'linear'});
+  setTimeout(()=>p.remove(),dur);
 }
 setInterval(createParticle,250);
 
+/* ---------- CONFETE ---------- */
 const colors=['#FFD700','#00FF99','#FFFFFF','#FF4444','#44AAFF'];
 function confetti(){
-const c=document.createElement('div');
-c.style.cssText='position:fixed;width:8px;height:8px;left:'+Math.random()*100+'vw;top:-20px;background:'+colors[Math.floor(Math.random()*colors.length)]+';z-index:8;pointer-events:none;';
-document.body.appendChild(c);
-const dur=Math.random()*4000+4000;
-c.animate([{transform:'translateY(0px) rotate(0deg)'},{transform:'translateY('+(window.innerHeight+100)+'px) rotate(720deg)'}],{duration:dur,easing:'linear'});
-setTimeout(()=>c.remove(),dur);
+  const c=document.createElement('div');
+  c.style.cssText='position:fixed;width:8px;height:8px;left:'+Math.random()*100+'vw;top:-20px;background:'+colors[Math.floor(Math.random()*colors.length)]+';z-index:8;pointer-events:none;';
+  document.body.appendChild(c);
+  const dur=Math.random()*4000+4000;
+  c.animate([{transform:'translateY(0px) rotate(0deg)'},{transform:'translateY('+(window.innerHeight+100)+'px) rotate(720deg)'}],{duration:dur,easing:'linear'});
+  setTimeout(()=>c.remove(),dur);
 }
 setInterval(confetti,400);
 document.body.animate([{filter:'brightness(1)'},{filter:'brightness(1.05)'},{filter:'brightness(1)'}],{duration:5000,iterations:Infinity});
